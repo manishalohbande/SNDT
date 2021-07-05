@@ -177,7 +177,7 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 				studentVerificationList.setBranch_nm(branch.getBranchName());
 				studentVerificationList.setSemester(sem.getSemester());
 				studentVerificationList.setMonthOfPassing(req.getMonthOfPassing());
-				
+				studentVerificationList.setPrnNo(req.getPrnNo());
 				List.add(studentVerificationList);
 			}
 			
