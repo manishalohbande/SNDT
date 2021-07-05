@@ -141,6 +141,8 @@ private static final Logger logger = LoggerFactory.getLogger(EmployerServiceImpl
 			resp.setBranch_nm(branch.getBranchName());
 			resp.setSemester(sem.getSemester());
 			resp.setMonthOfPassing(req.getMonthOfPassing());
+			  resp.setPrnNo(req.getPrnNo());
+
 			
 			responseList.add(resp);
 			

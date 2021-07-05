@@ -32,6 +32,10 @@ public class StudentDocVerificationRequest {
 	private String altEmail;
 	
 	private String monthOfPassing;
+	
+	private String prnNo;
+	private String courierAdrr;
+	private Long resultCollectionType;
 
 
 

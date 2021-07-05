@@ -158,6 +158,8 @@ public class VerifierServiceImpl implements VerifierService{
 			  resp.setBranch_nm(branch.getBranchName());
 			  resp.setSemester(sem.getSemester());
 			  resp.setMonthOfPassing(veriReq.getMonthOfPassing());
+			  resp.setPrnNo(veriReq.getPrnNo());
+
 			 // run query here which will update 'assigned_to' column with userId value
 			 // for now assign any value other than 0 (assign 1)
 			// Long a = (long) 1;

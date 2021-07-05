@@ -166,4 +166,13 @@ public class VerificationRequest extends CreateUpdate {
 	
 	@Column(name = "alternate_email")
 	private String altEmail;
+	
+	@Column(name = "prn_number")
+	private String prnNo;
+	
+	@Column(name = "courier_address")
+	private String courierAddr;
+	
+	@Column(name = "result_collection_type")
+	private String resultCollectionType;
 }

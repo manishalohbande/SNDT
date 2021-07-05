@@ -332,6 +332,11 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 			resp.setCreateby(req.getCreateby());
 			resp.setMonthOfPassing(req.getMonthOfPassing());
 			
+			resp.setPrnNo(req.getPrnNo());
+			resp.setCourierAddr(req.getCourierAdrr());
+			if(req.getResultCollectionType()!=null) {
+			resp.setResultCollectionType(req.getResultCollectionType().toString());
+			}
 			
 
 			if(req.getAltEmail()!=null) {

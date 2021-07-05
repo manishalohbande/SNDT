@@ -53,7 +53,8 @@ public class VerificationResponse {
 	private Long gst;
 	
 	private String monthOfPassing;
-	
+	private String prnNo;
+
 
 
 }
