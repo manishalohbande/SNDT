@@ -14,9 +14,8 @@ import com.scube.edu.model.PassingYearMaster;
 public interface YearOfPassingRepository extends JpaRepository<PassingYearMaster, Long> {
 	
 	PassingYearMaster  findByYearOfPassing(String yrofpass);
+	PassingYearMaster  findByYearOfPassingAndIsdeleted(String yrofpass,String isdeleted);
+
 	PassingYearMaster findById(long pid);
 	List<PassingYearMaster> findAllByIsdeleted(String isdeleted);
-
-
-
 }

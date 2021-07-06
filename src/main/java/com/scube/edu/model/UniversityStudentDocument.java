@@ -50,7 +50,7 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String studentName;
 		
 		//@NotBlank
-		@Size(max = 10)
+		//@Size(max = 10)
 		@Column(name = "passingYearId")
 		private Long passingYearId;
 		
@@ -325,155 +325,112 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String gradeSubSix;
 		
 		
-		@Column(name = "subject_7")
-		private String subSeven;
-		
-		@Column(name = "subject_name_7")
-		private String subNmSeven;
-		
-		@Column(name = "credit_7")
-		private Integer creditSubSeven;
-		
-		@Column(name = "int_7")
-		private Integer intSubSeven;
-		
-		@Column(name = "ext_7")
-		private Integer extSubSeven;
-		
-		@Column(name = "total_7")
-		private Integer totalSubSeven;
-		
-		@Column(name = "grace_7")
-		private String graceSubSeven;
-		
-		@Column(name = "prv_flag_7")
-		private String prvFlgSubSeven;
-		
-		@Column(name = "max_int_7")
-		private Integer maxIntSubSeven;
-		
-		@Column(name = "max_ext_7")
-		private Integer maxExtSubSeven;
-		
-		@Column(name = "max_total_7")
-		private Integer maxTotalSubSeven;
-		
-		@Column(name = "grade_7")
-		private String gradeSubSeven;
-		
-		
-		
-		@Column(name = "subject_8")
-		private String subEight;
-		
-		@Column(name = "subject_name_8")
-		private String subNmEight;
-		
-		@Column(name = "credit_8")
-		private Integer creditSubEight;
-		
-		@Column(name = "int_8")
-		private Integer intSubEight;
-		
-		@Column(name = "ext_8")
-		private Integer extSubEight;
-		
-		@Column(name = "total_8")
-		private Integer totalSubEight;
-		
-		@Column(name = "grace_8")
-		private String graceSubEight;
-		
-		@Column(name = "prv_flag_8")
-		private String prvFlgSubEight;
-		
-		@Column(name = "max_int_8")
-		private Integer maxIntEight;
-		
-		@Column(name = "max_ext_8")
-		private Integer maxExtSubEight;
-		
-		@Column(name = "max_total_8")
-		private Integer maxTotalSubEight;
-		
-		@Column(name = "grade_8")
-		private String gradeSubEight;
-		
-		
-		@Column(name = "subject_9")
-		private String subNine;
-		
-		@Column(name = "subject_name_9")
-		private String subNmNine;
-		
-		@Column(name = "credit_9")
-		private Integer creditSubNine;
-		
-		@Column(name = "int_9")
-		private Integer intSubNine;
-		
-		@Column(name = "ext_9")
-		private Integer extSubNine;
-		
-		@Column(name = "total_9")
-		private Integer totalSubNine;
-		
-		@Column(name = "grace_9")
-		private String graceSubNine;
-		
-		@Column(name = "prv_flag_9")
-		private String prvFlgSubNine;
-		
-		@Column(name = "max_int_9")
-		private Integer maxIntSubNine;
-		
-		@Column(name = "max_ext_9")
-		private Integer maxExtSubNine;
-		
-		@Column(name = "max_total_9")
-		private Integer maxTotalSubNine;
-		
-		@Column(name = "grade_9")
-		private String gradeSubNine;
-		
-		
-		
-		@Column(name = "subject_10")
-		private String subTen;
-		
-		@Column(name = "subject_name_10")
-		private String subNmTen;
-		
-		@Column(name = "credit_10")
-		private Integer creditTen;
-		
-		@Column(name = "int_10")
-		private Integer intTen;
-		
-		@Column(name = "ext_10")
-		private Integer extTen;
-		
-		@Column(name = "total_10")
-		private Integer totalTen;
-		
-		@Column(name = "grace_10")
-		private String graceTen;
-		
-		@Column(name = "prv_flag_10")
-		private String prvFlgTen;
-		
-		@Column(name = "max_int_10")
-		private Integer maxIntTen;
-		
-		@Column(name = "max_ext_10")
-		private Integer maxExtTen;
-		
-		@Column(name = "max_total_10")
-		private String maxTotalTen;
-				
-		@Column(name = "branch_Id")
-		private Long branchId;
-		
-		@Column(name = "grade_10")
-		private String gradeSubTen;
+	/*
+	 * @Column(name = "subject_7") private String subSeven;
+	 * 
+	 * @Column(name = "subject_name_7") private String subNmSeven;
+	 * 
+	 * @Column(name = "credit_7") private Integer creditSubSeven;
+	 * 
+	 * @Column(name = "int_7") private Integer intSubSeven;
+	 * 
+	 * @Column(name = "ext_7") private Integer extSubSeven;
+	 * 
+	 * @Column(name = "total_7") private Integer totalSubSeven;
+	 * 
+	 * @Column(name = "grace_7") private String graceSubSeven;
+	 * 
+	 * @Column(name = "prv_flag_7") private String prvFlgSubSeven;
+	 * 
+	 * @Column(name = "max_int_7") private Integer maxIntSubSeven;
+	 * 
+	 * @Column(name = "max_ext_7") private Integer maxExtSubSeven;
+	 * 
+	 * @Column(name = "max_total_7") private Integer maxTotalSubSeven;
+	 * 
+	 * @Column(name = "grade_7") private String gradeSubSeven;
+	 * 
+	 * 
+	 * 
+	 * @Column(name = "subject_8") private String subEight;
+	 * 
+	 * @Column(name = "subject_name_8") private String subNmEight;
+	 * 
+	 * @Column(name = "credit_8") private Integer creditSubEight;
+	 * 
+	 * @Column(name = "int_8") private Integer intSubEight;
+	 * 
+	 * @Column(name = "ext_8") private Integer extSubEight;
+	 * 
+	 * @Column(name = "total_8") private Integer totalSubEight;
+	 * 
+	 * @Column(name = "grace_8") private String graceSubEight;
+	 * 
+	 * @Column(name = "prv_flag_8") private String prvFlgSubEight;
+	 * 
+	 * @Column(name = "max_int_8") private Integer maxIntEight;
+	 * 
+	 * @Column(name = "max_ext_8") private Integer maxExtSubEight;
+	 * 
+	 * @Column(name = "max_total_8") private Integer maxTotalSubEight;
+	 * 
+	 * @Column(name = "grade_8") private String gradeSubEight;
+	 * 
+	 * 
+	 * @Column(name = "subject_9") private String subNine;
+	 * 
+	 * @Column(name = "subject_name_9") private String subNmNine;
+	 * 
+	 * @Column(name = "credit_9") private Integer creditSubNine;
+	 * 
+	 * @Column(name = "int_9") private Integer intSubNine;
+	 * 
+	 * @Column(name = "ext_9") private Integer extSubNine;
+	 * 
+	 * @Column(name = "total_9") private Integer totalSubNine;
+	 * 
+	 * @Column(name = "grace_9") private String graceSubNine;
+	 * 
+	 * @Column(name = "prv_flag_9") private String prvFlgSubNine;
+	 * 
+	 * @Column(name = "max_int_9") private Integer maxIntSubNine;
+	 * 
+	 * @Column(name = "max_ext_9") private Integer maxExtSubNine;
+	 * 
+	 * @Column(name = "max_total_9") private Integer maxTotalSubNine;
+	 * 
+	 * @Column(name = "grade_9") private String gradeSubNine;
+	 * 
+	 * 
+	 * 
+	 * @Column(name = "subject_10") private String subTen;
+	 * 
+	 * @Column(name = "subject_name_10") private String subNmTen;
+	 * 
+	 * @Column(name = "credit_10") private Integer creditTen;
+	 * 
+	 * @Column(name = "int_10") private Integer intTen;
+	 * 
+	 * @Column(name = "ext_10") private Integer extTen;
+	 * 
+	 * @Column(name = "total_10") private Integer totalTen;
+	 * 
+	 * @Column(name = "grace_10") private String graceTen;
+	 * 
+	 * @Column(name = "prv_flag_10") private String prvFlgTen;
+	 * 
+	 * @Column(name = "max_int_10") private Integer maxIntTen;
+	 * 
+	 * @Column(name = "max_ext_10") private Integer maxExtTen;
+	 * 
+	 * @Column(name = "max_total_10") private String maxTotalTen;
+	 * 
+	 * @Column(name = "grade_10") 
+	  private String gradeSubTen;
+	  */
+	 @Column(name = "branch_Id") 
+	 private Long branchId;
+	 
+	  
+	 
 }

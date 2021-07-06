@@ -15,6 +15,8 @@ public interface StreamRepository  extends JpaRepository<StreamMaster, Long>{
 
 	StreamMaster deleteById(long id);
 	StreamMaster findByStreamName( String Streamname);
+	StreamMaster findByStreamNameAndIsdeleted( String Streamname,String isdeleted);
+
 	List<StreamMaster> findAllByIsdeleted(String isdeleted);
 	
 }
