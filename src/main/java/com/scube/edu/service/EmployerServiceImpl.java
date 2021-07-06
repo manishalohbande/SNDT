@@ -106,7 +106,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployerServiceImpl
 			resp.setReq_date(strDate);
 			resp.setMonthOfPassing(req.getMonthOfPassing());
 			resp.setMonthOfPassing(req.getMonthOfPassing());
-
+			resp.setPrnNo(req.getPrnNo());
 			responseList.add(resp);
 			
 		}
