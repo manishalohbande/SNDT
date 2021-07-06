@@ -35,6 +35,7 @@ import com.scube.edu.model.VerificationRequest;
 import com.scube.edu.repository.CustomizationRepository;
 import com.scube.edu.repository.RequestTypeRepository;
 import com.scube.edu.repository.StreamRepository;
+import com.scube.edu.repository.UniversityStudentDocRepository;
 import com.scube.edu.repository.UserRepository;
 import com.scube.edu.repository.VerificationRequestRepository;
 import com.scube.edu.request.StatusChangeRequest;
@@ -44,6 +45,8 @@ import com.scube.edu.response.JwtResponse;
 import com.scube.edu.response.RequestTypeResponse;
 import com.scube.edu.response.StreamResponse;
 import com.scube.edu.response.StudentVerificationDocsResponse;
+import com.scube.edu.response.UniversityResponse;
+import com.scube.edu.response.UniversityStudentDocumentResponse;
 import com.scube.edu.response.UserResponse;
 import com.scube.edu.response.VerificationResponse;
 import com.scube.edu.security.JwtUtils;
@@ -87,6 +90,9 @@ public class VerifierServiceImpl implements VerifierService{
 	 
 	 @Autowired
 	 UniversityStudentDocService  stuDocService;
+	 
+	 @Autowired
+	 UniversityStudentDocRepository universityStudentDocRepo;
 	 
 	 @Autowired
 	 RequestTypeService reqTypeService;
@@ -290,6 +296,53 @@ public class VerifierServiceImpl implements VerifierService{
 
 		logger.info("List"+rowcnt);
 		return rowcnt;
+	}
+
+
+
+	@Override
+	public List<UniversityResponse> getUniTabularData(String prnNo, long semesterId) {
+		
+		System.out.println("******VerifierServiceImpl getUniTabularData******" + prnNo);
+		
+		List<UniversityStudentDocument> respList = universityStudentDocRepo.findByPrnNoAndSemesterId(prnNo, semesterId);
+		
+		List<UniversityResponse> docsList = new ArrayList<>();
+		
+		for(UniversityStudentDocument ent: respList) {
+			
+			UniversityResponse uniResp = new UniversityResponse();
+			
+			StreamMaster stream = streamService.getNameById(ent.getStreamId());
+			PassingYearMaster pym = yearOfPassService.getYearById(String.valueOf(ent.getPassingYearId()));
+			BranchMasterEntity bme = branchMasterService.getbranchById(ent.getBranchId());
+			SemesterEntity semEnt = semesterService.getSemById(ent.getSemId());
+			
+			
+			uniResp.setName(ent.getStudentName());
+			uniResp.setPrnNo(ent.getPrnNo());
+			uniResp.setResDesc(ent.getResultDesc());
+			uniResp.setBranch(bme.getBranchName());
+			uniResp.setSeatNo(ent.getEnrollmentNo());
+			uniResp.setSemClass(ent.getSemclass());
+			uniResp.setSemester(semEnt.getSemester());
+			uniResp.setSemGpa(ent.getSemGpa());
+			
+//			if(ent.getSemGrace().equalsIgnoreCase("")) {
+//				uniResp.setSemGrace(ent.getSemGrace());
+//			}
+			
+			uniResp.setSemGrade(ent.getSemGrade());
+			uniResp.setSemGrdTot(ent.getSemGradeTotal());
+			uniResp.setSemTotMax(ent.getSemTotalMax());
+			uniResp.setStream(stream.getStreamName());
+			uniResp.setYearOfPassing(pym.getYearOfPassing());
+			
+			docsList.add(uniResp);
+			
+		}
+		
+		return docsList;
 	}
 
 	

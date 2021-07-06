@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scube.edu.request.StatusChangeRequest;
 import com.scube.edu.response.BaseResponse;
 import com.scube.edu.response.StudentVerificationDocsResponse;
+import com.scube.edu.response.UniversityResponse;
 import com.scube.edu.response.VerificationResponse;
 import com.scube.edu.service.VerifierService;
 import com.scube.edu.util.FileStorageService;
@@ -206,6 +207,36 @@ public class VerifierController {
 						return ResponseEntity.badRequest().body(response);
 						
 					}
+				
+	   }
+		
+		@GetMapping("/getUniversityTabularFormData/{prnNo}/{semesterId}")
+		public  ResponseEntity<Object> getUniversityTabularFormData(@PathVariable String prnNo, @PathVariable long semesterId) {
+			
+			response = new BaseResponse();
+			
+			    try {
+			    	List<UniversityResponse> list = verifierService.getUniTabularData(prnNo, semesterId);
+						// this list has FIFO mechanism for getting records for verifier (limit 5)
+						response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+						response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+						response.setRespData(list);
+						
+						return ResponseEntity.ok(response);
+							
+					}catch (Exception e) {
+						
+						logger.error(e.getMessage()); //BAD creds message comes from here
+						
+						response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+						response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+						response.setRespData(e.getMessage());
+						
+						return ResponseEntity.badRequest().body(response);
+						
+					}
+			    
+			    
 				
 	   }
 
