@@ -86,6 +86,8 @@ public class UniversityStudDocResponse {
 
 	private Integer maxTotalSubOne;
 
+	private Integer gradeSubOne;
+
 	private String subTwo;
 
 	private String subNmTwo;
@@ -107,6 +109,9 @@ public class UniversityStudDocResponse {
 	private Integer maxExtSubTwo;
 
 	private Integer maxTotalSubTwo;
+	
+	private Integer gradeSubTwo;
+
 
 	private String subThree;
 
@@ -130,6 +135,8 @@ public class UniversityStudDocResponse {
 
 	private Integer maxTotalSubThree;
 
+	private Integer gradeSubThree;
+
 	private String subFour;
 
 	private String subNmFour;
@@ -151,6 +158,8 @@ public class UniversityStudDocResponse {
 	private Integer maxExtSubFour;
 
 	private Integer maxTotalSubFour;
+
+	private Integer gradeSubFour;
 
 	private String subFive;
 
@@ -174,6 +183,8 @@ public class UniversityStudDocResponse {
 
 	private Integer maxTotalSubFive;
 
+	private Integer gradeSubFive;
+
 	private String subSix;
 
 	private String subNmSix;
@@ -195,5 +206,8 @@ public class UniversityStudDocResponse {
 	private Integer maxExtSubSix;
 
 	private Integer maxTotalSubSix;
+	
+	private Integer gradeSubSix;
+
 
 }

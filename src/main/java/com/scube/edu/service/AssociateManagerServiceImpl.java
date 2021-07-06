@@ -183,16 +183,13 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        studentData.setCreditOne(Data.getCreditOne());
 		        studentData.setIntSubOne(Data.getIntSubOne());
 		        studentData.setExtSubOne(Data.getExtSubOne());
-		        studentData
-		        studentData
-		        studentData
-		        studentData
-		        studentData
-		        studentData
-		        studentData
-		        studentData
-		        
-		        
+		        studentData.setTotalSubOne(Data.getTotalSubOne());
+		        studentData.setGraceSubOne(Data.getGraceSubOne());
+		        studentData.setPrvFlgSubOne(Data.getPrvFlgSubOne());
+		        studentData.setMaxExtSubOne(Data.getMaxExtSubOne());
+		        studentData.setMaxIntSubOne(Data.getMaxIntSubOne());
+		        studentData.setMaxTotalSubOne(Data.getMaxTotalSubOne());
+		       
 		        studentDataList.add(studentData);    		        
 		        //SavestudentData.setFirstName(Data.getFirstName());
 		       // SavestudentData.setLastName(Data.getLastName());

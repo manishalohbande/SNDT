@@ -141,7 +141,7 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private Integer maxTotalSubOne;
 		
 		@Column(name = "grade_1")
-		private Integer gradeOne;
+		private Integer gradeSubOne;
 		
 		@Column(name = "subject_2")
 		private String subTwo;
