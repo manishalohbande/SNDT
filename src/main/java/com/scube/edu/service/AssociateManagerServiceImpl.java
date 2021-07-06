@@ -37,6 +37,7 @@ import com.scube.edu.repository.StreamRepository;
 import com.scube.edu.repository.UniversityStudentDocRepository;
 import com.scube.edu.repository.YearOfPassingRepository;
 import com.scube.edu.request.UniversityStudentRequest;
+import com.scube.edu.response.UniversityResponse;
 import com.scube.edu.response.UniversityStudDocResponse;
 import com.scube.edu.response.UniversityStudentDocumentResponse;
 import com.scube.edu.util.FileStorageService;
@@ -629,26 +630,23 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 	}
 
 	@Override
-	public List<UniversityStudDocResponse> getStudentData(UniversityStudentRequest universityStudData ) {
+	public List<UniversityResponse> getStudentData(UniversityStudentRequest universityStudData ) {
 		
 		logger.info("********AssociateManagerServiceImpl getStudentData********");
 
 		 List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
 		 
-		List<UniversityStudentDocument> usdr = universityStudentDocRepository.searchByEnrollmentNoLikeAndPassingYearIdLikeAndStreamIdLikeAndSemIdLikeAndMonthOfPassingLike( 
-				universityStudData.getEnrollmentNo(), universityStudData.getPassingYearId(), universityStudData.getStreamId(),universityStudData.getSemId(),universityStudData.getMonthOfPassing());
-		List<UniversityStudDocResponse> studData=new ArrayList<>();
+		List<UniversityStudentDocument> usdr = universityStudentDocRepository.searchBySeatNoLikeAndPassingYearIdLikeAndStreamIdLikeAndSemIdLikeAndMonthOfPassingLikeAndPrnNoLike( 
+				universityStudData.getEnrollmentNo(), universityStudData.getPassingYearId(), universityStudData.getStreamId(),universityStudData.getSemId(),universityStudData.getMonthOfPassing(), universityStudData.getPrnNo());
+		List<UniversityResponse> studData=new ArrayList<>();
 		
 		logger.info("********AssociateManagerServiceImpl getStudentData********");
 		 
 		 for(UniversityStudentDocument studentData:usdr) {
 			 
 			 UniversityStudDocResponse resp = new UniversityStudDocResponse();
-			/*
-			 * Optional<CollegeMaster> cm =
-			 * collegeRespository.findById(studentData.getCollegeId()); CollegeMaster
-			 * college = cm.get();
-			 */
+			 
+			 UniversityResponse uniResp = new UniversityResponse();
 			 
 			 Optional<StreamMaster> streaminfo = streamRespository.findById(studentData.getStreamId());
 			 StreamMaster stream = streaminfo.get();
@@ -658,22 +656,35 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 
 			 SemesterEntity sem=semesterService.getSemById(studentData.getSemId());
 				
-			// BranchMasterEntity branch=branchMasterService.getbranchById(studentData.getBranchId());
+			 BranchMasterEntity branch=branchMasterService.getbranchById(studentData.getBranchId());
 				
+			 uniResp.setName(studentData.getStudentName());
+			 uniResp.setPrnNo(studentData.getPrnNo());
+			 uniResp.setResDesc(studentData.getResultDesc());
+			 uniResp.setSeatNo(studentData.getEnrollmentNo());
+			 uniResp.setSemClass(studentData.getSemclass());
+			 uniResp.setSemester(sem.getSemester());
+			 uniResp.setSemGpa(studentData.getSemGpa());
+			 uniResp.setSemGrade(studentData.getSemGrade());
+			 uniResp.setSemGrdTot(studentData.getSemGradeTotal());
+			 uniResp.setBranch(branch.getBranchName());
+			 uniResp.setSemTotMax(studentData.getSemTotalMax());
+			 uniResp.setStream(stream.getStreamName());
+			 uniResp.setYearOfPassing(passingyr.getYearOfPassing());
 			 
-			 resp.setId(studentData.getId());
-			// resp.setFirstName(studentData.getFirstName());
-			// resp.setLastName(studentData.getLastName());
-			// resp.setCollegeName(college.getCollegeName());
-			 resp.setEnrollmentNo(studentData.getEnrollmentNo());
-			 resp.setStream(stream.getStreamName());
-			 resp.setPassingYear(passingyr.getYearOfPassing());
-			// resp.setBranch_nm(branch.getBranchName());
-			 resp.setSemester(sem.getSemester());
-			 resp.setMonthOfPassing(studentData.getMonthOfPassing());
-			 //String Path=
-			// resp.setOriginalDOCuploadfilePath("/verifier/getimage/U/"+studentData.getId());
-			 studData.add(resp);
+//			 resp.setId(studentData.getId());
+//			// resp.setFirstName(studentData.getFirstName());
+//			// resp.setLastName(studentData.getLastName());
+//			// resp.setCollegeName(college.getCollegeName());
+//			 resp.setEnrollmentNo(studentData.getEnrollmentNo());
+//			 resp.setStream(stream.getStreamName());
+//			 resp.setPassingYear(passingyr.getYearOfPassing());
+//			// resp.setBranch_nm(branch.getBranchName());
+//			 resp.setSemester(sem.getSemester());
+//			 resp.setMonthOfPassing(studentData.getMonthOfPassing());
+//			 //String Path=
+//			// resp.setOriginalDOCuploadfilePath("/verifier/getimage/U/"+studentData.getId());
+			 studData.add(uniResp);
 			 
 		 }
 

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.scube.edu.model.UniversityStudentDocument;
 import com.scube.edu.request.UniversityStudentRequest;
 import com.scube.edu.response.BaseResponse;
+import com.scube.edu.response.UniversityResponse;
 import com.scube.edu.response.UniversityStudDocResponse;
 import com.scube.edu.service.AssociateManagerService;
 import com.scube.edu.util.StringsUtils;
@@ -105,7 +106,7 @@ public class AssociateManagerController {
 		
 	    try {
 	    	
-	    	  List<UniversityStudDocResponse> List=associateManagerService.getStudentData(stuentData) ;
+	    	  List<UniversityResponse> List=associateManagerService.getStudentData(stuentData) ;
 				
 				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
 				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
