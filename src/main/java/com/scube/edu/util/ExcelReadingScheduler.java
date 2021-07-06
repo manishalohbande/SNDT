@@ -194,7 +194,7 @@ public class ExcelReadingScheduler {
 						}
 					}
 					previmagefile = imagefilenm;
-					studentData.setOriginalDOCuploadfilePath(filePath);
+					//studentData.setOriginalDOCuploadfilePath(filePath);
 
 				}
 

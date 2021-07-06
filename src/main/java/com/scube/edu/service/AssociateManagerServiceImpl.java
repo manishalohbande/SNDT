@@ -142,7 +142,8 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 if(docEntity==null) {	
 				
 				
-				if(passingyr!=null&&sem!=null && !Data.getEnrollmentNo().equals("")&&month!=null&&!Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
+				if(passingyr!=null&&sem!=null && !Data.getEnrollmentNo().equals("")&&month!=null){
+						//Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
 					//if(Data.getOriginalDOCuploadfilePath().equals("FileNotAvailable")) {
 				UniversityStudentDocument studentData=new UniversityStudentDocument();
 				UniversityStudDocResponse SavestudentData=new UniversityStudDocResponse();
@@ -167,7 +168,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        SavestudentData.setStream(Data.getStream());	
 		        SavestudentData.setEnrollmentNo(Data.getEnrollmentNo());
 		        SavestudentData.setPassingYear(Data.getPassingYear());	
-		        SavestudentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+		        //SavestudentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 		      //  SavestudentData.setReason(reason);
 		        //SavestudentData.setBranch_nm(Data.getBranch_nm());
 		        SavestudentData.setSemester(Data.getSemester());
@@ -233,17 +234,15 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 					  }
 					  } */
 				     
-						 if( Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
-							
-							 if(reason!=null) {
-								 reason=reason+", ImageNotAvailable";
-
-							 }
-							 else {
-								 reason=" ImageNotAvailable";
-
-							 }
-						 }
+					/*
+					 * if( Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
+					 * 
+					 * if(reason!=null) { reason=reason+", ImageNotAvailable";
+					 * 
+					 * } else { reason=" ImageNotAvailable";
+					 * 
+					 * } }
+					 */
 						
 						 if(Data.getEnrollmentNo()==null || Data.getEnrollmentNo().equals("") )
 						 {
@@ -281,7 +280,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 				        studentData.setStream(Data.getStream());	
 				        studentData.setEnrollmentNo(Data.getEnrollmentNo());
 				        studentData.setPassingYear(Data.getPassingYear());	
-				        studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+				     //   studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 				        studentData.setMonthOfPassing(Data.getMonthOfPassing());
 				        studentData.setReason(reason);
 				        rejectedData.add(studentData);				
@@ -299,7 +298,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
 		        studentData.setPassingYear(Data.getPassingYear());	
 		        studentData.setMonthOfPassing(Data.getMonthOfPassing());	
-		        studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+		     //   studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 		        studentData.setReason(reason);
 
 		        rejectedData.add(studentData);				
@@ -413,7 +412,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 else {
 				 studentData.setPassingYear("");
 			 }
-		        studentData.setOriginalDOCuploadfilePath(filePath);
+		        //studentData.setOriginalDOCuploadfilePath(filePath);
 		        studentDataReviewList.add(studentData);    
 			 }
 		 }
@@ -466,7 +465,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 resp.setSemester(sem.getSemester());
 			 resp.setMonthOfPassing(studentData.getMonthOfPassing());
 			 //String Path=
-			 resp.setOriginalDOCuploadfilePath("/verifier/getimage/U/"+studentData.getId());
+			// resp.setOriginalDOCuploadfilePath("/verifier/getimage/U/"+studentData.getId());
 			 studData.add(resp);
 			 
 		 }
@@ -556,7 +555,9 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 if(docEntity==null) {	
 				
 				
-				if(passingyr!=null&&sem!=null && !Data.getEnrollmentNo().equals("")&&month!=null&&!Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
+				if(passingyr!=null&&sem!=null && !Data.getEnrollmentNo().equals("")&&month!=null) {
+					//&&!Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
+				
 					//if(Data.getOriginalDOCuploadfilePath().equals("FileNotAvailable")) {
 				UniversityStudentDocument studentData=new UniversityStudentDocument();
 				UniversityStudDocResponse SavestudentData=new UniversityStudDocResponse();
@@ -581,7 +582,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        SavestudentData.setStream(Data.getStream());	
 		        SavestudentData.setEnrollmentNo(Data.getEnrollmentNo());
 		        SavestudentData.setPassingYear(Data.getPassingYear());	
-		        SavestudentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+		        //SavestudentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 		      //  SavestudentData.setReason(reason);
 		        //SavestudentData.setBranch_nm(Data.getBranch_nm());
 		        SavestudentData.setSemester(Data.getSemester());
@@ -647,7 +648,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 					  }
 					  } */
 				     
-						 if( Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
+						/* if( Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
 							
 							 if(reason!=null) {
 								 reason=reason+", ImageNotAvailable";
@@ -657,7 +658,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 								 reason=" ImageNotAvailable";
 
 							 }
-						 }
+						 }*/
 						
 						 if(Data.getEnrollmentNo()==null || Data.getEnrollmentNo().equals("") )
 						 {
@@ -695,7 +696,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 				        studentData.setStream(Data.getStream());	
 				        studentData.setEnrollmentNo(Data.getEnrollmentNo());
 				        studentData.setPassingYear(Data.getPassingYear());	
-				        studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+				      //  studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 				        studentData.setMonthOfPassing(Data.getMonthOfPassing());
 				        studentData.setReason(reason);
 				        rejectedData.add(studentData);				
@@ -713,7 +714,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
 		        studentData.setPassingYear(Data.getPassingYear());	
 		        studentData.setMonthOfPassing(Data.getMonthOfPassing());	
-		        studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+		    //    studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 		        studentData.setReason(reason);
 
 		        rejectedData.add(studentData);				

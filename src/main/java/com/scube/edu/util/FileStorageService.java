@@ -329,7 +329,7 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
 	  	            }
 	        		
 	        		
-<<<<<<< HEAD
+
 	        	}else {
 	        		newPAth = this.fileAssociateBaseLocation;
 	        		UniversityStudentDocument doc = universityStudentDocServiceImpl.getUniversityDocDataById(id);
@@ -361,8 +361,7 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
 	  	            	logger.info("Inside else()");
 	  	                throw new Exception("File not found " + fileName);
 	  	            }
-=======
->>>>>>> d60ff39fe9f41fae789ae8c44f613a0a262c8a73
+
 	        	}
 //	        	else {
 //	        		newPAth = this.fileAssociateBaseLocation;
@@ -396,8 +395,6 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
 //	  	                throw new Exception("File not found " + fileName);
 //	  	            }
 //	        	}
-	        
-	        	return null;
 	        	
 	        } catch (Exception ex) {
 	            throw new Exception("File not found " + fileName, ex);
