@@ -24,6 +24,7 @@ public class UniversityStudentRequest {
 	private String filePath;
 	private String userId;
 	private String monthOfPassing;
+	private String prnNo;
 
 
 	

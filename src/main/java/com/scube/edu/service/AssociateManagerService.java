@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.scube.edu.model.UniversityStudentDocument;
 import com.scube.edu.request.UniversityStudentRequest;
+import com.scube.edu.response.UniversityResponse;
 import com.scube.edu.response.UniversityStudDocResponse;
 
 public interface AssociateManagerService {
@@ -17,7 +18,7 @@ public interface AssociateManagerService {
 
 	public List<UniversityStudDocResponse> ReviewStudentData(MultipartFile excelfile,MultipartFile datafile) throws IOException;
 
-	public List<UniversityStudDocResponse>  getStudentData(UniversityStudentRequest universityStudData);
+	public List<UniversityResponse>  getStudentData(UniversityStudentRequest universityStudData);
 
 
 	public String saveassociatefilepath (MultipartFile datafile);
