@@ -17,8 +17,8 @@ import com.scube.edu.response.UniversityStudentDocumentResponse;
 @Repository
 public interface UniversityStudentDocRepository extends JpaRepository<UniversityStudentDocument, Long> {
 
-	@Query(value = "SELECT * FROM university_studentdocument where enrollment_no = ?1 "
-			+ "and passing_year_id = ?2 and semester_id = ?3 and stream_id = ?4 and month_of_passing = ?5" , nativeQuery = true)
+	@Query(value = "SELECT * FROM university_studentdocument where seat_no = ?1 "
+			+ "and passing_year_id = ?2 and semester_id = ?3 and sream_id = ?4 and month_of_passing = ?5" , nativeQuery = true)
 //	@Query(value = "SELECT * FROM university_studentdocument where enrollment_no = ?1 ", nativeQuery = true)
 	UniversityStudentDocument getDocDataByFourFields(String enrollmentNo , String yearOfPassing, Long semId, Long streamId, String monthOfPassing);
 
