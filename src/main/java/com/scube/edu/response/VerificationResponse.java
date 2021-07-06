@@ -26,6 +26,7 @@ public class VerificationResponse {
 	private String upload_doc_path;
 	private String branch_nm;
 	private String semester;
+	private Long semId;
 
 	private String req_date;
 
