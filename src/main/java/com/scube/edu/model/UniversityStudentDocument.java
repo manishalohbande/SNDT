@@ -24,11 +24,11 @@ public class UniversityStudentDocument extends CreateUpdate {
 	    private Long id;
 		
 		
-		@Size(max = 100)
+	//	@Size(max = 100)
 		@Column(name = "seat_no")
-		private String seatNo;
+		private String enrollmentNo;
 		
-		@Size(max = 100)
+		//@Size(max = 100)
 		@Column(name = "prn_no")
 		private String prnNo;
 		
@@ -50,24 +50,25 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String studentName;
 		
 		//@NotBlank
-	//	@Size(max = 100)
+		@Size(max = 10)
 		@Column(name = "passingYearId")
 		private Long passingYearId;
 		
 		@Column(name = "month_of_passing")
 		private String monthOfPassing;
 		
-		
+		@Column(name = "sream_id")
+		private Long streamId;
 		
 		@Column(name = "semester_Id")
 		private Long semId;
 		
 		@Column(name = "sem_total_max")
-		private String semTotalMax;
+		private Integer semTotalMax;
 
 		
 		@Column(name = "sem_grd_total")
-		private String semGradeTotal;
+		private Integer semGradeTotal;
 		
 		@Column(name = "sem_grace")
 		private String semGrace;
@@ -77,22 +78,22 @@ public class UniversityStudentDocument extends CreateUpdate {
 		
 		
 		@Column(name = "sem_gpa")
-		private String semGpa;
+		private Integer semGpa;
 		
 		@Column(name = "sem_grade")
 		private String semGrade;
 		
 		@Column(name = "grade_total")
-		private String gradeTotal;
+		private Integer gradeTotal;
 		
 		@Column(name = "class_grc")
 		private String classGrace;
 		
 		@Column(name = "max_gr_total")
-		private String maxGrTotal;
+		private Integer maxGrTotal;
 		
 		@Column(name = "cred_total")
-		private String credTotal;
+		private Integer credTotal;
 		
 		@Column(name = "gpa")
 		private String gpa;
@@ -113,16 +114,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmOne;
 		
 		@Column(name = "credit_1")
-		private String creditOne;
+		private Integer creditOne;
 		
 		@Column(name = "int_1")
-		private String intSubOne;
+		private Integer intSubOne;
 		
 		@Column(name = "ext_1")
-		private String extSubOne;
+		private Integer extSubOne;
 		
 		@Column(name = "total_1")
-		private String totalSubOne;
+		private Integer totalSubOne;
 		
 		@Column(name = "grace_1")
 		private String graceSubOne;
@@ -131,13 +132,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubOne;
 		
 		@Column(name = "max_int_1")
-		private String maxIntSubOne;
+		private Integer maxIntSubOne;
 		
 		@Column(name = "max_ext_1")
-		private String maxExtSubOne;
+		private Integer maxExtSubOne;
 		
 		@Column(name = "max_total_1")
-		private String maxTotalSubOne;
+		private Integer maxTotalSubOne;
 		
 		
 		@Column(name = "subject_2")
@@ -147,16 +148,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmTwo;
 		
 		@Column(name = "credit_2")
-		private String creditSubTwo;
+		private Integer creditSubTwo;
 		
 		@Column(name = "int_2")
-		private String intSubTwo;
+		private Integer intSubTwo;
 		
 		@Column(name = "ext_2")
-		private String extSubTwo;
+		private Integer extSubTwo;
 		
 		@Column(name = "total_2")
-		private String totalSubTwo;
+		private Integer totalSubTwo;
 		
 		@Column(name = "grace_2")
 		private String graceSubTwo;
@@ -165,13 +166,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubTwo;
 		
 		@Column(name = "max_int_2")
-		private String maxIntSubTwo;
+		private Integer maxIntSubTwo;
 		
 		@Column(name = "max_ext_2")
-		private String maxExtSubTwo;
+		private Integer maxExtSubTwo;
 		
 		@Column(name = "max_total_2")
-		private String maxTotalSubTwo;
+		private Integer maxTotalSubTwo;
 		
 		
 		@Column(name = "subject_3")
@@ -181,16 +182,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmThree;
 		
 		@Column(name = "credit_3")
-		private String creditSubThree;
+		private Integer creditSubThree;
 		
 		@Column(name = "int_3")
-		private String intSubThree;
+		private Integer intSubThree;
 		
 		@Column(name = "ext_3")
-		private String extSubThree;
+		private Integer extSubThree;
 		
 		@Column(name = "total_3")
-		private String totalSubThree;
+		private Integer totalSubThree;
 		
 		@Column(name = "grace_3")
 		private String graceSubThree;
@@ -199,13 +200,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubThree;
 		
 		@Column(name = "max_int_3")
-		private String maxIntSubThree;
+		private Integer maxIntSubThree;
 		
 		@Column(name = "max_ext_3")
-		private String maxExtSubThree;
+		private Integer maxExtSubThree;
 		
 		@Column(name = "max_total_3")
-		private String maxTotalSubThree;
+		private Integer maxTotalSubThree;
 		
 		
 		@Column(name = "subject_4")
@@ -215,16 +216,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmFour;
 		
 		@Column(name = "credit_4")
-		private String creditSubFour;
+		private Integer creditSubFour;
 		
 		@Column(name = "int_4")
-		private String intSubFour;
+		private Integer intSubFour;
 		
 		@Column(name = "ext_4")
-		private String extSubFour;
+		private Integer extSubFour;
 		
 		@Column(name = "total_4")
-		private String totalSubFour;
+		private Integer totalSubFour;
 		
 		@Column(name = "grace_4")
 		private String graceSubFour;
@@ -233,13 +234,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubFour;
 		
 		@Column(name = "max_int_4")
-		private String maxIntSubFour;
+		private Integer maxIntSubFour;
 		
 		@Column(name = "max_ext_4")
-		private String maxExtSubFour;
+		private Integer maxExtSubFour;
 		
 		@Column(name = "max_total_4")
-		private String maxTotalSubFour;
+		private Integer maxTotalSubFour;
 		
 		
 		
@@ -250,16 +251,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmFive;
 		
 		@Column(name = "credit_5")
-		private String creditSubFive;
+		private Integer creditSubFive;
 		
 		@Column(name = "int_5")
-		private String intSubFive;
+		private Integer intSubFive;
 		
 		@Column(name = "ext_5")
-		private String extSubFive;
+		private Integer extSubFive;
 		
 		@Column(name = "total_5")
-		private String totalSubFive;
+		private Integer totalSubFive;
 		
 		@Column(name = "grace_5")
 		private String graceSubFive;
@@ -268,13 +269,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubFive;
 		
 		@Column(name = "max_int_5")
-		private String maxIntSubFive;
+		private Integer maxIntSubFive;
 		
 		@Column(name = "max_ext_5")
-		private String maxExtSubFive;
+		private Integer maxExtSubFive;
 		
 		@Column(name = "max_total_5")
-		private String maxTotalSubFive;
+		private Integer maxTotalSubFive;
 		
 		
 		
@@ -285,16 +286,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmSix;
 		
 		@Column(name = "credit_6")
-		private String creditSubSix;
+		private Integer creditSubSix;
 		
 		@Column(name = "int_6")
-		private String intSubSix;
+		private Integer intSubSix;
 		
 		@Column(name = "ext_6")
-		private String extSubSix;
+		private Integer extSubSix;
 		
 		@Column(name = "total_6")
-		private String totalSubSix;
+		private Integer totalSubSix;
 		
 		@Column(name = "grace_6")
 		private String graceSubSix;
@@ -303,13 +304,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubSix;
 		
 		@Column(name = "max_int_6")
-		private String maxIntSubSix;
+		private Integer maxIntSubSix;
 		
 		@Column(name = "max_ext_6")
-		private String maxExtSubSix;
+		private Integer maxExtSubSix;
 		
 		@Column(name = "max_total_6")
-		private String maxTotalSubSix;
+		private Integer maxTotalSubSix;
 		
 		
 		
@@ -321,16 +322,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmSeven;
 		
 		@Column(name = "credit_7")
-		private String creditSubSeven;
+		private Integer creditSubSeven;
 		
 		@Column(name = "int_7")
-		private String intSubSeven;
+		private Integer intSubSeven;
 		
 		@Column(name = "ext_7")
-		private String extSubSeven;
+		private Integer extSubSeven;
 		
 		@Column(name = "total_7")
-		private String totalSubSeven;
+		private Integer totalSubSeven;
 		
 		@Column(name = "grace_7")
 		private String graceSubSeven;
@@ -339,13 +340,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubSeven;
 		
 		@Column(name = "max_int_7")
-		private String maxIntSubSeven;
+		private Integer maxIntSubSeven;
 		
 		@Column(name = "max_ext_7")
-		private String maxExtSubSeven;
+		private Integer maxExtSubSeven;
 		
 		@Column(name = "max_total_7")
-		private String maxTotalSubSeven;
+		private Integer maxTotalSubSeven;
 		
 		
 		
@@ -357,16 +358,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmEight;
 		
 		@Column(name = "credit_8")
-		private String creditSubEight;
+		private Integer creditSubEight;
 		
 		@Column(name = "int_8")
-		private String intSubEight;
+		private Integer intSubEight;
 		
 		@Column(name = "ext_8")
-		private String extSubEight;
+		private Integer extSubEight;
 		
 		@Column(name = "total_8")
-		private String totalSubEight;
+		private Integer totalSubEight;
 		
 		@Column(name = "grace_8")
 		private String graceSubEight;
@@ -375,13 +376,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubEight;
 		
 		@Column(name = "max_int_8")
-		private String maxIntEight;
+		private Integer maxIntEight;
 		
 		@Column(name = "max_ext_8")
-		private String maxExtSubEight;
+		private Integer maxExtSubEight;
 		
 		@Column(name = "max_total_8")
-		private String maxTotalSubEight;
+		private Integer maxTotalSubEight;
 		
 		
 		
@@ -392,16 +393,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmNine;
 		
 		@Column(name = "credit_9")
-		private String creditSubNine;
+		private Integer creditSubNine;
 		
 		@Column(name = "int_9")
-		private String intSubNine;
+		private Integer intSubNine;
 		
 		@Column(name = "ext_9")
-		private String extSubNine;
+		private Integer extSubNine;
 		
 		@Column(name = "total_9")
-		private String totalSubNine;
+		private Integer totalSubNine;
 		
 		@Column(name = "grace_9")
 		private String graceSubNine;
@@ -410,13 +411,13 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgSubNine;
 		
 		@Column(name = "max_int_9")
-		private String maxIntSubNine;
+		private Integer maxIntSubNine;
 		
 		@Column(name = "max_ext_9")
-		private String maxExtSubNine;
+		private Integer maxExtSubNine;
 		
 		@Column(name = "max_total_9")
-		private String maxTotalSubNine;
+		private Integer maxTotalSubNine;
 		
 		
 		
@@ -429,16 +430,16 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String subNmTen;
 		
 		@Column(name = "credit_10")
-		private String creditTen;
+		private Integer creditTen;
 		
 		@Column(name = "int_10")
-		private String intTen;
+		private Integer intTen;
 		
 		@Column(name = "ext_10")
-		private String extTen;
+		private Integer extTen;
 		
 		@Column(name = "total_10")
-		private String totalTen;
+		private Integer totalTen;
 		
 		@Column(name = "grace_10")
 		private String graceTen;
@@ -447,10 +448,10 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private String prvFlgTen;
 		
 		@Column(name = "max_int_10")
-		private String maxIntTen;
+		private Integer maxIntTen;
 		
 		@Column(name = "max_ext_10")
-		private String maxExtTen;
+		private Integer maxExtTen;
 		
 		@Column(name = "max_total_10")
 		private String maxTotalTen;

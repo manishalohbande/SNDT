@@ -153,7 +153,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        studentData.setStreamId(stream.getId());	
 		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
 		        studentData.setPassingYearId(passingyr.getId());	
-		        studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+		        //studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 		        studentData.setSemId(sem.getId());
 		       // studentData.setBranchId(branch.getId());
 		        studentData.setCreatedate(new Date());
@@ -567,7 +567,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        studentData.setStreamId(stream.getId());	
 		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
 		        studentData.setPassingYearId(passingyr.getId());	
-		        studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+		      //  studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
 		        studentData.setSemId(sem.getId());
 		       // studentData.setBranchId(branch.getId());
 		        studentData.setCreatedate(new Date());

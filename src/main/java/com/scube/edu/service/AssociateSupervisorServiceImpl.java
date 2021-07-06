@@ -98,14 +98,14 @@ public class AssociateSupervisorServiceImpl implements AssociateSupervisorServic
 			UniversityStudentDocument editRecord = new UniversityStudentDocument();
 			
 			editRecord.setId(universityStudentRequest.getId());
-			editRecord.setFirstName(ogRecord.getFirstName());
-			editRecord.setLastName(ogRecord.getLastName());
+			//editRecord.setFirstName(ogRecord.getFirstName());
+			//editRecord.setLastName(ogRecord.getLastName());
 
 			editRecord.setEnrollmentNo(universityStudentRequest.getEnrollmentNo());
 			if(universityStudentRequest.getFilePath() != "") {
-			editRecord.setOriginalDOCuploadfilePath(universityStudentRequest.getFilePath());
+			//editRecord.setOriginalDOCuploadfilePath(universityStudentRequest.getFilePath());
 			}else{
-				editRecord.setOriginalDOCuploadfilePath(ogRecord.getOriginalDOCuploadfilePath());
+				//editRecord.setOriginalDOCuploadfilePath(ogRecord.getOriginalDOCuploadfilePath());
 			}
 			editRecord.setCollegeId( ogRecord.getCollegeId());
 			editRecord.setPassingYearId( Long.parseLong(universityStudentRequest.getPassingYearId()));
@@ -152,9 +152,9 @@ public class AssociateSupervisorServiceImpl implements AssociateSupervisorServic
 		resp.setId(ogRecord.getId());
 //		resp.setCollegeName(college.getCollegeName());
 		resp.setEnrollmentNo(ogRecord.getEnrollmentNo());
-		resp.setFirstName(ogRecord.getFirstName());
-		resp.setLastName(ogRecord.getLastName());
-		resp.setOriginalDOCuploadfilePath(ogRecord.getOriginalDOCuploadfilePath());
+	//	resp.setFirstName(ogRecord.getFirstName());
+		//resp.setLastName(ogRecord.getLastName());
+		//resp.setOriginalDOCuploadfilePath(ogRecord.getOriginalDOCuploadfilePath());
 		resp.setPassingYear(passingyr.getYearOfPassing());
 		resp.setStream(stream.getStreamName());
 		resp.setPassingYearId(ogRecord.getPassingYearId());

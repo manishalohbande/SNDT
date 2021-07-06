@@ -248,7 +248,7 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
     	}else {
     		
     		UniversityStudentDocument doc = universityStudentDocServiceImpl.getUniversityDocDataById(id);
-    		fileName = doc.getOriginalDOCuploadfilePath();
+    	//	fileName = doc.getOriginalDOCuploadfilePath();
     		
     		extension = fileName.split("\\.")[1]; // req for mediaType
     		
@@ -331,7 +331,7 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
 	        	}else {
 	        		newPAth = this.fileAssociateBaseLocation;
 	        		UniversityStudentDocument doc = universityStudentDocServiceImpl.getUniversityDocDataById(id);
-	        		fileName = doc.getOriginalDOCuploadfilePath();	        		
+	        	//	fileName = doc.getOriginalDOCuploadfilePath();	        		
 //	        		System.out.println("--------InsideElse----fileName--------------"+fileName);
 	        		logger.info("U------fileName----->"+ fileName);
 	        		
