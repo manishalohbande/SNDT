@@ -38,7 +38,7 @@ public class UniversityStudentDocument extends CreateUpdate {
 		
 		//@Size(max = 100)
 		@Column(name = "med_desc")
-		private Long medDesc;
+		private String medDesc;
 		
 		//@Size(max = 100)
 		@Column(name = "CollegeId")

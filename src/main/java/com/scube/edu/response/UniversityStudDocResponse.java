@@ -24,7 +24,7 @@ public class UniversityStudDocResponse {
 
 	private String center;
 
-	private Long medDesc;
+	private String medDesc;
 
 	private Long collegeId;
 
