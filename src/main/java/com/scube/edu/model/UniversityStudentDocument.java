@@ -140,6 +140,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_1")
 		private Integer maxTotalSubOne;
 		
+		@Column(name = "grade_1")
+		private Integer gradeOne;
 		
 		@Column(name = "subject_2")
 		private String subTwo;
@@ -174,6 +176,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_2")
 		private Integer maxTotalSubTwo;
 		
+		@Column(name = "grade_2")
+		private Integer gradeSubTwo;
 		
 		@Column(name = "subject_3")
 		private String subThree;
@@ -208,6 +212,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_3")
 		private Integer maxTotalSubThree;
 		
+		@Column(name = "grade_3")
+		private Integer gradeSubThree;
 		
 		@Column(name = "subject_4")
 		private String subFour;
@@ -242,7 +248,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_4")
 		private Integer maxTotalSubFour;
 		
-		
+		@Column(name = "grade_4")
+		private Integer gradeSubFour;
 		
 		@Column(name = "subject_5")
 		private String subFive;
@@ -277,6 +284,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_5")
 		private Integer maxTotalSubFive;
 		
+		@Column(name = "grade_5")
+		private Integer gradeSubFive;
 		
 		
 		@Column(name = "subject_6")
@@ -312,7 +321,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_6")
 		private Integer maxTotalSubSix;
 		
-		
+		@Column(name = "grade_6")
+		private Integer gradeSubSix;
 		
 		
 		@Column(name = "subject_7")
@@ -348,6 +358,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_7")
 		private Integer maxTotalSubSeven;
 		
+		@Column(name = "grade_7")
+		private Integer gradeSubSeven;
 		
 		
 		
@@ -384,6 +396,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_8")
 		private Integer maxTotalSubEight;
 		
+		@Column(name = "grade_8")
+		private Integer gradeSubEight;
 		
 		
 		@Column(name = "subject_9")
@@ -419,7 +433,8 @@ public class UniversityStudentDocument extends CreateUpdate {
 		@Column(name = "max_total_9")
 		private Integer maxTotalSubNine;
 		
-		
+		@Column(name = "grade_9")
+		private Integer gradeSubNine;
 		
 		
 		
@@ -458,4 +473,7 @@ public class UniversityStudentDocument extends CreateUpdate {
 				
 		@Column(name = "branch_Id")
 		private Long branchId;
+		
+		@Column(name = "grade_10")
+		private Integer gradeSubTen;
 }

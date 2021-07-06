@@ -160,8 +160,40 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        studentData.setCreatedate(new Date());
 		        studentData.setCreateby(userid.toString());
 		        studentData.setMonthOfPassing(monthnm);
-		        studentDataList.add(studentData);    
+		        studentData.setPrnNo(Data.getPrnNo());
+		        studentData.setCenter(Data.getCenter());
+		        studentData.setMedDesc(Data.getMedDesc());
+		        studentData.setStudentName(Data.getStudentName());
+		        studentData.setSemTotalMax(Data.getSemTotalMax());
+		        studentData.setSemGradeTotal(Data.getSemGradeTotal());
+		        studentData.setSemGrace(Data.getSemGrace());
+		        studentData.setSemclass(Data.getSemclass());
+		        studentData.setSemGpa(Data.getSemGpa());
+		        studentData.setSemGrade(Data.getSemGrade());
+		        studentData.setGradeTotal(Data.getGradeTotal());
+		        studentData.setClassGrace(Data.getClassGrace());
+		        studentData.setMaxGrTotal(Data.getMaxGrTotal());
+		        studentData.setCredTotal(Data.getCredTotal());
+		        studentData.setGpa(Data.getGpa());
+		        studentData.setFgrade(Data.getFgrade());
+		        studentData.setResultDesc(Data.getResultDesc());
+		        studentData.setInceDesc(Data.getInceDesc());
+		        studentData.setSubOne(Data.getSubOne());
+		        studentData.setSubNmOne(Data.getSubNmOne());
+		        studentData.setCreditOne(Data.getCreditOne());
+		        studentData.setIntSubOne(Data.getIntSubOne());
+		        studentData.setExtSubOne(Data.getExtSubOne());
+		        studentData
+		        studentData
+		        studentData
+		        studentData
+		        studentData
+		        studentData
+		        studentData
+		        studentData
 		        
+		        
+		        studentDataList.add(studentData);    		        
 		        //SavestudentData.setFirstName(Data.getFirstName());
 		       // SavestudentData.setLastName(Data.getLastName());
 		      //  SavestudentData.setCollegeName(Data.getCollegeName());	
@@ -174,6 +206,8 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        SavestudentData.setSemester(Data.getSemester());
 		        SavestudentData.setMonthOfPassing(monthnm);
 
+		        
+		        
 		        savedStudDataList.add(SavestudentData);	
 		        
 				
