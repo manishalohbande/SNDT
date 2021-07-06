@@ -245,7 +245,8 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
     		System.out.println("------------fileName--------------"+ nameOfFile);
     		logger.info("VR------fileName----->"+ fileName);
     		
-    	}else {
+    	}
+    	else {
     		
     		UniversityStudentDocument doc = universityStudentDocServiceImpl.getUniversityDocDataById(id);
     	//	fileName = doc.getOriginalDOCuploadfilePath();
@@ -328,6 +329,7 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
 	  	            }
 	        		
 	        		
+<<<<<<< HEAD
 	        	}else {
 	        		newPAth = this.fileAssociateBaseLocation;
 	        		UniversityStudentDocument doc = universityStudentDocServiceImpl.getUniversityDocDataById(id);
@@ -359,9 +361,43 @@ public HashMap<String, Object> loadFileAsResourceFromAws(String userFor, Long id
 	  	            	logger.info("Inside else()");
 	  	                throw new Exception("File not found " + fileName);
 	  	            }
+=======
+>>>>>>> d60ff39fe9f41fae789ae8c44f613a0a262c8a73
 	        	}
+//	        	else {
+//	        		newPAth = this.fileAssociateBaseLocation;
+//	        		UniversityStudentDocument doc = universityStudentDocServiceImpl.getUniversityDocDataById(id);
+//	        		fileName = doc.getOriginalDOCuploadfilePath();	        		
+////	        		System.out.println("--------InsideElse----fileName--------------"+fileName);
+//	        		logger.info("U------fileName----->"+ fileName);
+//	        		
+//	        		
+//	        		Path fileStorageLocation = Paths.get(newPAth).toAbsolutePath().normalize();
+//	  	          
+//	  	          System.out.println("----this.fileStorageLocation--------userFor---------"+fileStorageLocation+"-------------"+userFor);
+//	  	          
+//	  	          //  logger.info("newPath"+ newPAth);
+//	  	        //	logger.info("fileStorageLocation"+ this.fileStorageLocation);
+////	  	            System.out.println(this.fileStorageLocation);
+//	  	            
+//	  	            Path filePath = fileStorageLocation.resolve(fileName).normalize();
+//	  	            logger.info("filePath"+ filePath);
+////	  	            System.out.println(filePath);
+////	  	            System.out.println(filePath.toUri());
+////	  	            logger.info(filePath.toUri());
+//	  	            
+//	  	            
+//	  	            Resource resource = new UrlResource(filePath.toUri());
+//	  	            if(resource.exists()) {
+//	  	            	logger.info("Inside IF(resource.exists)");
+//	  	                return resource;
+//	  	            } else {
+//	  	            	logger.info("Inside else()");
+//	  	                throw new Exception("File not found " + fileName);
+//	  	            }
+//	        	}
 	        
-	        	
+	        	return null;
 	        	
 	        } catch (Exception ex) {
 	            throw new Exception("File not found " + fileName, ex);
