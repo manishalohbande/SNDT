@@ -33,6 +33,7 @@ import com.scube.edu.model.StreamMaster;
 import com.scube.edu.model.UniversityStudentDocument;
 import com.scube.edu.repository.CollegeRepository;
 import com.scube.edu.repository.MonthOfPassingRepository;
+import com.scube.edu.repository.SemesterRepository;
 import com.scube.edu.repository.StreamRepository;
 import com.scube.edu.repository.UniversityStudentDocRepository;
 import com.scube.edu.repository.YearOfPassingRepository;
@@ -67,6 +68,8 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 	 MonthOfPassingRepository monthOfPassingRepository;
 	 
 	 @Autowired
+	 SemesterRepository semesterRepository;
+	 @Autowired
 		SemesterService semesterService;
 		
 		@Autowired
@@ -94,11 +97,10 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 				Long semId = null;
 				Long branchId = null;
 				String monthnm=null;
-			/*
-			 * CollegeMaster collegeEntities =
-			 * collegeRespository.findByCollegeName(Data.getCollegeName()); */
+			
+			  CollegeMaster collegeEntities =collegeRespository.findByCollegeNameAndIsdeleted(Data.getCollegeName(),"N");
 				MonthOfPassing month=monthOfPassingRepository.findByMonthOfPassing(Data.getMonthOfPassing());
-			 StreamMaster stream =streamRespository.findByStreamName(Data.getStream());
+			 StreamMaster stream =streamRespository.findByStreamNameAndIsdeleted(Data.getStream(),"N");
 			
 			 if(month!=null) {
 				 monthnm=month.getMonthOfPassing();
@@ -108,9 +110,9 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 				  strm=stream.getId(); 
 			  logger.info("strm"+strm);
 			  }
-			  PassingYearMaster passingyr=yearOfPassingRespository.findByYearOfPassing(Data.getPassingYear());
+			  PassingYearMaster passingyr=yearOfPassingRespository.findByYearOfPassingAndIsdeleted(Data.getPassingYear(),"N");
 			 
-				 SemesterEntity sem=semesterService.getSemIdByNm(Data.getSemester(),strm);					
+				 SemesterEntity sem=semesterRepository.findBySemesterAndStreamIdAndIsdeleted(Data.getSemester(),strm,"N");					
 				//  BranchMasterEntity branch=branchMasterService.getbranchIdByname(Data.getBranch_nm(),strm);
 				
 
@@ -118,9 +120,9 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 			//String fnm=Data.getFirstName();
 			 			//String lnm=Data.getLastName();
 			 			
-			/*
-			 * if(collegeEntities!=null) { clgnm=collegeEntities.getId();
-			 * logger.info("clgnm"+clgnm); }*/
+			
+			  if(collegeEntities!=null) { clgnm=collegeEntities.getId();
+			 logger.info("clgnm"+clgnm); }
 			   if(passingyr!=null) {
 			 
 			  passyr=passingyr.getId();
@@ -152,7 +154,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 
 			//	studentData.setFirstName(Data.getFirstName());
 		      //  studentData.setLastName(Data.getLastName());
-		       // studentData.setCollegeId(collegeEntities.getId());	
+		        studentData.setCollegeId(collegeEntities.getId());	
 		        studentData.setStreamId(stream.getId());	
 		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
 		        studentData.setPassingYearId(passingyr.getId());	
@@ -160,6 +162,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 		        studentData.setSemId(sem.getId());
 		       // studentData.setBranchId(branch.getId());
 		        studentData.setCreatedate(new Date());
+		        studentData.setIsdeleted("N");
 		        studentData.setCreateby(userid.toString());
 		        studentData.setMonthOfPassing(monthnm);
 		        studentData.setPrnNo(Data.getPrnNo());
@@ -728,7 +731,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 * CollegeMaster collegeEntities =
 			 * collegeRespository.findByCollegeName(Data.getCollegeName()); */
 				MonthOfPassing month=monthOfPassingRepository.findByMonthOfPassing(Data.getMonthOfPassing());
-			 StreamMaster stream =streamRespository.findByStreamName(Data.getStream());
+			 StreamMaster stream =streamRespository.findByStreamNameAndIsdeleted(Data.getStream(),"N");
 			
 			 if(month!=null) {
 				 monthnm=month.getMonthOfPassing();
@@ -738,7 +741,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 				  strm=stream.getId(); 
 			  logger.info("strm"+strm);
 			  }
-			  PassingYearMaster passingyr=yearOfPassingRespository.findByYearOfPassing(Data.getPassingYear());
+			  PassingYearMaster passingyr=yearOfPassingRespository.findByYearOfPassingAndIsdeleted(Data.getPassingYear(),"N");
 			 
 				 SemesterEntity sem=semesterService.getSemIdByNm(Data.getSemester(),strm);					
 				//  BranchMasterEntity branch=branchMasterService.getbranchIdByname(Data.getBranch_nm(),strm);

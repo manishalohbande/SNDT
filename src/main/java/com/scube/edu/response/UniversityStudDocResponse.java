@@ -10,10 +10,10 @@ import lombok.ToString;
 public class UniversityStudDocResponse {
 
 	private long id;
-	private String CollegeName;
-	private String Stream;
-	private String EnrollmentNo;
-	private String PassingYear;
+	private String collegeName;
+	private String stream;
+	private String enrollmentNo;
+	private String passingYear;
 	private String reason;
 	private String branch_nm;
 	private String semester;
@@ -26,11 +26,9 @@ public class UniversityStudDocResponse {
 
 	private String medDesc;
 
-	private Long collegeId;
 
 	private String studentName;
 
-	private Long passingYearId;
 
 	private Long streamId;
 
