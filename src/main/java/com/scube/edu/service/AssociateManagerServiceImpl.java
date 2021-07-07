@@ -604,39 +604,39 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 						universityStudData.getStreamId(), universityStudData.getSemId(),
 						universityStudData.getMonthOfPassing(), universityStudData.getPrnNo());
 		List<UniversityResponse> studData = new ArrayList<>();
-
-		logger.info("********AssociateManagerServiceImpl getStudentData********");
-
-		for (UniversityStudentDocument studentData : usdr) {
-
-			UniversityStudDocResponse resp = new UniversityStudDocResponse();
-
-			UniversityResponse uniResp = new UniversityResponse();
-
-			Optional<StreamMaster> streaminfo = streamRespository.findById(studentData.getStreamId());
-			StreamMaster stream = streaminfo.get();
-
-			Optional<PassingYearMaster> passingyrinfo = yearOfPassingRespository
-					.findById(studentData.getPassingYearId());
-			PassingYearMaster passingyr = passingyrinfo.get();
-
-			SemesterEntity sem = semesterService.getSemById(studentData.getSemId());
-
-			BranchMasterEntity branch = branchMasterService.getbranchById(studentData.getBranchId());
-
-			uniResp.setName(studentData.getStudentName());
-			uniResp.setPrnNo(studentData.getPrnNo());
-			uniResp.setResDesc(studentData.getResultDesc());
-			uniResp.setSeatNo(studentData.getEnrollmentNo());
-			uniResp.setSemClass(studentData.getSemclass());
-			uniResp.setSemester(sem.getSemester());
-			uniResp.setSemGpa(studentData.getSemGpa());
-			uniResp.setSemGrade(studentData.getSemGrade());
-			uniResp.setSemGrdTot(studentData.getSemGradeTotal());
-			uniResp.setBranch(branch.getBranchName());
-			uniResp.setSemTotMax(studentData.getSemTotalMax());
-			uniResp.setStream(stream.getStreamName());
-			uniResp.setYearOfPassing(passingyr.getYearOfPassing());
+		 
+		 for(UniversityStudentDocument studentData:usdr) {
+			 
+			 UniversityStudDocResponse resp = new UniversityStudDocResponse();
+			 
+			 UniversityResponse uniResp = new UniversityResponse();
+			 
+			 Optional<StreamMaster> streaminfo = streamRespository.findById(studentData.getStreamId());
+			 StreamMaster stream = streaminfo.get();
+			 
+			 Optional<PassingYearMaster> passingyrinfo = yearOfPassingRespository.findById(studentData.getPassingYearId());
+			 PassingYearMaster passingyr = passingyrinfo.get();
+			 
+			 SemesterEntity sem=semesterService.getSemById(studentData.getSemId());
+				
+//			 BranchMasterEntity branch=branchMasterService.getbranchById(studentData.getBranchId());
+				
+			 uniResp.setName(studentData.getStudentName());
+			 uniResp.setPrnNo(studentData.getPrnNo());
+			 uniResp.setResDesc(studentData.getResultDesc());
+			 uniResp.setSeatNo(studentData.getEnrollmentNo());
+			 uniResp.setSemClass(studentData.getSemclass());
+			 uniResp.setSemester(sem.getSemester());
+			 uniResp.setSemGpa(studentData.getSemGpa());
+			 uniResp.setSemGrade(studentData.getSemGrade());
+			 uniResp.setSemGrdTot(studentData.getSemGradeTotal());
+//			 uniResp.setBranch(branch.getBranchName());
+			 uniResp.setSemTotMax(studentData.getSemTotalMax());
+			 uniResp.setStream(stream.getStreamName());
+			 uniResp.setYearOfPassing(passingyr.getYearOfPassing());
+			 uniResp.setMonthOfPassing(studentData.getMonthOfPassing());
+			 uniResp.setSemGrace(studentData.getSemGrace());
+			 
 
 //			 resp.setId(studentData.getId());
 //			// resp.setFirstName(studentData.getFirstName());

@@ -23,6 +23,7 @@ public class UniversityResponse {
 	private Double semGpa;
 	private String semGrade;
 	private String resDesc;
+	private String monthOfPassing;
 	
 	
 
