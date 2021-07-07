@@ -8,6 +8,8 @@ public interface MonthOfPassingService {
 	
 	public List<MonthOfPassingResponse> getAllMonth();
 
+	public MonthOfPassingResponse getMonthById(String id);
+
 	
 
 }

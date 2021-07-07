@@ -25,6 +25,7 @@ import com.scube.edu.model.BranchMasterEntity;
 import com.scube.edu.model.CollegeMaster;
 import com.scube.edu.model.CutomizationEntity;
 import com.scube.edu.model.DocumentMaster;
+import com.scube.edu.model.MonthOfPassing;
 import com.scube.edu.model.PassingYearMaster;
 import com.scube.edu.model.RequestTypeMaster;
 import com.scube.edu.model.SemesterEntity;
@@ -42,6 +43,7 @@ import com.scube.edu.request.StatusChangeRequest;
 import com.scube.edu.response.BaseResponse;
 import com.scube.edu.response.CollegeResponse;
 import com.scube.edu.response.JwtResponse;
+import com.scube.edu.response.MonthOfPassingResponse;
 import com.scube.edu.response.RequestTypeResponse;
 import com.scube.edu.response.StreamResponse;
 import com.scube.edu.response.StudentVerificationDocsResponse;
@@ -72,6 +74,9 @@ public class VerifierServiceImpl implements VerifierService{
 	 
 	 @Autowired
 	 YearOfPassingService yearOfPassService;
+	 
+	 @Autowired
+	 MonthOfPassingService monthOfPassingService;
 	 
 	 @Autowired
 	 DocumentService	documentService;
@@ -145,6 +150,8 @@ public class VerifierServiceImpl implements VerifierService{
 			  SemesterEntity sem=semesterService.getSemById(veriReq.getSemId());
 				
 			  BranchMasterEntity branch=branchMasterService.getbranchById(veriReq.getBranchId());
+			  
+			  MonthOfPassingResponse month = monthOfPassingService.getMonthById(veriReq.getMonthOfPassing());
 				
 			  resp.setId(veriReq.getId());
 			  resp.setApplication_id(veriReq.getApplicationId());
@@ -164,7 +171,7 @@ public class VerifierServiceImpl implements VerifierService{
 			  resp.setBranch_nm(branch.getBranchName());
 			  resp.setSemId(veriReq.getSemId());
 			  resp.setSemester(sem.getSemester());
-			  resp.setMonthOfPassing(veriReq.getMonthOfPassing());
+			  resp.setMonthOfPassing(month.getMonthOfPAssing());
 			  resp.setPrnNo(veriReq.getPrnNo());
 
 			 // run query here which will update 'assigned_to' column with userId value
