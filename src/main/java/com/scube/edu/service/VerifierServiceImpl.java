@@ -323,14 +323,13 @@ public class VerifierServiceImpl implements VerifierService{
 			
 			StreamMaster stream = streamService.getNameById(ent.getStreamId());
 			PassingYearMaster pym = yearOfPassService.getYearById(String.valueOf(ent.getPassingYearId()));
-//			BranchMasterEntity bme = branchMasterService.getbranchById(ent.getBranchId());
+
 			SemesterEntity semEnt = semesterService.getSemById(ent.getSemId());
 			
 			
 			uniResp.setName(ent.getStudentName());
 			uniResp.setPrnNo(ent.getPrnNo());
 			uniResp.setResDesc(ent.getResultDesc());
-//			uniResp.setBranch(bme.getBranchName());
 			uniResp.setSeatNo(ent.getEnrollmentNo());
 			uniResp.setSemClass(ent.getSemclass());
 			uniResp.setSemester(semEnt.getSemester());

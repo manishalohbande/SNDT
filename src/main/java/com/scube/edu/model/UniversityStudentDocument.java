@@ -78,7 +78,7 @@ public class UniversityStudentDocument extends CreateUpdate {
 		
 		
 		@Column(name = "sem_gpa")
-		private Integer semGpa;
+		private Double semGpa;
 		
 		@Column(name = "sem_grade")
 		private String semGrade;
@@ -96,7 +96,7 @@ public class UniversityStudentDocument extends CreateUpdate {
 		private Integer credTotal;
 		
 		@Column(name = "gpa")
-		private String gpa;
+		private Double gpa;
 		
 		@Column(name = "fgrade")
 		private String fgrade;

@@ -20,7 +20,7 @@ public class UniversityResponse {
 	private int semGrdTot;
 	private String semGrace;
 	private String semClass;
-	private int semGpa;
+	private Double semGpa;
 	private String semGrade;
 	private String resDesc;
 	private String monthOfPassing;

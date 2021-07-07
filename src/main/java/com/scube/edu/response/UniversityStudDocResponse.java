@@ -42,7 +42,7 @@ public class UniversityStudDocResponse {
 
 	private String semclass;
 
-	private Integer semGpa;
+	private Double semGpa;
 
 	private String semGrade;
 
@@ -54,7 +54,7 @@ public class UniversityStudDocResponse {
 
 	private Integer credTotal;
 
-	private String gpa;
+	private Double gpa;
 
 	private String fgrade;
 
