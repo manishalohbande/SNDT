@@ -659,7 +659,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 
 			 SemesterEntity sem=semesterService.getSemById(studentData.getSemId());
 				
-			 BranchMasterEntity branch=branchMasterService.getbranchById(studentData.getBranchId());
+//			 BranchMasterEntity branch=branchMasterService.getbranchById(studentData.getBranchId());
 				
 			 uniResp.setName(studentData.getStudentName());
 			 uniResp.setPrnNo(studentData.getPrnNo());
@@ -670,10 +670,12 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 			 uniResp.setSemGpa(studentData.getSemGpa());
 			 uniResp.setSemGrade(studentData.getSemGrade());
 			 uniResp.setSemGrdTot(studentData.getSemGradeTotal());
-			 uniResp.setBranch(branch.getBranchName());
+//			 uniResp.setBranch(branch.getBranchName());
 			 uniResp.setSemTotMax(studentData.getSemTotalMax());
 			 uniResp.setStream(stream.getStreamName());
 			 uniResp.setYearOfPassing(passingyr.getYearOfPassing());
+			 uniResp.setMonthOfPassing(studentData.getMonthOfPassing());
+			 uniResp.setSemGrace(studentData.getSemGrace());
 			 
 //			 resp.setId(studentData.getId());
 //			// resp.setFirstName(studentData.getFirstName());
