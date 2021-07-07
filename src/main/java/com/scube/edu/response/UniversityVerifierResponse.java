@@ -22,6 +22,7 @@ public class UniversityVerifierResponse {
 		private String semester;
 		private String monthOfPassing;
 		private String prnNo;
+		private Long semId;
 
        
         

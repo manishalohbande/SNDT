@@ -89,6 +89,8 @@ public class UniversityVerifierServiceImpl implements UniversityVerifierService 
 		for (VerificationRequest req : list) {
 
 			UniversityVerifierResponse resp = new UniversityVerifierResponse();
+			
+			resp.setSemId(req.getSemId());
 
 			PassingYearMaster year = yearOfPassService.getYearById(req.getYearOfPassingId());
 

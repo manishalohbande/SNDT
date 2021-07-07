@@ -120,6 +120,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployerServiceImpl
 			String strDate= formatter.format(req.getCreatedate());
 			
 			resp.setDoc_status(req.getDocStatus());
+			resp.setSemId(req.getSemId());
 			resp.setId(req.getId());
 			resp.setApplication_id(req.getApplicationId());
 //			closedDocResp.setCollege_name_id(req.getCollegeId());
