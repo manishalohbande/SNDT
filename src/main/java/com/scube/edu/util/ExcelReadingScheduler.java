@@ -125,6 +125,8 @@ public class ExcelReadingScheduler {
 		String folder=csvFileLocation;
 		//String flnm=csvfilenm;
 		S3Object fi = fileStore.readExcel(csvFileLocation);
+		//fileStore.deleteFile(fi.getKey());
+
 		if(fi!=null) {
 		InputStream csvstream = fi.getObjectContent();
 
@@ -132,73 +134,281 @@ public class ExcelReadingScheduler {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(csvstream));
 
 		System.out.println("--File content:");
+		String monthyear;
+		String month = null;
+		String year = null;
+		String clgnsem;
+		String stream = null;
+		String sem = null;
 		while ((line = reader.readLine()) != null) {
 			System.out.println(line);
 			if (check == 0) {
 				check++;
 				continue;
 			}
-
+			
 			String[] datalist = line.split(",");
 			logger.info("" + datalist);
 			UniversityStudDocResponse studentData = new UniversityStudDocResponse();
+			
+           if(check ==1) {
+        	   for (k = 0; k < 5; k++) {
 
+   				 if (k == 2) {
+   					monthyear=datalist[2];
+   					String[] arr=monthyear.split(" ");
+   					month=arr[0];
+   					year=arr[1];
+   					
+   				} else if (k == 3) {
+   					clgnsem=datalist[3];
+   					String[] arr1=clgnsem.split(" - ");
+   					stream=arr1[0];
+   					sem=arr1[1];
+
+   					
+   				}
+   				}
+        	   check++;
+
+        	   continue;
+			}
 			for (k = 0; k < datalist.length; k++) {
-
+				
 				if (k == 0) {
-					studentData.setStream(datalist[0]);
+					studentData.setPrnNo(datalist[0]);
 				} else if (k == 1) {
-					studentData.setSemester(datalist[1]);
+					studentData.setEnrollmentNo(datalist[1]);
+
 
 				} else if (k == 2) {
-					studentData.setEnrollmentNo(datalist[2]);
+					studentData.setCenter(datalist[2]);
 
 				} else if (k == 3) {
-					studentData.setMonthOfPassing(datalist[3]);
+					studentData.setCollegeName(datalist[3]);
 				}
 				else if (k == 4) {
-					studentData.setPassingYear(datalist[4]);
+					studentData.setMedDesc(datalist[4]);
 
 				} else if (k == 5) {
-					imagefilenm = datalist[5];
-					imagefile=imgLocation;
-					logger.info("imageFileNAme" + imagefile);
-
-					String flag = "2";
-
-					Date date1 = new Date();
-					SimpleDateFormat formatter1 = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-					String strdate1 = formatter1.format(date1);
-					strdate1 = strdate1.replace(" ", "_");
-					strdate1 = strdate1.replace(":", "-");
-					if (!previmagefile.equals(imagefilenm)) {
-						S3Object imgdata = fileStore.getimage(imagefile,imagefilenm);
-						if (imgdata != null) {
-
-							InputStream imagestream = imgdata.getObjectContent();
-
-							filePath = fileStorageService.schedulerstoreFileOnAws(imagestream, flag, imagefilenm);
-
-							S3Object mvimgdata = fileStore.getimage(imagefile,imagefilenm);
-							InputStream movedimagestream = mvimgdata.getObjectContent();
-
-							String filename = imagefilenm.split("\\.")[0];
-							String extension = imagefilenm.split("\\.")[1];
-
-							String newimagefilenm = filename+"_" + strdate1 +  "." + extension;
-							fileStorageService.MoveCsvAndImgToArchive(movedimagestream, newimagefilenm, "1");
-							fileStore.deleteFile(mvimgdata.getKey());
-
-						} else {
-							filePath = "ImageNotAvailable";
-						}
-					}
-					previmagefile = imagefilenm;
-					//studentData.setOriginalDOCuploadfilePath(filePath);
+					studentData.setStudentName(datalist[5]);
 
 				}
-
+			 else if (k == 6) {
+					studentData.setSemTotalMax(Integer.valueOf(datalist[6]));
 			}
+			 else if (k == 7) {
+					studentData.setSemGradeTotal(Integer.valueOf(datalist[7]));
+
+					
+				} else if (k == 8) {
+					studentData.setSemGrace(datalist[8]);
+
+					
+				} else if (k == 9) {
+					studentData.setSemclass(datalist[9]);
+
+					
+				} else if (k == 10) {
+					studentData.setSemGpa(Double.valueOf(datalist[10]));
+
+					
+				} else if (k == 11) {
+					studentData.setSemGrade(datalist[11]);
+
+				} else if (k == 12) {
+					studentData.setGradeTotal(Integer.valueOf(datalist[12]));
+
+				} else if (k == 13) {
+					studentData.setClassGrace(datalist[13]);
+
+				} else if (k == 14) {
+					studentData.setMaxGrTotal(Integer.valueOf(datalist[14]));
+
+				} else if (k == 15) {
+					studentData.setCredTotal(Integer.valueOf(datalist[15]));
+
+				} else if (k == 16) {
+					studentData.setGpa(Double.valueOf(datalist[16]));
+
+				} else if (k == 17) {
+					studentData.setFgrade(datalist[17]);
+
+				} else if (k == 18) {
+					studentData.setResultDesc(datalist[18]);
+
+				} else if (k == 19) {
+					studentData.setInceDesc(datalist[19]);
+
+				} else if (k == 20) {
+					studentData.setSubOne(datalist[20]);
+
+					
+				} else if (k == 21) {
+					studentData.setSubNmOne(datalist[21]);
+
+				} else if (k == 22) {
+					studentData.setCreditSubOne(Integer.valueOf(datalist[22]));
+
+				} else if (k == 23) {
+					studentData.setIntSubOne(Integer.valueOf(datalist[23]));
+
+				} else if (k == 24) {
+					studentData.setExtSubOne(Integer.valueOf(datalist[24]));
+
+				} else if (k == 25) {
+					studentData.setTotalSubOne(Integer.valueOf(datalist[25]));
+
+				} else if (k == 26) {
+					studentData.setGraceSubOne(datalist[26]);
+				} else if (k == 27) {
+					studentData.setPrvFlgSubOne(datalist[27]);
+
+				} else if (k == 28) {
+					studentData.setMaxExtSubOne(Integer.valueOf(datalist[28]));
+
+				} else if (k == 29) {
+					studentData.setMaxIntSubOne(Integer.valueOf(datalist[29]));
+
+				} else if (k == 30) {
+					studentData.setMaxTotalSubOne(Integer.valueOf(datalist[30]));
+
+				} else if (k == 31) {
+					studentData.setGradeSubOne(datalist[31]);
+
+				} else if (k == 32) {
+				
+				studentData.setSubTwo(datalist[32]);
+				} else if (k == 33) {
+				studentData.setSubNmTwo(datalist[33]);
+				} else if (k == 34) {
+				studentData.setCreditSubTwo(Integer.valueOf(datalist[34]));
+				} else if (k == 35) {
+				studentData.setIntSubTwo(Integer.valueOf(datalist[35]));
+				} else if (k == 36) {
+				studentData.setExtSubTwo(Integer.valueOf(datalist[36]));
+				} else if (k == 37) {
+				studentData.setTotalSubTwo(Integer.valueOf(datalist[37]));
+				} else if (k == 38) {
+				studentData.setGraceSubTwo(datalist[38]);
+				} else if (k == 39) {
+				studentData.setPrvFlgSubTwo(datalist[39]);
+				} else if (k == 40) {
+				studentData.setMaxExtSubTwo(Integer.valueOf(datalist[40]));
+				} else if (k == 41) {
+				studentData.setMaxIntSubTwo(Integer.valueOf(datalist[41]));
+				} else if (k == 42) {
+				studentData.setMaxTotalSubTwo(Integer.valueOf(datalist[42]));
+				} else if (k == 43) {
+				studentData.setGradeSubTwo(datalist[43]);
+				} 
+				else if (k == 44) {
+
+				studentData.setSubThree(datalist[44]);
+				} else if (k == 45) {
+				studentData.setSubNmThree(datalist[45]);
+				} else if (k == 46) {
+				studentData.setCreditSubThree(Integer.valueOf(datalist[46]));
+				} else if (k == 47) {
+				studentData.setIntSubThree(Integer.valueOf(datalist[47]));
+				} else if (k == 48) {
+				studentData.setExtSubThree(Integer.valueOf(datalist[48]));
+				} else if (k == 49) {
+				studentData.setTotalSubThree(Integer.valueOf(datalist[49]));
+				} else if (k == 50) {
+				studentData.setGraceSubThree(datalist[50]);
+				} else if (k == 51) {
+				studentData.setPrvFlgSubThree(datalist[51]);
+				} else if (k == 52) {
+				studentData.setMaxExtSubThree(Integer.valueOf(datalist[52]));
+				} else if (k == 53) {
+				studentData.setMaxIntSubThree(Integer.valueOf(datalist[53]));
+				} else if (k == 54) {
+				studentData.setMaxTotalSubThree(Integer.valueOf(datalist[54]));
+				} else if (k == 55) {
+				studentData.setGradeSubThree(datalist[55]);
+				} else if (k == 56) {
+
+				studentData.setSubFour(datalist[56]);
+				} else if (k == 57) {
+				studentData.setSubNmFour(datalist[57]);
+				} else if (k == 58) {
+				studentData.setCreditSubFour(Integer.valueOf(datalist[58]));
+				} else if (k == 59) {
+				studentData.setIntSubFour(Integer.valueOf(datalist[59]));
+				} else if (k == 60) {
+				studentData.setExtSubFour(Integer.valueOf(datalist[60]));
+				} else if (k == 61) {
+				studentData.setTotalSubFour(Integer.valueOf(datalist[61]));
+				} else if (k == 62) {
+				studentData.setGraceSubFour(datalist[62]);
+				} else if (k == 63) {
+				studentData.setPrvFlgSubFour(datalist[63]);
+				} else if (k == 64) {
+				studentData.setMaxExtSubFour(Integer.valueOf(datalist[64]));
+				} else if (k == 65) {
+				studentData.setMaxIntSubFour(Integer.valueOf(datalist[65]));
+				} else if (k == 66) {
+				studentData.setMaxTotalSubFour(Integer.valueOf(datalist[66]));
+				} else if (k == 67) {
+				studentData.setGradeSubFour(datalist[67]);
+				} else if (k == 68) {
+
+				studentData.setSubFive(datalist[68]);
+				} else if (k == 69) {
+				studentData.setSubNmFive(datalist[69]);
+				} else if (k == 70) {
+				studentData.setCreditSubFive(Integer.valueOf(datalist[70]));
+				} else if (k == 71) {
+				studentData.setIntSubFive(Integer.valueOf(datalist[71]));
+				} else if (k == 72) {
+				studentData.setExtSubFive(Integer.valueOf(datalist[72]));
+				} else if (k == 73) {
+				studentData.setTotalSubFive(Integer.valueOf(datalist[73]));
+				} else if (k == 74) {
+				studentData.setGraceSubFive(datalist[74]);
+				} else if (k == 75) {
+				studentData.setPrvFlgSubFive(datalist[75]);
+				} else if (k == 76) {
+				studentData.setMaxExtSubFive(Integer.valueOf(datalist[76]));
+				} else if (k == 77) {
+				studentData.setMaxIntSubFive(Integer.valueOf(datalist[77]));
+				} else if (k == 78) {
+				studentData.setMaxTotalSubFive(Integer.valueOf(datalist[78]));
+				} else if (k == 79) {
+				studentData.setGradeSubFive(datalist[79]);
+				} else if (k == 80) {
+
+				studentData.setSubSix(datalist[80]);
+				} else if (k == 81) {
+				studentData.setSubNmSix(datalist[81]);
+				} else if (k == 82) {
+				studentData.setCreditSubSix(Integer.valueOf(datalist[82]));
+				} else if (k == 83) {
+				studentData.setIntSubSix(Integer.valueOf(datalist[83]));
+				} else if (k == 84) {
+				studentData.setExtSubSix(Integer.valueOf(datalist[84]));
+				} else if (k == 85) {
+				studentData.setTotalSubSix(Integer.valueOf(datalist[85]));
+				} else if (k == 86) {
+				studentData.setGraceSubSix(datalist[86]);
+				} else if (k == 87) {
+				studentData.setPrvFlgSubSix(datalist[87]);
+				} else if (k == 88) {
+				studentData.setMaxExtSubSix(Integer.valueOf(datalist[88]));
+				} else if (k == 89) {
+				studentData.setMaxIntSubSix(Integer.valueOf(datalist[89]));
+				} else if (k == 90) {
+				studentData.setMaxTotalSubSix(Integer.valueOf(datalist[90]));
+				} else if (k == 91) {
+				studentData.setGradeSubSix(datalist[91]);
+				} 
+				
+			}
+			studentData.setPassingYear(year);
+			studentData.setMonthOfPassing(month);
+			studentData.setStream(stream);
+			studentData.setSemester(sem);
 			studentDataReviewList.add(studentData);
 
 		}
@@ -220,7 +430,7 @@ public class ExcelReadingScheduler {
 		if(moveddat!=null) {
 		InputStream mvcsvstream = moveddat.getObjectContent();
 		if(mvcsvstream!=null){
-		fileStorageService.MoveCsvAndImgToArchive(mvcsvstream, csvnm, "1");
+		//fileStorageService.MoveCsvAndImgToArchive(mvcsvstream, csvnm, "1");
 		
 
 		fileStore.deleteFile(fi.getKey());
@@ -231,7 +441,7 @@ public class ExcelReadingScheduler {
 		long id = 0000;
 		
 		HashMap<String, List<UniversityStudDocResponse>> resp = associateManagerService
-				.AutosaveStudentInfo(studentDataReviewList, id);
+				.saveStudentInfo(studentDataReviewList, id);
 
 		if (resp.get("RejectedData") != null && !resp.get("RejectedData").isEmpty()) {
 			List<UniversityStudDocResponse> response = resp.get("RejectedData");
@@ -246,21 +456,10 @@ public class ExcelReadingScheduler {
 			Row row = sheet.createRow(0);
 
 			Cell cell = row.createCell(0);
-			cell.setCellValue("Degree");
-
+			cell.setCellValue("PRN NO.");
 			cell = row.createCell(1);
 			cell.setCellValue("Semester");
-
 			cell = row.createCell(2);
-			cell.setCellValue("Seat No.");
-			
-			cell = row.createCell(3);
-			cell.setCellValue("MonthOfPassing");
-
-			cell = row.createCell(4);
-			cell.setCellValue("YearOfPassing");
-
-			cell = row.createCell(5);
 			cell.setCellValue("Reasons");
 			rownum++;
 			for (UniversityStudDocResponse user : response) {
@@ -288,7 +487,7 @@ public class ExcelReadingScheduler {
 			out.close();
 			InputStream targetStream = new FileInputStream(emailexcelstorePath);
 
-			fileStorageService.MoveCsvAndImgToArchive(targetStream, emailexcelstorePath.getName(), "2");
+			//fileStorageService.MoveCsvAndImgToArchive(targetStream, emailexcelstorePath.getName(), "2");
 
 			emailService.sendRejectedDatamail(emailexcelstorePath);
 		
@@ -339,21 +538,20 @@ public class ExcelReadingScheduler {
 	private static void createList(UniversityStudDocResponse user, Row row) // creating cells for each row
 	{
 		Cell cell = row.createCell(0);
-		cell.setCellValue(user.getStream());
+		cell.setCellValue(user.getPrnNo());
 
+		/*
+		 * cell = row.createCell(1); cell.setCellValue(user.getSemester());
+		 * 
+		 * cell = row.createCell(2); cell.setCellValue(user.getEnrollmentNo());
+		 * 
+		 * cell = row.createCell(3); cell.setCellValue(user.getMonthOfPassing());
+		 * 
+		 * cell = row.createCell(4); cell.setCellValue(user.getPassingYear());
+		 */
 		cell = row.createCell(1);
 		cell.setCellValue(user.getSemester());
-
 		cell = row.createCell(2);
-		cell.setCellValue(user.getEnrollmentNo());
-
-		cell = row.createCell(3);
-		cell.setCellValue(user.getMonthOfPassing());
-		
-		cell = row.createCell(4);
-		cell.setCellValue(user.getPassingYear());
-
-		cell = row.createCell(5);
 		cell.setCellValue(user.getReason());
 
 	}

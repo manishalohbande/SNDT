@@ -44,405 +44,378 @@ import com.scube.edu.response.UniversityStudentDocumentResponse;
 import com.scube.edu.util.FileStorageService;
 
 @Service
-public class AssociateManagerServiceImpl implements AssociateManagerService{
+public class AssociateManagerServiceImpl implements AssociateManagerService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AssociateManagerServiceImpl.class);
 
 	@Autowired
-	 UniversityStudentDocRepository 	 universityStudentDocRepository ;
-	
+	UniversityStudentDocRepository universityStudentDocRepository;
+
 	@PersistenceUnit
-	 private EntityManagerFactory emf;
-	
-	 @Autowired
-	 private FileStorageService fileStorageService;
-	 
-	 @Autowired
+	private EntityManagerFactory emf;
+
+	@Autowired
+	private FileStorageService fileStorageService;
+
+	@Autowired
 	CollegeRepository collegeRespository;
-	 
-	 @Autowired
-		StreamRepository  streamRespository;
-	 @Autowired
-		YearOfPassingRepository yearOfPassingRespository;
-	 @Autowired
-	 MonthOfPassingRepository monthOfPassingRepository;
-	 
-	 @Autowired
-	 SemesterRepository semesterRepository;
-	 @Autowired
-		SemesterService semesterService;
-		
-		@Autowired
-		BranchMasterService branchMasterService;
-		
-	
+
+	@Autowired
+	StreamRepository streamRespository;
+	@Autowired
+	YearOfPassingRepository yearOfPassingRespository;
+	@Autowired
+	MonthOfPassingRepository monthOfPassingRepository;
+
+	@Autowired
+	SemesterRepository semesterRepository;
+	@Autowired
+	SemesterService semesterService;
+
+	@Autowired
+	BranchMasterService branchMasterService;
+
 	private XSSFWorkbook workbook;
-	
-	
+
 	@Override
-	public  HashMap<String,List<UniversityStudDocResponse>> saveStudentInfo(List<UniversityStudDocResponse> list, Long userid) throws IOException {
-		
-		 List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
-		 List<UniversityStudDocResponse> savedStudDataList = new ArrayList<UniversityStudDocResponse>();
+	public HashMap<String, List<UniversityStudDocResponse>> saveStudentInfo(List<UniversityStudDocResponse> list,
+			Long userid) throws IOException {
 
-		 UniversityStudentDocument docEntity =null;
-		 List<UniversityStudDocResponse> rejectedData=new ArrayList<UniversityStudDocResponse>();
-		 HashMap<String,List<UniversityStudDocResponse>> datalist=new HashMap<String,List<UniversityStudDocResponse>>();
-		
-		 for(UniversityStudDocResponse Data:list) {
-			 
-			    Long clgnm = null;
-				Long passyr = null;
-				Long strm = null;
-				Long semId = null;
-				Long branchId = null;
-				String monthnm=null;
-			
-			  CollegeMaster collegeEntities =collegeRespository.findByCollegeNameAndIsdeleted(Data.getCollegeName(),"N");
-				MonthOfPassing month=monthOfPassingRepository.findByMonthOfPassing(Data.getMonthOfPassing());
-			 StreamMaster stream =streamRespository.findByStreamNameAndIsdeleted(Data.getStream(),"N");
-			
-			 if(month!=null) {
-				 monthnm=month.getMonthOfPassing();
-			 }
-			 if(stream!=null) 
-			  { 
-				  strm=stream.getId(); 
-			  logger.info("strm"+strm);
-			  }
-			  PassingYearMaster passingyr=yearOfPassingRespository.findByYearOfPassingAndIsdeleted(Data.getPassingYear(),"N");
-			 
-				 SemesterEntity sem=semesterRepository.findBySemesterAndStreamIdAndIsdeleted(Data.getSemester(),strm,"N");					
-				//  BranchMasterEntity branch=branchMasterService.getbranchIdByname(Data.getBranch_nm(),strm);
-				
+		List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
+		List<UniversityStudDocResponse> savedStudDataList = new ArrayList<UniversityStudDocResponse>();
 
-			 			String enrollNo=Data.getEnrollmentNo();
-			 			//String fnm=Data.getFirstName();
-			 			//String lnm=Data.getLastName();
-			 			
-			
-			  if(collegeEntities!=null) { clgnm=collegeEntities.getId();
-			 logger.info("clgnm"+clgnm); }
-			   if(passingyr!=null) {
-			 
-			  passyr=passingyr.getId();
-			  logger.info("passyr"+passyr); }
-			 
-			 			if(sem!=null) {
+		UniversityStudentDocument docEntity = null;
+		List<UniversityStudDocResponse> rejectedData = new ArrayList<UniversityStudDocResponse>();
+		HashMap<String, List<UniversityStudDocResponse>> datalist = new HashMap<String, List<UniversityStudDocResponse>>();
 
-				 			 semId=sem.getId();
-				 			logger.info("semId"+semId);
-				 			}
+		for (UniversityStudDocResponse Data : list) {
+
+			Long clgnm = null;
+			Long passyr = null;
+			Long strm = null;
+			Long semId = null;
+			Long branchId = null;
+			String monthnm = null;
+			Long clgId = null;
+			CollegeMaster collegeEntities = collegeRespository.findByCollegeNameAndIsdeleted(Data.getCollegeName(),
+					"N");
+			MonthOfPassing month = monthOfPassingRepository.findByMonthOfPassing(Data.getMonthOfPassing());
+			StreamMaster stream = streamRespository.findByStreamNameAndIsdeleted(Data.getStream(), "N");
+
+			if (month != null) {
+				monthnm = month.getMonthOfPassing();
+			}
+			if (stream != null) {
+				strm = stream.getId();
+				logger.info("strm" + strm);
+			}
+			PassingYearMaster passingyr = yearOfPassingRespository
+					.findByYearOfPassingAndIsdeleted(Data.getPassingYear(), "N");
+
+			SemesterEntity sem = semesterRepository.findBySemesterAndStreamIdAndIsdeleted(Data.getSemester(), strm,
+					"N");
+			// BranchMasterEntity
+			// branch=branchMasterService.getbranchIdByname(Data.getBranch_nm(),strm);
+
+			String enrollNo = Data.getEnrollmentNo();
+			// String fnm=Data.getFirstName();
+			// String lnm=Data.getLastName();
+
+			if (collegeEntities != null) {
+				clgnm = collegeEntities.getId();
+				logger.info("clgnm" + clgnm);
+			}
+			if (passingyr != null) {
+
+				passyr = passingyr.getId();
+				logger.info("passyr" + passyr);
+			}
+
+			if (sem != null) {
+
+				semId = sem.getId();
+				logger.info("semId" + semId);
+			}
+
 			/*
 			 * if(branch!=null) {
 			 * 
 			 * branchId=branch.getId(); logger.info("branchId"+branchId); }
 			 */
-			 			
-			 			
+
 			// docEntity=universityStudentDocRepository.findByEnrollmentNoAndStreamIdAndPassingYearIdAndSemIdAndMonthOfPassing(enrollNo,strm,passyr,semId,monthnm);
-			 			docEntity=universityStudentDocRepository.findByPrnNoAndSemId(Data.getPrnNo(), semId);
-			 			String reason = null;
-			    if(docEntity==null) {	
-				
-				
-				if(passingyr!=null&&sem!=null && !Data.getEnrollmentNo().equals("")&&month!=null){
-						//Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
-					//if(Data.getOriginalDOCuploadfilePath().equals("FileNotAvailable")) {
-				UniversityStudentDocument studentData=new UniversityStudentDocument();
-				UniversityStudDocResponse SavestudentData=new UniversityStudDocResponse();
+			docEntity = universityStudentDocRepository.findByPrnNoAndSemId(Data.getPrnNo(), semId);
+			String reason = null;
+			if (docEntity == null) {
 
-			//	studentData.setFirstName(Data.getFirstName());
-		      //  studentData.setLastName(Data.getLastName());
-		        studentData.setCollegeId(collegeEntities.getId());	
-		        studentData.setStreamId(stream.getId());	
-		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
-		        studentData.setPassingYearId(passingyr.getId());	
-		        //studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
-		        studentData.setSemId(sem.getId());
-		       // studentData.setBranchId(branch.getId());
-		        studentData.setCreatedate(new Date());
-		        studentData.setIsdeleted("N");
-		        studentData.setCreateby(userid.toString());
-		        studentData.setMonthOfPassing(monthnm);
-		        studentData.setPrnNo(Data.getPrnNo());
-		        studentData.setCenter(Data.getCenter());
-		        studentData.setMedDesc(Data.getMedDesc());
-		        studentData.setStudentName(Data.getStudentName());
-		        studentData.setSemTotalMax(Data.getSemTotalMax());
-		        studentData.setSemGradeTotal(Data.getSemGradeTotal());
-		        studentData.setSemGrace(Data.getSemGrace());
-		        studentData.setSemclass(Data.getSemclass());
-		        studentData.setSemGpa(Data.getSemGpa());
-		        studentData.setSemGrade(Data.getSemGrade());
-		        studentData.setGradeTotal(Data.getGradeTotal());
-		        studentData.setClassGrace(Data.getClassGrace());
-		        studentData.setMaxGrTotal(Data.getMaxGrTotal());
-		        studentData.setCredTotal(Data.getCredTotal());
-		        studentData.setGpa(Data.getGpa());
-		        studentData.setFgrade(Data.getFgrade());
-		        studentData.setResultDesc(Data.getResultDesc());
-		        studentData.setInceDesc(Data.getInceDesc());
-		        studentData.setSubOne(Data.getSubOne());
-		        studentData.setSubNmOne(Data.getSubNmOne());
-		        studentData.setCreditSubOne(Data.getCreditSubOne());
-		        studentData.setIntSubOne(Data.getIntSubOne());
-		        studentData.setExtSubOne(Data.getExtSubOne());
-		        studentData.setTotalSubOne(Data.getTotalSubOne());
-		        studentData.setGraceSubOne(Data.getGraceSubOne());
-		        studentData.setPrvFlgSubOne(Data.getPrvFlgSubOne());
-		        studentData.setMaxExtSubOne(Data.getMaxExtSubOne());
-		        studentData.setMaxIntSubOne(Data.getMaxIntSubOne());
-		        studentData.setMaxTotalSubOne(Data.getMaxTotalSubOne());
-		        studentData.setGradeSubOne(Data.getGradeSubOne());
-		        
-		        
-		        
-		        
-		        studentData.setSubTwo(Data.getSubTwo());
-		        studentData.setSubNmTwo(Data.getSubNmTwo());
-		        studentData.setCreditSubTwo(Data.getCreditSubTwo());
-		        studentData.setIntSubTwo(Data.getIntSubTwo());
-		        studentData.setExtSubTwo(Data.getExtSubTwo());
-		        studentData.setTotalSubTwo(Data.getTotalSubTwo());
-		        studentData.setGraceSubTwo(Data.getGraceSubTwo());
-		        studentData.setPrvFlgSubTwo(Data.getPrvFlgSubTwo());
-		        studentData.setMaxExtSubTwo(Data.getMaxExtSubTwo());
-		        studentData.setMaxIntSubTwo(Data.getMaxIntSubTwo());
-		        studentData.setMaxTotalSubTwo(Data.getMaxTotalSubTwo());
-		        studentData.setGradeSubTwo(Data.getGradeSubTwo());
-		        
-		        
-		        
-		        studentData.setSubThree(Data.getSubThree());
-		        studentData.setSubNmThree(Data.getSubNmThree());
-		        studentData.setCreditSubThree(Data.getCreditSubThree());
-		        studentData.setIntSubThree(Data.getIntSubThree());
-		        studentData.setExtSubThree(Data.getExtSubThree());
-		        studentData.setTotalSubThree(Data.getTotalSubThree());
-		        studentData.setGraceSubThree(Data.getGraceSubThree());
-		        studentData.setPrvFlgSubThree(Data.getPrvFlgSubThree());
-		        studentData.setMaxExtSubThree(Data.getMaxExtSubThree());
-		        studentData.setMaxIntSubThree(Data.getMaxIntSubThree());
-		        studentData.setMaxTotalSubThree(Data.getMaxTotalSubThree());
-		        studentData.setGradeSubThree(Data.getGradeSubThree());
-		        
-		        
-		        studentData.setSubFour(Data.getSubFour());
-		        studentData.setSubNmFour(Data.getSubNmFour());
-		        studentData.setCreditSubFour(Data.getCreditSubFour());
-		        studentData.setIntSubFour(Data.getIntSubFour());
-		        studentData.setExtSubFour(Data.getExtSubFour());
-		        studentData.setTotalSubFour(Data.getTotalSubFour());
-		        studentData.setGraceSubFour(Data.getGraceSubFour());
-		        studentData.setPrvFlgSubFour(Data.getPrvFlgSubFour());
-		        studentData.setMaxExtSubFour(Data.getMaxExtSubFour());
-		        studentData.setMaxIntSubFour(Data.getMaxIntSubFour());
-		        studentData.setMaxTotalSubFour(Data.getMaxTotalSubFour());
-		        studentData.setGradeSubFour(Data.getGradeSubFour());
-		        
-		        
-		        studentData.setSubFive(Data.getSubFive());
-		        studentData.setSubNmFive(Data.getSubNmFive());
-		        studentData.setCreditSubFive(Data.getCreditSubFive());
-		        studentData.setIntSubFive(Data.getIntSubFive());
-		        studentData.setExtSubFive(Data.getExtSubFive());
-		        studentData.setTotalSubFive(Data.getTotalSubFive());
-		        studentData.setGraceSubFive(Data.getGraceSubFive());
-		        studentData.setPrvFlgSubFive(Data.getPrvFlgSubFive());
-		        studentData.setMaxExtSubFive(Data.getMaxExtSubFive());
-		        studentData.setMaxIntSubFive(Data.getMaxIntSubFive());
-		        studentData.setMaxTotalSubFive(Data.getMaxTotalSubFive());
-		        studentData.setGradeSubFive(Data.getGradeSubFive());
-		        
-		        
-		        
-		        studentData.setSubSix(Data.getSubSix());
-		        studentData.setSubNmSix(Data.getSubNmSix());
-		        studentData.setCreditSubSix(Data.getCreditSubSix());
-		        studentData.setIntSubSix(Data.getIntSubSix());
-		        studentData.setExtSubSix(Data.getExtSubSix());
-		        studentData.setTotalSubSix(Data.getTotalSubSix());
-		        studentData.setGraceSubSix(Data.getGraceSubSix());
-		        studentData.setPrvFlgSubSix(Data.getPrvFlgSubSix());
-		        studentData.setMaxExtSubSix(Data.getMaxExtSubSix());
-		        studentData.setMaxIntSubSix(Data.getMaxIntSubSix());
-		        studentData.setMaxTotalSubSix(Data.getMaxTotalSubSix());
-		        studentData.setGradeSubSix(Data.getGradeSubSix());
-		        studentDataList.add(studentData);    		        
-		       	
-		        
-		        
-		        studentData.setPrnNo(Data.getPrnNo());
-		        studentData.setCenter(Data.getCenter());
-		        studentData.setMedDesc(Data.getMedDesc());
-		        studentData.setStudentName(Data.getStudentName());
-		        studentData.setSemTotalMax(Data.getSemTotalMax());
-		        studentData.setSemGradeTotal(Data.getSemGradeTotal());
-		        studentData.setSemGrace(Data.getSemGrace());
-		        studentData.setSemclass(Data.getSemclass());
-		        studentData.setSemGpa(Data.getSemGpa());
-		        studentData.setSemGrade(Data.getSemGrade());
-		        studentData.setGradeTotal(Data.getGradeTotal());
-		        studentData.setClassGrace(Data.getClassGrace());
-		        studentData.setMaxGrTotal(Data.getMaxGrTotal());
-		        studentData.setCredTotal(Data.getCredTotal());
-		        studentData.setGpa(Data.getGpa());
-		        studentData.setFgrade(Data.getFgrade());
-		        studentData.setResultDesc(Data.getResultDesc());
-		        studentData.setInceDesc(Data.getInceDesc());
-		        studentData.setSubOne(Data.getSubOne());
-		        studentData.setSubNmOne(Data.getSubNmOne());
-		        studentData.setCreditSubOne(Data.getCreditSubOne());
-		        studentData.setIntSubOne(Data.getIntSubOne());
-		        studentData.setExtSubOne(Data.getExtSubOne());
-		        studentData.setTotalSubOne(Data.getTotalSubOne());
-		        studentData.setGraceSubOne(Data.getGraceSubOne());
-		        studentData.setPrvFlgSubOne(Data.getPrvFlgSubOne());
-		        studentData.setMaxExtSubOne(Data.getMaxExtSubOne());
-		        studentData.setMaxIntSubOne(Data.getMaxIntSubOne());
-		        studentData.setMaxTotalSubOne(Data.getMaxTotalSubOne());
-		        studentData.setGradeSubOne(Data.getGradeSubOne());
-		        
-		        
-		        
-		        
-		        studentData.setSubTwo(Data.getSubTwo());
-		        studentData.setSubNmTwo(Data.getSubNmTwo());
-		        studentData.setCreditSubTwo(Data.getCreditSubTwo());
-		        studentData.setIntSubTwo(Data.getIntSubTwo());
-		        studentData.setExtSubTwo(Data.getExtSubTwo());
-		        studentData.setTotalSubTwo(Data.getTotalSubTwo());
-		        studentData.setGraceSubTwo(Data.getGraceSubTwo());
-		        studentData.setPrvFlgSubTwo(Data.getPrvFlgSubTwo());
-		        studentData.setMaxExtSubTwo(Data.getMaxExtSubTwo());
-		        studentData.setMaxIntSubTwo(Data.getMaxIntSubTwo());
-		        studentData.setMaxTotalSubTwo(Data.getMaxTotalSubTwo());
-		        studentData.setGradeSubTwo(Data.getGradeSubTwo());
-		        
-		        
-		        
-		        studentData.setSubThree(Data.getSubThree());
-		        studentData.setSubNmThree(Data.getSubNmThree());
-		        studentData.setCreditSubThree(Data.getCreditSubThree());
-		        studentData.setIntSubThree(Data.getIntSubThree());
-		        studentData.setExtSubThree(Data.getExtSubThree());
-		        studentData.setTotalSubThree(Data.getTotalSubThree());
-		        studentData.setGraceSubThree(Data.getGraceSubThree());
-		        studentData.setPrvFlgSubThree(Data.getPrvFlgSubThree());
-		        studentData.setMaxExtSubThree(Data.getMaxExtSubThree());
-		        studentData.setMaxIntSubThree(Data.getMaxIntSubThree());
-		        studentData.setMaxTotalSubThree(Data.getMaxTotalSubThree());
-		        studentData.setGradeSubThree(Data.getGradeSubThree());
-		        
-		        
-		        studentData.setSubFour(Data.getSubFour());
-		        studentData.setSubNmFour(Data.getSubNmFour());
-		        studentData.setCreditSubFour(Data.getCreditSubFour());
-		        studentData.setIntSubFour(Data.getIntSubFour());
-		        studentData.setExtSubFour(Data.getExtSubFour());
-		        studentData.setTotalSubFour(Data.getTotalSubFour());
-		        studentData.setGraceSubFour(Data.getGraceSubFour());
-		        studentData.setPrvFlgSubFour(Data.getPrvFlgSubFour());
-		        studentData.setMaxExtSubFour(Data.getMaxExtSubFour());
-		        studentData.setMaxIntSubFour(Data.getMaxIntSubFour());
-		        studentData.setMaxTotalSubFour(Data.getMaxTotalSubFour());
-		        studentData.setGradeSubFour(Data.getGradeSubFour());
-		        
-		        
-		        studentData.setSubFive(Data.getSubFive());
-		        studentData.setSubNmFive(Data.getSubNmFive());
-		        studentData.setCreditSubFive(Data.getCreditSubFive());
-		        studentData.setIntSubFive(Data.getIntSubFive());
-		        studentData.setExtSubFive(Data.getExtSubFive());
-		        studentData.setTotalSubFive(Data.getTotalSubFive());
-		        studentData.setGraceSubFive(Data.getGraceSubFive());
-		        studentData.setPrvFlgSubFive(Data.getPrvFlgSubFive());
-		        studentData.setMaxExtSubFive(Data.getMaxExtSubFive());
-		        studentData.setMaxIntSubFive(Data.getMaxIntSubFive());
-		        studentData.setMaxTotalSubFive(Data.getMaxTotalSubFive());
-		        studentData.setGradeSubFive(Data.getGradeSubFive());
-		        
-		        
-		        
-		        studentData.setSubSix(Data.getSubSix());
-		        studentData.setSubNmSix(Data.getSubNmSix());
-		        studentData.setCreditSubSix(Data.getCreditSubSix());
-		        studentData.setIntSubSix(Data.getIntSubSix());
-		        studentData.setExtSubSix(Data.getExtSubSix());
-		        studentData.setTotalSubSix(Data.getTotalSubSix());
-		        studentData.setGraceSubSix(Data.getGraceSubSix());
-		        studentData.setPrvFlgSubSix(Data.getPrvFlgSubSix());
-		        studentData.setMaxExtSubSix(Data.getMaxExtSubSix());
-		        studentData.setMaxIntSubSix(Data.getMaxIntSubSix());
-		        studentData.setMaxTotalSubSix(Data.getMaxTotalSubSix());
-		        studentData.setGradeSubSix(Data.getGradeSubSix());
-		        SavestudentData.setStream(Data.getStream());	
-		        SavestudentData.setEnrollmentNo(Data.getEnrollmentNo());
-		        SavestudentData.setPassingYear(Data.getPassingYear());	
-		        SavestudentData.setSemester(Data.getSemester());
-		        SavestudentData.setMonthOfPassing(monthnm);
-	        
-		        savedStudDataList.add(SavestudentData);	
-		        
-				
+				if (passingyr != null && sem != null && !Data.getPrnNo().equals("") && month != null
+						&& collegeEntities != null&&Data.getPrnNo()!=null) {
+					// Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
+					// if(Data.getOriginalDOCuploadfilePath().equals("FileNotAvailable")) {
+					UniversityStudentDocument studentData = new UniversityStudentDocument();
+					UniversityStudDocResponse SavestudentData = new UniversityStudDocResponse();
+
+					// studentData.setFirstName(Data.getFirstName());
+					// studentData.setLastName(Data.getLastName());
+					studentData.setCollegeId(clgnm);
+					studentData.setStreamId(stream.getId());
+					studentData.setEnrollmentNo(Data.getEnrollmentNo());
+					studentData.setPassingYearId(passingyr.getId());
+					// studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+					studentData.setSemId(sem.getId());
+					// studentData.setBranchId(branchId);
+					studentData.setCreatedate(new Date());
+					studentData.setIsdeleted("N");
+					studentData.setCreateby(userid.toString());
+					studentData.setMonthOfPassing(monthnm);
+					studentData.setPrnNo(Data.getPrnNo());
+					studentData.setCenter(Data.getCenter());
+					studentData.setMedDesc(Data.getMedDesc());
+					studentData.setStudentName(Data.getStudentName());
+					studentData.setSemTotalMax(Data.getSemTotalMax());
+					studentData.setSemGradeTotal(Data.getSemGradeTotal());
+					studentData.setSemGrace(Data.getSemGrace());
+					studentData.setSemclass(Data.getSemclass());
+					studentData.setSemGpa(Data.getSemGpa());
+					studentData.setSemGrade(Data.getSemGrade());
+					studentData.setGradeTotal(Data.getGradeTotal());
+					studentData.setClassGrace(Data.getClassGrace());
+					studentData.setMaxGrTotal(Data.getMaxGrTotal());
+					studentData.setCredTotal(Data.getCredTotal());
+					studentData.setGpa(Data.getGpa());
+					studentData.setFgrade(Data.getFgrade());
+					studentData.setResultDesc(Data.getResultDesc());
+					studentData.setInceDesc(Data.getInceDesc());
+					studentData.setSubOne(Data.getSubOne());
+					studentData.setSubNmOne(Data.getSubNmOne());
+					studentData.setCreditSubOne(Data.getCreditSubOne());
+					studentData.setIntSubOne(Data.getIntSubOne());
+					studentData.setExtSubOne(Data.getExtSubOne());
+					studentData.setTotalSubOne(Data.getTotalSubOne());
+					studentData.setGraceSubOne(Data.getGraceSubOne());
+					studentData.setPrvFlgSubOne(Data.getPrvFlgSubOne());
+					studentData.setMaxExtSubOne(Data.getMaxExtSubOne());
+					studentData.setMaxIntSubOne(Data.getMaxIntSubOne());
+					studentData.setMaxTotalSubOne(Data.getMaxTotalSubOne());
+					studentData.setGradeSubOne(Data.getGradeSubOne());
+
+					studentData.setSubTwo(Data.getSubTwo());
+					studentData.setSubNmTwo(Data.getSubNmTwo());
+					studentData.setCreditSubTwo(Data.getCreditSubTwo());
+					studentData.setIntSubTwo(Data.getIntSubTwo());
+					studentData.setExtSubTwo(Data.getExtSubTwo());
+					studentData.setTotalSubTwo(Data.getTotalSubTwo());
+					studentData.setGraceSubTwo(Data.getGraceSubTwo());
+					studentData.setPrvFlgSubTwo(Data.getPrvFlgSubTwo());
+					studentData.setMaxExtSubTwo(Data.getMaxExtSubTwo());
+					studentData.setMaxIntSubTwo(Data.getMaxIntSubTwo());
+					studentData.setMaxTotalSubTwo(Data.getMaxTotalSubTwo());
+					studentData.setGradeSubTwo(Data.getGradeSubTwo());
+
+					studentData.setSubThree(Data.getSubThree());
+					studentData.setSubNmThree(Data.getSubNmThree());
+					studentData.setCreditSubThree(Data.getCreditSubThree());
+					studentData.setIntSubThree(Data.getIntSubThree());
+					studentData.setExtSubThree(Data.getExtSubThree());
+					studentData.setTotalSubThree(Data.getTotalSubThree());
+					studentData.setGraceSubThree(Data.getGraceSubThree());
+					studentData.setPrvFlgSubThree(Data.getPrvFlgSubThree());
+					studentData.setMaxExtSubThree(Data.getMaxExtSubThree());
+					studentData.setMaxIntSubThree(Data.getMaxIntSubThree());
+					studentData.setMaxTotalSubThree(Data.getMaxTotalSubThree());
+					studentData.setGradeSubThree(Data.getGradeSubThree());
+
+					studentData.setSubFour(Data.getSubFour());
+					studentData.setSubNmFour(Data.getSubNmFour());
+					studentData.setCreditSubFour(Data.getCreditSubFour());
+					studentData.setIntSubFour(Data.getIntSubFour());
+					studentData.setExtSubFour(Data.getExtSubFour());
+					studentData.setTotalSubFour(Data.getTotalSubFour());
+					studentData.setGraceSubFour(Data.getGraceSubFour());
+					studentData.setPrvFlgSubFour(Data.getPrvFlgSubFour());
+					studentData.setMaxExtSubFour(Data.getMaxExtSubFour());
+					studentData.setMaxIntSubFour(Data.getMaxIntSubFour());
+					studentData.setMaxTotalSubFour(Data.getMaxTotalSubFour());
+					studentData.setGradeSubFour(Data.getGradeSubFour());
+
+					studentData.setSubFive(Data.getSubFive());
+					studentData.setSubNmFive(Data.getSubNmFive());
+					studentData.setCreditSubFive(Data.getCreditSubFive());
+					studentData.setIntSubFive(Data.getIntSubFive());
+					studentData.setExtSubFive(Data.getExtSubFive());
+					studentData.setTotalSubFive(Data.getTotalSubFive());
+					studentData.setGraceSubFive(Data.getGraceSubFive());
+					studentData.setPrvFlgSubFive(Data.getPrvFlgSubFive());
+					studentData.setMaxExtSubFive(Data.getMaxExtSubFive());
+					studentData.setMaxIntSubFive(Data.getMaxIntSubFive());
+					studentData.setMaxTotalSubFive(Data.getMaxTotalSubFive());
+					studentData.setGradeSubFive(Data.getGradeSubFive());
+
+					studentData.setSubSix(Data.getSubSix());
+					studentData.setSubNmSix(Data.getSubNmSix());
+					studentData.setCreditSubSix(Data.getCreditSubSix());
+					studentData.setIntSubSix(Data.getIntSubSix());
+					studentData.setExtSubSix(Data.getExtSubSix());
+					studentData.setTotalSubSix(Data.getTotalSubSix());
+					studentData.setGraceSubSix(Data.getGraceSubSix());
+					studentData.setPrvFlgSubSix(Data.getPrvFlgSubSix());
+					studentData.setMaxExtSubSix(Data.getMaxExtSubSix());
+					studentData.setMaxIntSubSix(Data.getMaxIntSubSix());
+					studentData.setMaxTotalSubSix(Data.getMaxTotalSubSix());
+					studentData.setGradeSubSix(Data.getGradeSubSix());
+					studentDataList.add(studentData);
+
+					studentData.setPrnNo(Data.getPrnNo());
+					studentData.setCenter(Data.getCenter());
+					studentData.setMedDesc(Data.getMedDesc());
+					studentData.setStudentName(Data.getStudentName());
+					studentData.setSemTotalMax(Data.getSemTotalMax());
+					studentData.setSemGradeTotal(Data.getSemGradeTotal());
+					studentData.setSemGrace(Data.getSemGrace());
+					studentData.setSemclass(Data.getSemclass());
+					studentData.setSemGpa(Data.getSemGpa());
+					studentData.setSemGrade(Data.getSemGrade());
+					studentData.setGradeTotal(Data.getGradeTotal());
+					studentData.setClassGrace(Data.getClassGrace());
+					studentData.setMaxGrTotal(Data.getMaxGrTotal());
+					studentData.setCredTotal(Data.getCredTotal());
+					studentData.setGpa(Data.getGpa());
+					studentData.setFgrade(Data.getFgrade());
+					studentData.setResultDesc(Data.getResultDesc());
+					studentData.setInceDesc(Data.getInceDesc());
+					studentData.setSubOne(Data.getSubOne());
+					studentData.setSubNmOne(Data.getSubNmOne());
+					studentData.setCreditSubOne(Data.getCreditSubOne());
+					studentData.setIntSubOne(Data.getIntSubOne());
+					studentData.setExtSubOne(Data.getExtSubOne());
+					studentData.setTotalSubOne(Data.getTotalSubOne());
+					studentData.setGraceSubOne(Data.getGraceSubOne());
+					studentData.setPrvFlgSubOne(Data.getPrvFlgSubOne());
+					studentData.setMaxExtSubOne(Data.getMaxExtSubOne());
+					studentData.setMaxIntSubOne(Data.getMaxIntSubOne());
+					studentData.setMaxTotalSubOne(Data.getMaxTotalSubOne());
+					studentData.setGradeSubOne(Data.getGradeSubOne());
+
+					studentData.setSubTwo(Data.getSubTwo());
+					studentData.setSubNmTwo(Data.getSubNmTwo());
+					studentData.setCreditSubTwo(Data.getCreditSubTwo());
+					studentData.setIntSubTwo(Data.getIntSubTwo());
+					studentData.setExtSubTwo(Data.getExtSubTwo());
+					studentData.setTotalSubTwo(Data.getTotalSubTwo());
+					studentData.setGraceSubTwo(Data.getGraceSubTwo());
+					studentData.setPrvFlgSubTwo(Data.getPrvFlgSubTwo());
+					studentData.setMaxExtSubTwo(Data.getMaxExtSubTwo());
+					studentData.setMaxIntSubTwo(Data.getMaxIntSubTwo());
+					studentData.setMaxTotalSubTwo(Data.getMaxTotalSubTwo());
+					studentData.setGradeSubTwo(Data.getGradeSubTwo());
+
+					studentData.setSubThree(Data.getSubThree());
+					studentData.setSubNmThree(Data.getSubNmThree());
+					studentData.setCreditSubThree(Data.getCreditSubThree());
+					studentData.setIntSubThree(Data.getIntSubThree());
+					studentData.setExtSubThree(Data.getExtSubThree());
+					studentData.setTotalSubThree(Data.getTotalSubThree());
+					studentData.setGraceSubThree(Data.getGraceSubThree());
+					studentData.setPrvFlgSubThree(Data.getPrvFlgSubThree());
+					studentData.setMaxExtSubThree(Data.getMaxExtSubThree());
+					studentData.setMaxIntSubThree(Data.getMaxIntSubThree());
+					studentData.setMaxTotalSubThree(Data.getMaxTotalSubThree());
+					studentData.setGradeSubThree(Data.getGradeSubThree());
+
+					studentData.setSubFour(Data.getSubFour());
+					studentData.setSubNmFour(Data.getSubNmFour());
+					studentData.setCreditSubFour(Data.getCreditSubFour());
+					studentData.setIntSubFour(Data.getIntSubFour());
+					studentData.setExtSubFour(Data.getExtSubFour());
+					studentData.setTotalSubFour(Data.getTotalSubFour());
+					studentData.setGraceSubFour(Data.getGraceSubFour());
+					studentData.setPrvFlgSubFour(Data.getPrvFlgSubFour());
+					studentData.setMaxExtSubFour(Data.getMaxExtSubFour());
+					studentData.setMaxIntSubFour(Data.getMaxIntSubFour());
+					studentData.setMaxTotalSubFour(Data.getMaxTotalSubFour());
+					studentData.setGradeSubFour(Data.getGradeSubFour());
+
+					studentData.setSubFive(Data.getSubFive());
+					studentData.setSubNmFive(Data.getSubNmFive());
+					studentData.setCreditSubFive(Data.getCreditSubFive());
+					studentData.setIntSubFive(Data.getIntSubFive());
+					studentData.setExtSubFive(Data.getExtSubFive());
+					studentData.setTotalSubFive(Data.getTotalSubFive());
+					studentData.setGraceSubFive(Data.getGraceSubFive());
+					studentData.setPrvFlgSubFive(Data.getPrvFlgSubFive());
+					studentData.setMaxExtSubFive(Data.getMaxExtSubFive());
+					studentData.setMaxIntSubFive(Data.getMaxIntSubFive());
+					studentData.setMaxTotalSubFive(Data.getMaxTotalSubFive());
+					studentData.setGradeSubFive(Data.getGradeSubFive());
+
+					studentData.setSubSix(Data.getSubSix());
+					studentData.setSubNmSix(Data.getSubNmSix());
+					studentData.setCreditSubSix(Data.getCreditSubSix());
+					studentData.setIntSubSix(Data.getIntSubSix());
+					studentData.setExtSubSix(Data.getExtSubSix());
+					studentData.setTotalSubSix(Data.getTotalSubSix());
+					studentData.setGraceSubSix(Data.getGraceSubSix());
+					studentData.setPrvFlgSubSix(Data.getPrvFlgSubSix());
+					studentData.setMaxExtSubSix(Data.getMaxExtSubSix());
+					studentData.setMaxIntSubSix(Data.getMaxIntSubSix());
+					studentData.setMaxTotalSubSix(Data.getMaxTotalSubSix());
+					studentData.setGradeSubSix(Data.getGradeSubSix());
+					SavestudentData.setStream(Data.getStream());
+					SavestudentData.setEnrollmentNo(Data.getEnrollmentNo());
+					SavestudentData.setPassingYear(Data.getPassingYear());
+					SavestudentData.setSemester(Data.getSemester());
+					SavestudentData.setMonthOfPassing(monthnm);
+
+					savedStudDataList.add(SavestudentData);
+
 				}
-				
-					 else
-					 {	
-						 UniversityStudDocResponse studentData=new UniversityStudDocResponse();
-						 if(passingyr==null|| sem==null||stream==null||month==null) {
-						 reason="Invalid";
-						  if(stream==null) { 
-					    	   
-					    	   reason=reason+" Stream";
-						      if(passingyr==null||sem==null||month==null) { 
-						    	  
-							  reason=reason+",";
-						  
-						  } }
-						 
-							  if(passingyr==null)
-							 {
-								 reason=reason+" Year of Passing";
-								 if(sem==null||month==null)
-								 {
-									 reason=reason+",";
 
-								 }
+				else {
+					UniversityStudDocResponse studentData = new UniversityStudDocResponse();
+					if (passingyr == null || sem == null || stream == null || month == null
+							|| collegeEntities == null) {
+						reason = "Invalid";
+						if (stream == null) {
 
-							 }
-							  if(sem==null)
-							 {
-								 reason=reason+" Semester";
-							/*
-							 * if(branch==null) { reason=reason+",";
-							 * 
-							 * }
-							 * 
-							 * } if(branch==null) { reason=reason+" Branch";
-							 * 
-							 */
-								 if(month==null)
-								 {
-									 reason=reason+",";
+							reason = reason + " Stream";
+							if (passingyr == null || sem == null || month == null || collegeEntities == null) {
 
-								 }
-							 }
-							  if(month==null) {
-									
-									 reason=reason+" Month Of Passing";
+								reason = reason + ",";
 
-								 }
-						 }
-					/*
-					 * if(collegeEntities==null) { reason=reason+" College Name";
-					  if(stream==null||passingyr==null||sem==null||branch==null) {
-					  reason=reason+",";
-					 * 
-					  }
-					  } */
-				     
+							}
+						}
+
+						if (passingyr == null) {
+							reason = reason + " Year of Passing";
+							if (sem == null || month == null || collegeEntities == null) {
+								reason = reason + ",";
+
+							}
+
+						}
+						if (sem == null) {
+							reason = reason + " Semester";
+							if (month == null || collegeEntities == null) {
+								reason = reason + ",";
+
+							}
+						}
+						if (month == null) {
+
+							reason = reason + " Month Of Passing";
+							if (collegeEntities == null) {
+								reason = reason + ",";
+
+							}
+
+						}
+					}
+
+					if (collegeEntities == null) {
+						reason = reason + " College Name";
+
+					}
+
 					/*
 					 * if( Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
 					 * 
@@ -452,19 +425,16 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 					 * 
 					 * } }
 					 */
-						
-						 if(Data.getEnrollmentNo()==null || Data.getEnrollmentNo().equals("") )
-						 {
-							 if(reason!=null) {
-								 reason=reason+" & Blank";
 
-							 }
-							 else {
-							 reason="Blank";
-							 }
-						 }
-						 
-						 
+					if (Data.getPrnNo() == null || Data.getPrnNo().equals("")) {
+						if (reason != null) {
+							reason = reason + " & Blank PRN NO";
+
+						} else {
+							reason = "Blank PRN NO";
+						}
+					}
+
 					/*
 					 * if(Data.getFirstName()==null || Data.getFirstName().equals("")) {
 					 * reason=reason+" First name"; if (Data.getLastName() == null ||
@@ -475,206 +445,199 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 					 * reason=reason+" Last name"; if(Data.getEnrollmentNo()==null ||
 					 * Data.getEnrollmentNo().equals("")) { reason=reason+","; } }
 					 */
-						 if(Data.getEnrollmentNo()==null || Data.getEnrollmentNo().equals("") )
-						 {
-							 reason=reason+" Seat No";
-							
-						 }
-						
-					   // studentData.setFirstName(Data.getFirstName());
-				       // studentData.setLastName(Data.getLastName());
-				       // studentData.setCollegeName(Data.getCollegeName());
-				       // studentData.setBranch_nm(Data.getBranch_nm());
-				        studentData.setSemester(Data.getSemester());
-				        studentData.setStream(Data.getStream());	
-				        studentData.setEnrollmentNo(Data.getEnrollmentNo());
-				        studentData.setPassingYear(Data.getPassingYear());	
-				     //   studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
-				        studentData.setMonthOfPassing(Data.getMonthOfPassing());
-				        studentData.setPrnNo(Data.getPrnNo());
-				        studentData.setReason(reason);
-				        rejectedData.add(studentData);				
-					 }
-			 }
-			 else
-			 {	 UniversityStudDocResponse studentData=new UniversityStudDocResponse();
-			 	reason="Duplicate record";
-			    //studentData.setFirstName(Data.getFirstName());
-		        //studentData.setLastName(Data.getLastName());
-		       // studentData.setCollegeName(Data.getCollegeName());	
-		        studentData.setStream(Data.getStream());	
-		       // studentData.setBranch_nm(Data.getBranch_nm());
-		        studentData.setSemester(Data.getSemester());
-		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
-		        studentData.setPassingYear(Data.getPassingYear());	
-		        studentData.setMonthOfPassing(Data.getMonthOfPassing());
-		        studentData.setPrnNo(Data.getPrnNo());
-		     //   studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
-		        studentData.setReason(reason);
+					/*
+					 * if (Data.getEnrollmentNo() == null || Data.getEnrollmentNo().equals("")) {
+					 * reason = reason + " Seat No";
+					 * 
+					 * }
+					 */
 
-		        rejectedData.add(studentData);				
-			 }
-			
-		 }
-		 logger.info("rejectedData : "+rejectedData);
-		 universityStudentDocRepository.saveAll(studentDataList);
-		 datalist.put("savedStudentData", savedStudDataList);
-		 datalist.put("RejectedData", rejectedData);
-		 return datalist;
-		 
+					// studentData.setFirstName(Data.getFirstName());
+					// studentData.setLastName(Data.getLastName());
+					// studentData.setCollegeName(Data.getCollegeName());
+					// studentData.setBranch_nm(Data.getBranch_nm());
+					studentData.setSemester(Data.getSemester());
+					studentData.setStream(Data.getStream());
+					studentData.setEnrollmentNo(Data.getEnrollmentNo());
+					studentData.setPassingYear(Data.getPassingYear());
+					// studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+					studentData.setMonthOfPassing(Data.getMonthOfPassing());
+					studentData.setPrnNo(Data.getPrnNo());
+					studentData.setReason(reason);
+					rejectedData.add(studentData);
+				}
+			} else {
+				UniversityStudDocResponse studentData = new UniversityStudDocResponse();
+				reason = "Duplicate record";
+				// studentData.setFirstName(Data.getFirstName());
+				// studentData.setLastName(Data.getLastName());
+				// studentData.setCollegeName(Data.getCollegeName());
+				studentData.setStream(Data.getStream());
+				// studentData.setBranch_nm(Data.getBranch_nm());
+				studentData.setSemester(Data.getSemester());
+				studentData.setEnrollmentNo(Data.getEnrollmentNo());
+				studentData.setPassingYear(Data.getPassingYear());
+				studentData.setMonthOfPassing(Data.getMonthOfPassing());
+				studentData.setPrnNo(Data.getPrnNo());
+				// studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+				studentData.setReason(reason);
+
+				rejectedData.add(studentData);
+			}
+
+		}
+		logger.info("rejectedData : " + rejectedData);
+		universityStudentDocRepository.saveAll(studentDataList);
+		datalist.put("savedStudentData", savedStudDataList);
+		datalist.put("RejectedData", rejectedData);
+		return datalist;
+
 	}
 
 	@Value("${file.awsORtest}")
-    private String awsORtest;
-	
+	private String awsORtest;
+
 	@Override
-	public List<UniversityStudDocResponse> ReviewStudentData(MultipartFile excelfile, MultipartFile datafile) throws IOException {
-		
+	public List<UniversityStudDocResponse> ReviewStudentData(MultipartFile excelfile, MultipartFile datafile)
+			throws IOException {
+
 		logger.info("********AssociateManagerServiceImpl ReviewStudentData********");
 
-		 workbook = new XSSFWorkbook(excelfile.getInputStream());
-		 XSSFSheet worksheet = workbook.getSheetAt(0);
-		 List<UniversityStudDocResponse> studentDataReviewList = new ArrayList<UniversityStudDocResponse>();
-		int rowcnt=worksheet.getLastRowNum();
-		
-		int clomncnt=worksheet.getRow(0).getLastCellNum() ;
-		
+		workbook = new XSSFWorkbook(excelfile.getInputStream());
+		XSSFSheet worksheet = workbook.getSheetAt(0);
+		List<UniversityStudDocResponse> studentDataReviewList = new ArrayList<UniversityStudDocResponse>();
+		int rowcnt = worksheet.getLastRowNum();
+
+		int clomncnt = worksheet.getRow(0).getLastCellNum();
+
 		int noOfColumns = worksheet.getRow(0).getPhysicalNumberOfCells();
 
-		logger.info("noOfColumns="+noOfColumns);
+		logger.info("noOfColumns=" + noOfColumns);
 
-		logger.info("clomncnt="+clomncnt);
-		 String fileSubPath = "file/";
-		 String filePath;
-		 
-		 String flag = "2";
-		 if(awsORtest.equalsIgnoreCase("TEST") || awsORtest.equalsIgnoreCase("LOCAL")) {
-			 
-			 filePath = fileStorageService.storeFile(datafile, fileSubPath, flag);
-		 }else {
-			 filePath = fileStorageService.storeFileOnAws(datafile , flag);
-		 }
-		 if(clomncnt==5) {
-		 for(int i=1;i<=rowcnt;i++) {
-			 
-			 XSSFRow row = worksheet.getRow(i);		 
-			
+		logger.info("clomncnt=" + clomncnt);
+		String fileSubPath = "file/";
+		String filePath;
 
-			 UniversityStudDocResponse studentData = new UniversityStudDocResponse();	            
-		     if(row!=null) {
-		    	 int rowcell= row.getPhysicalNumberOfCells();
-					logger.info("rowcell="+rowcell);
-					
-		     
-		     if(row.getCell(0)!=null){
-					 
-					 studentData.setStream(row.getCell(0).getStringCellValue()); 
-					 }
-					 else {
-					 studentData.setStream(""); }
-					 
-			 if(row.getCell(1)!=null){
+		String flag = "2";
+		if (awsORtest.equalsIgnoreCase("TEST") || awsORtest.equalsIgnoreCase("LOCAL")) {
 
-		        studentData.setSemester(row.getCell(1).getStringCellValue());	
-			 }
-			 else {
-				 studentData.setSemester(""); 
-			 }
+			filePath = fileStorageService.storeFile(datafile, fileSubPath, flag);
+		} else {
+			filePath = fileStorageService.storeFileOnAws(datafile, flag);
+		}
+		if (clomncnt == 5) {
+			for (int i = 1; i <= rowcnt; i++) {
 
-			 if(row.getCell(2)!=null){
-		        int cellType=row.getCell(2).getCellType();
-		        
-		 logger.info("celltype "+cellType);
-		 if(cellType==1)
-		 {
-		        studentData.setEnrollmentNo(row.getCell(2).getStringCellValue());
-		 }
-		 else
-		 {
-		        Integer enrollNo=(int) row.getCell(2).getNumericCellValue();		        
-		        studentData.setEnrollmentNo(enrollNo.toString());			 
-		 }
-			 }
-			 else {
-				 studentData.setEnrollmentNo("");
-			 }
-			 
-			 
-			 if(row.getCell(3)!=null){
+				XSSFRow row = worksheet.getRow(i);
 
-		        studentData.setMonthOfPassing(row.getCell(3).getStringCellValue());	
-			 }
-			 else {
-				 studentData.setMonthOfPassing(""); 
-			 }
+				UniversityStudDocResponse studentData = new UniversityStudDocResponse();
+				if (row != null) {
+					int rowcell = row.getPhysicalNumberOfCells();
+					logger.info("rowcell=" + rowcell);
 
-		 if(row.getCell(4)!=null){
-	        int yearcellType=row.getCell(4).getCellType();
+					if (row.getCell(0) != null) {
 
-		 if(yearcellType==1)
-		 {
-		        studentData.setPassingYear(row.getCell(4).getStringCellValue());
-		 }
-		 else {
-		        Integer yearofPassing=(int) row.getCell(4).getNumericCellValue();
-		        studentData.setPassingYear(yearofPassing.toString());		        
-		 }
-			 }
-			 else {
-				 studentData.setPassingYear("");
-			 }
-		        //studentData.setOriginalDOCuploadfilePath(filePath);
-		        studentDataReviewList.add(studentData);    
-			 }
-		 }
-		 }
-		 
-		 return studentDataReviewList;
+						studentData.setStream(row.getCell(0).getStringCellValue());
+					} else {
+						studentData.setStream("");
+					}
+
+					if (row.getCell(1) != null) {
+
+						studentData.setSemester(row.getCell(1).getStringCellValue());
+					} else {
+						studentData.setSemester("");
+					}
+
+					if (row.getCell(2) != null) {
+						int cellType = row.getCell(2).getCellType();
+
+						logger.info("celltype " + cellType);
+						if (cellType == 1) {
+							studentData.setEnrollmentNo(row.getCell(2).getStringCellValue());
+						} else {
+							Integer enrollNo = (int) row.getCell(2).getNumericCellValue();
+							studentData.setEnrollmentNo(enrollNo.toString());
+						}
+					} else {
+						studentData.setEnrollmentNo("");
+					}
+
+					if (row.getCell(3) != null) {
+
+						studentData.setMonthOfPassing(row.getCell(3).getStringCellValue());
+					} else {
+						studentData.setMonthOfPassing("");
+					}
+
+					if (row.getCell(4) != null) {
+						int yearcellType = row.getCell(4).getCellType();
+
+						if (yearcellType == 1) {
+							studentData.setPassingYear(row.getCell(4).getStringCellValue());
+						} else {
+							Integer yearofPassing = (int) row.getCell(4).getNumericCellValue();
+							studentData.setPassingYear(yearofPassing.toString());
+						}
+					} else {
+						studentData.setPassingYear("");
+					}
+					// studentData.setOriginalDOCuploadfilePath(filePath);
+					studentDataReviewList.add(studentData);
+				}
+			}
+		}
+
+		return studentDataReviewList;
 	}
 
 	@Override
-	public List<UniversityResponse> getStudentData(UniversityStudentRequest universityStudData ) {
-		
+	public List<UniversityResponse> getStudentData(UniversityStudentRequest universityStudData) {
+
 		logger.info("********AssociateManagerServiceImpl getStudentData********");
 
-		 List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
-		 
-		List<UniversityStudentDocument> usdr = universityStudentDocRepository.searchBySeatNoLikeAndPassingYearIdLikeAndStreamIdLikeAndSemIdLikeAndMonthOfPassingLikeAndPrnNoLike( 
-				universityStudData.getEnrollmentNo(), universityStudData.getPassingYearId(), universityStudData.getStreamId(),universityStudData.getSemId(),universityStudData.getMonthOfPassing(), universityStudData.getPrnNo());
-		List<UniversityResponse> studData=new ArrayList<>();
-		
+		List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
+
+		List<UniversityStudentDocument> usdr = universityStudentDocRepository
+				.searchBySeatNoLikeAndPassingYearIdLikeAndStreamIdLikeAndSemIdLikeAndMonthOfPassingLikeAndPrnNoLike(
+						universityStudData.getEnrollmentNo(), universityStudData.getPassingYearId(),
+						universityStudData.getStreamId(), universityStudData.getSemId(),
+						universityStudData.getMonthOfPassing(), universityStudData.getPrnNo());
+		List<UniversityResponse> studData = new ArrayList<>();
+
 		logger.info("********AssociateManagerServiceImpl getStudentData********");
-		 
-		 for(UniversityStudentDocument studentData:usdr) {
-			 
-			 UniversityStudDocResponse resp = new UniversityStudDocResponse();
-			 
-			 UniversityResponse uniResp = new UniversityResponse();
-			 
-			 Optional<StreamMaster> streaminfo = streamRespository.findById(studentData.getStreamId());
-			 StreamMaster stream = streaminfo.get();
-			 
-			 Optional<PassingYearMaster> passingyrinfo = yearOfPassingRespository.findById(studentData.getPassingYearId());
-			 PassingYearMaster passingyr = passingyrinfo.get();
-			 
-			 SemesterEntity sem=semesterService.getSemById(studentData.getSemId());
-				
-			 BranchMasterEntity branch=branchMasterService.getbranchById(studentData.getBranchId());
-				
-			 uniResp.setName(studentData.getStudentName());
-			 uniResp.setPrnNo(studentData.getPrnNo());
-			 uniResp.setResDesc(studentData.getResultDesc());
-			 uniResp.setSeatNo(studentData.getEnrollmentNo());
-			 uniResp.setSemClass(studentData.getSemclass());
-			 uniResp.setSemester(sem.getSemester());
-			 uniResp.setSemGpa(studentData.getSemGpa());
-			 uniResp.setSemGrade(studentData.getSemGrade());
-			 uniResp.setSemGrdTot(studentData.getSemGradeTotal());
-			 uniResp.setBranch(branch.getBranchName());
-			 uniResp.setSemTotMax(studentData.getSemTotalMax());
-			 uniResp.setStream(stream.getStreamName());
-			 uniResp.setYearOfPassing(passingyr.getYearOfPassing());
-			 
+
+		for (UniversityStudentDocument studentData : usdr) {
+
+			UniversityStudDocResponse resp = new UniversityStudDocResponse();
+
+			UniversityResponse uniResp = new UniversityResponse();
+
+			Optional<StreamMaster> streaminfo = streamRespository.findById(studentData.getStreamId());
+			StreamMaster stream = streaminfo.get();
+
+			Optional<PassingYearMaster> passingyrinfo = yearOfPassingRespository
+					.findById(studentData.getPassingYearId());
+			PassingYearMaster passingyr = passingyrinfo.get();
+
+			SemesterEntity sem = semesterService.getSemById(studentData.getSemId());
+
+			BranchMasterEntity branch = branchMasterService.getbranchById(studentData.getBranchId());
+
+			uniResp.setName(studentData.getStudentName());
+			uniResp.setPrnNo(studentData.getPrnNo());
+			uniResp.setResDesc(studentData.getResultDesc());
+			uniResp.setSeatNo(studentData.getEnrollmentNo());
+			uniResp.setSemClass(studentData.getSemclass());
+			uniResp.setSemester(sem.getSemester());
+			uniResp.setSemGpa(studentData.getSemGpa());
+			uniResp.setSemGrade(studentData.getSemGrade());
+			uniResp.setSemGrdTot(studentData.getSemGradeTotal());
+			uniResp.setBranch(branch.getBranchName());
+			uniResp.setSemTotMax(studentData.getSemTotalMax());
+			uniResp.setStream(stream.getStreamName());
+			uniResp.setYearOfPassing(passingyr.getYearOfPassing());
+
 //			 resp.setId(studentData.getId());
 //			// resp.setFirstName(studentData.getFirstName());
 //			// resp.setLastName(studentData.getLastName());
@@ -687,160 +650,160 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 //			 resp.setMonthOfPassing(studentData.getMonthOfPassing());
 //			 //String Path=
 //			// resp.setOriginalDOCuploadfilePath("/verifier/getimage/U/"+studentData.getId());
-			 studData.add(uniResp);
-			 
-		 }
+			studData.add(uniResp);
+
+		}
 
 		return studData;
 	}
+
 	@Override
 	public String saveassociatefilepath(MultipartFile datafile) {
-		 String fileSubPath = "file/";
-		 String filePath;
-		 
-		 String flag = "2";
-		 if(awsORtest.equalsIgnoreCase("TEST") || awsORtest.equalsIgnoreCase("LOCAL")) {
-			 
-			 filePath = fileStorageService.storeFile(datafile, fileSubPath, flag);
-		 }else {
-			 filePath = fileStorageService.storeFileOnAws(datafile , flag);
-		 }				 
-		 return filePath;
-	}
-	
-	
-	@Override
-	public  HashMap<String,List<UniversityStudDocResponse>> AutosaveStudentInfo(List<UniversityStudDocResponse> list, Long userid) throws IOException {
-		
-		 List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
-		 List<UniversityStudDocResponse> savedStudDataList = new ArrayList<UniversityStudDocResponse>();
+		String fileSubPath = "file/";
+		String filePath;
 
-		 UniversityStudentDocument docEntity =null;
-		 List<UniversityStudDocResponse> rejectedData=new ArrayList<UniversityStudDocResponse>();
-		 HashMap<String,List<UniversityStudDocResponse>> datalist=new HashMap<String,List<UniversityStudDocResponse>>();
-		
-		 for(UniversityStudDocResponse Data:list) {
-			 
-			    Long clgnm = null;
-				Long passyr = null;
-				Long strm = null;
-				Long semId = null;
-				Long branchId = null;
-				String monthnm=null;
+		String flag = "2";
+		if (awsORtest.equalsIgnoreCase("TEST") || awsORtest.equalsIgnoreCase("LOCAL")) {
+
+			filePath = fileStorageService.storeFile(datafile, fileSubPath, flag);
+		} else {
+			filePath = fileStorageService.storeFileOnAws(datafile, flag);
+		}
+		return filePath;
+	}
+
+	@Override
+	public HashMap<String, List<UniversityStudDocResponse>> AutosaveStudentInfo(List<UniversityStudDocResponse> list,
+			Long userid) throws IOException {
+
+		List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
+		List<UniversityStudDocResponse> savedStudDataList = new ArrayList<UniversityStudDocResponse>();
+
+		UniversityStudentDocument docEntity = null;
+		List<UniversityStudDocResponse> rejectedData = new ArrayList<UniversityStudDocResponse>();
+		HashMap<String, List<UniversityStudDocResponse>> datalist = new HashMap<String, List<UniversityStudDocResponse>>();
+
+		for (UniversityStudDocResponse Data : list) {
+
+			Long clgnm = null;
+			Long passyr = null;
+			Long strm = null;
+			Long semId = null;
+			Long branchId = null;
+			String monthnm = null;
 			/*
 			 * CollegeMaster collegeEntities =
-			 * collegeRespository.findByCollegeName(Data.getCollegeName()); */
-				MonthOfPassing month=monthOfPassingRepository.findByMonthOfPassing(Data.getMonthOfPassing());
-			 StreamMaster stream =streamRespository.findByStreamNameAndIsdeleted(Data.getStream(),"N");
-			
-			 if(month!=null) {
-				 monthnm=month.getMonthOfPassing();
-			 }
-			 if(stream!=null) 
-			  { 
-				  strm=stream.getId(); 
-			  logger.info("strm"+strm);
-			  }
-			  PassingYearMaster passingyr=yearOfPassingRespository.findByYearOfPassingAndIsdeleted(Data.getPassingYear(),"N");
-			 
-				 SemesterEntity sem=semesterService.getSemIdByNm(Data.getSemester(),strm);					
-				//  BranchMasterEntity branch=branchMasterService.getbranchIdByname(Data.getBranch_nm(),strm);
-				
+			 * collegeRespository.findByCollegeName(Data.getCollegeName());
+			 */
+			MonthOfPassing month = monthOfPassingRepository.findByMonthOfPassing(Data.getMonthOfPassing());
+			StreamMaster stream = streamRespository.findByStreamNameAndIsdeleted(Data.getStream(), "N");
 
-			 			String enrollNo=Data.getEnrollmentNo();
-			 			//String fnm=Data.getFirstName();
-			 			//String lnm=Data.getLastName();
-			 			
+			if (month != null) {
+				monthnm = month.getMonthOfPassing();
+			}
+			if (stream != null) {
+				strm = stream.getId();
+				logger.info("strm" + strm);
+			}
+			PassingYearMaster passingyr = yearOfPassingRespository
+					.findByYearOfPassingAndIsdeleted(Data.getPassingYear(), "N");
+
+			SemesterEntity sem = semesterService.getSemIdByNm(Data.getSemester(), strm);
+			// BranchMasterEntity
+			// branch=branchMasterService.getbranchIdByname(Data.getBranch_nm(),strm);
+
+			String enrollNo = Data.getEnrollmentNo();
+			// String fnm=Data.getFirstName();
+			// String lnm=Data.getLastName();
+
 			/*
 			 * if(collegeEntities!=null) { clgnm=collegeEntities.getId();
-			 * logger.info("clgnm"+clgnm); }*/
-			   if(passingyr!=null) {
-			 
-			  passyr=passingyr.getId();
-			  logger.info("passyr"+passyr); }
-			 
-			 			if(sem!=null) {
+			 * logger.info("clgnm"+clgnm); }
+			 */
+			if (passingyr != null) {
 
-				 			 semId=sem.getId();
-				 			logger.info("semId"+semId);
-				 			}
+				passyr = passingyr.getId();
+				logger.info("passyr" + passyr);
+			}
+
+			if (sem != null) {
+
+				semId = sem.getId();
+				logger.info("semId" + semId);
+			}
 			/*
 			 * if(branch!=null) {
 			 * 
 			 * branchId=branch.getId(); logger.info("branchId"+branchId); }
 			 */
-			 			
-			 			
-			 docEntity=universityStudentDocRepository.findByEnrollmentNoAndStreamIdAndPassingYearIdAndSemIdAndMonthOfPassing(enrollNo,strm,passyr,semId,monthnm);
+
+			docEntity = universityStudentDocRepository
+					.findByEnrollmentNoAndStreamIdAndPassingYearIdAndSemIdAndMonthOfPassing(enrollNo, strm, passyr,
+							semId, monthnm);
 			String reason = null;
-			 if(docEntity==null) {	
-				
-				
-				if(passingyr!=null&&sem!=null && !Data.getEnrollmentNo().equals("")&&month!=null) {
-					//&&!Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
-				
-					//if(Data.getOriginalDOCuploadfilePath().equals("FileNotAvailable")) {
-				UniversityStudentDocument studentData=new UniversityStudentDocument();
-				UniversityStudDocResponse SavestudentData=new UniversityStudDocResponse();
+			if (docEntity == null) {
 
-			//	studentData.setFirstName(Data.getFirstName());
-		      //  studentData.setLastName(Data.getLastName());
-		       // studentData.setCollegeId(collegeEntities.getId());	
-		        studentData.setStreamId(stream.getId());	
-		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
-		        studentData.setPassingYearId(passingyr.getId());	
-		      //  studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
-		        studentData.setSemId(sem.getId());
-		       // studentData.setBranchId(branch.getId());
-		        studentData.setCreatedate(new Date());
-		        studentData.setCreateby(userid.toString());
-		        studentData.setMonthOfPassing(monthnm);
-		        studentDataList.add(studentData);    
-		        
-		        //SavestudentData.setFirstName(Data.getFirstName());
-		       // SavestudentData.setLastName(Data.getLastName());
-		      //  SavestudentData.setCollegeName(Data.getCollegeName());	
-		        SavestudentData.setStream(Data.getStream());	
-		        SavestudentData.setEnrollmentNo(Data.getEnrollmentNo());
-		        SavestudentData.setPassingYear(Data.getPassingYear());	
-		        //SavestudentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
-		      //  SavestudentData.setReason(reason);
-		        //SavestudentData.setBranch_nm(Data.getBranch_nm());
-		        SavestudentData.setSemester(Data.getSemester());
-		        SavestudentData.setMonthOfPassing(monthnm);
+				if (passingyr != null && sem != null && !Data.getEnrollmentNo().equals("") && month != null) {
+					// &&!Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
 
-		        savedStudDataList.add(SavestudentData);	
-		        
-				
+					// if(Data.getOriginalDOCuploadfilePath().equals("FileNotAvailable")) {
+					UniversityStudentDocument studentData = new UniversityStudentDocument();
+					UniversityStudDocResponse SavestudentData = new UniversityStudDocResponse();
+
+					// studentData.setFirstName(Data.getFirstName());
+					// studentData.setLastName(Data.getLastName());
+					// studentData.setCollegeId(collegeEntities.getId());
+					studentData.setStreamId(stream.getId());
+					studentData.setEnrollmentNo(Data.getEnrollmentNo());
+					studentData.setPassingYearId(passingyr.getId());
+					// studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+					studentData.setSemId(sem.getId());
+					// studentData.setBranchId(branch.getId());
+					studentData.setCreatedate(new Date());
+					studentData.setCreateby(userid.toString());
+					studentData.setMonthOfPassing(monthnm);
+					studentDataList.add(studentData);
+
+					// SavestudentData.setFirstName(Data.getFirstName());
+					// SavestudentData.setLastName(Data.getLastName());
+					// SavestudentData.setCollegeName(Data.getCollegeName());
+					SavestudentData.setStream(Data.getStream());
+					SavestudentData.setEnrollmentNo(Data.getEnrollmentNo());
+					SavestudentData.setPassingYear(Data.getPassingYear());
+					// SavestudentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+					// SavestudentData.setReason(reason);
+					// SavestudentData.setBranch_nm(Data.getBranch_nm());
+					SavestudentData.setSemester(Data.getSemester());
+					SavestudentData.setMonthOfPassing(monthnm);
+
+					savedStudDataList.add(SavestudentData);
+
 				}
-				
-					 else
-					 {	
-						 UniversityStudDocResponse studentData=new UniversityStudDocResponse();
-						 if(passingyr==null|| sem==null||stream==null||month==null) {
-						 reason="Invalid";
-						  if(stream==null) { 
-					    	   
-					    	   reason=reason+" Stream";
-						      if(passingyr==null||sem==null||month==null) { 
-						    	  
-							  reason=reason+",";
-						  
-						  } }
-						 
-							  if(passingyr==null)
-							 {
-								 reason=reason+" Year of Passing";
-								 if(sem==null||month==null)
-								 {
-									 reason=reason+",";
 
-								 }
+				else {
+					UniversityStudDocResponse studentData = new UniversityStudDocResponse();
+					if (passingyr == null || sem == null || stream == null || month == null) {
+						reason = "Invalid";
+						if (stream == null) {
 
-							 }
-							  if(sem==null)
-							 {
-								 reason=reason+" Semester";
+							reason = reason + " Stream";
+							if (passingyr == null || sem == null || month == null) {
+
+								reason = reason + ",";
+
+							}
+						}
+
+						if (passingyr == null) {
+							reason = reason + " Year of Passing";
+							if (sem == null || month == null) {
+								reason = reason + ",";
+
+							}
+
+						}
+						if (sem == null) {
+							reason = reason + " Semester";
 							/*
 							 * if(branch==null) { reason=reason+",";
 							 * 
@@ -849,50 +812,44 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 							 * } if(branch==null) { reason=reason+" Branch";
 							 * 
 							 */
-								 if(month==null)
-								 {
-									 reason=reason+",";
+							if (month == null) {
+								reason = reason + ",";
 
-								 }
-							 }
-							  if(month==null) {
-									
-									 reason=reason+" Month Of Passing";
+							}
+						}
+						if (month == null) {
 
-								 }
-						 }
+							reason = reason + " Month Of Passing";
+
+						}
+					}
 					/*
 					 * if(collegeEntities==null) { reason=reason+" College Name";
-					  if(stream==null||passingyr==null||sem==null||branch==null) {
-					  reason=reason+",";
+					 * if(stream==null||passingyr==null||sem==null||branch==null) {
+					 * reason=reason+",";
 					 * 
-					  }
-					  } */
-				     
-						/* if( Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
-							
-							 if(reason!=null) {
-								 reason=reason+", ImageNotAvailable";
+					 * } }
+					 */
 
-							 }
-							 else {
-								 reason=" ImageNotAvailable";
+					/*
+					 * if( Data.getOriginalDOCuploadfilePath().equals("ImageNotAvailable")) {
+					 * 
+					 * if(reason!=null) { reason=reason+", ImageNotAvailable";
+					 * 
+					 * } else { reason=" ImageNotAvailable";
+					 * 
+					 * } }
+					 */
 
-							 }
-						 }*/
-						
-						 if(Data.getEnrollmentNo()==null || Data.getEnrollmentNo().equals("") )
-						 {
-							 if(reason!=null) {
-								 reason=reason+" & Blank";
+					if (Data.getEnrollmentNo() == null || Data.getEnrollmentNo().equals("")) {
+						if (reason != null) {
+							reason = reason + " & Blank";
 
-							 }
-							 else {
-							 reason="Blank";
-							 }
-						 }
-						 
-						 
+						} else {
+							reason = "Blank";
+						}
+					}
+
 					/*
 					 * if(Data.getFirstName()==null || Data.getFirstName().equals("")) {
 					 * reason=reason+" First name"; if (Data.getLastName() == null ||
@@ -903,50 +860,48 @@ public class AssociateManagerServiceImpl implements AssociateManagerService{
 					 * reason=reason+" Last name"; if(Data.getEnrollmentNo()==null ||
 					 * Data.getEnrollmentNo().equals("")) { reason=reason+","; } }
 					 */
-						 if(Data.getEnrollmentNo()==null || Data.getEnrollmentNo().equals("") )
-						 {
-							 reason=reason+" Seat No";
-							
-						 }
-						
-					   // studentData.setFirstName(Data.getFirstName());
-				       // studentData.setLastName(Data.getLastName());
-				       // studentData.setCollegeName(Data.getCollegeName());
-				       // studentData.setBranch_nm(Data.getBranch_nm());
-				        studentData.setSemester(Data.getSemester());
-				        studentData.setStream(Data.getStream());	
-				        studentData.setEnrollmentNo(Data.getEnrollmentNo());
-				        studentData.setPassingYear(Data.getPassingYear());	
-				      //  studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
-				        studentData.setMonthOfPassing(Data.getMonthOfPassing());
-				        studentData.setReason(reason);
-				        rejectedData.add(studentData);				
-					 }
-			 }
-			 else
-			 {	 UniversityStudDocResponse studentData=new UniversityStudDocResponse();
-			 	reason="Duplicate record";
-			    //studentData.setFirstName(Data.getFirstName());
-		        //studentData.setLastName(Data.getLastName());
-		       // studentData.setCollegeName(Data.getCollegeName());	
-		        studentData.setStream(Data.getStream());	
-		       // studentData.setBranch_nm(Data.getBranch_nm());
-		        studentData.setSemester(Data.getSemester());
-		        studentData.setEnrollmentNo(Data.getEnrollmentNo());
-		        studentData.setPassingYear(Data.getPassingYear());	
-		        studentData.setMonthOfPassing(Data.getMonthOfPassing());	
-		    //    studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
-		        studentData.setReason(reason);
+					if (Data.getEnrollmentNo() == null || Data.getEnrollmentNo().equals("")) {
+						reason = reason + " Seat No";
 
-		        rejectedData.add(studentData);				
-			 }
-			
-		 }
-		 logger.info("rejectedData : "+rejectedData);
-		 universityStudentDocRepository.saveAll(studentDataList);
-		 datalist.put("savedStudentData", savedStudDataList);
-		 datalist.put("RejectedData", rejectedData);
-		 return datalist;
-		 
+					}
+
+					// studentData.setFirstName(Data.getFirstName());
+					// studentData.setLastName(Data.getLastName());
+					// studentData.setCollegeName(Data.getCollegeName());
+					// studentData.setBranch_nm(Data.getBranch_nm());
+					studentData.setSemester(Data.getSemester());
+					studentData.setStream(Data.getStream());
+					studentData.setEnrollmentNo(Data.getEnrollmentNo());
+					studentData.setPassingYear(Data.getPassingYear());
+					// studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+					studentData.setMonthOfPassing(Data.getMonthOfPassing());
+					studentData.setReason(reason);
+					rejectedData.add(studentData);
+				}
+			} else {
+				UniversityStudDocResponse studentData = new UniversityStudDocResponse();
+				reason = "Duplicate record";
+				// studentData.setFirstName(Data.getFirstName());
+				// studentData.setLastName(Data.getLastName());
+				// studentData.setCollegeName(Data.getCollegeName());
+				studentData.setStream(Data.getStream());
+				// studentData.setBranch_nm(Data.getBranch_nm());
+				studentData.setSemester(Data.getSemester());
+				studentData.setEnrollmentNo(Data.getEnrollmentNo());
+				studentData.setPassingYear(Data.getPassingYear());
+				studentData.setMonthOfPassing(Data.getMonthOfPassing());
+				// studentData.setOriginalDOCuploadfilePath(Data.getOriginalDOCuploadfilePath());
+				studentData.setReason(reason);
+
+				rejectedData.add(studentData);
+			}
+
+		}
+		logger.info("rejectedData : " + rejectedData);
+		universityStudentDocRepository.saveAll(studentDataList);
+		datalist.put("savedStudentData", savedStudDataList);
+		datalist.put("RejectedData", rejectedData);
+		return datalist;
+
 	}
 }
