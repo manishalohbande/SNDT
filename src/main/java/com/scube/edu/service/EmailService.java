@@ -965,7 +965,7 @@ public class EmailService {
 			if(vr.getDocStatus().equalsIgnoreCase("UN_Approved_Pass")||vr.getDocStatus().equalsIgnoreCase("SVD_Approved_Pass")) {
 			
 			para.add(
-					"          With reference to your application for Verification of the educational document , this is to inform you that the contents of the photocopy of the Statement Of Marks of the below mentioned candidate received along with your letter have been verified and found correct.(Pass)");
+					"          With reference to your application for Verification of the educational document , this is to inform you that the contents of the photocopy of the Statement Of Marks of the below mentioned candidate received along with your letter have been verified and found correct(Pass).");
 			para.add(Chunk.NEWLINE);
 			para.add(Chunk.NEWLINE);
 			}

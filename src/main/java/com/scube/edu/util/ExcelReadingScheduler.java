@@ -44,7 +44,6 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.scube.edu.awsconfig.FileStore;
 import com.scube.edu.model.checkautoReadingActiveEntity;
 import com.scube.edu.repository.ChkAutoReadingStatus;
-import com.scube.edu.request.AssociateExcelRequest;
 import com.scube.edu.response.UniversityStudDocResponse;
 import com.scube.edu.service.AssociateManagerService;
 import com.scube.edu.service.AssociateManagerServiceImpl;
@@ -108,7 +107,7 @@ public class ExcelReadingScheduler {
 				chkAutoReadingStatus.updateFlg(statusflag);
 
 		logger.info("********Enterning ExcelReadingScheduler readExcelFiles********");
-		List<AssociateExcelRequest> studentDataReviewList = new ArrayList<AssociateExcelRequest>();
+		List<UniversityStudDocResponse> studentDataReviewList = new ArrayList<UniversityStudDocResponse>();
 		List<UniversityStudDocResponse> invalidRecordList = new ArrayList<UniversityStudDocResponse>();
 
 		String imagefile = null;
@@ -152,7 +151,7 @@ public class ExcelReadingScheduler {
 			
 			String[] datalist = line.split(",");
 			logger.info("" + datalist);
-			AssociateExcelRequest studentData = new AssociateExcelRequest();
+			UniversityStudDocResponse studentData = new UniversityStudDocResponse();
 			UniversityStudDocResponse invalidRecord = new UniversityStudDocResponse();
 
            if(check ==1) {
@@ -202,10 +201,10 @@ public class ExcelReadingScheduler {
 
 				}
 			 else if (k == 6) {
-					studentData.setSemTotalMax(datalist[6]);
+					studentData.setSemTotalMax(Integer.valueOf(datalist[6]));
 			}
 			 else if (k == 7) {
-					studentData.setSemGradeTotal(datalist[7]);
+					studentData.setSemGradeTotal(Integer.valueOf(datalist[7]));
 
 					
 				} else if (k == 8) {
@@ -217,26 +216,26 @@ public class ExcelReadingScheduler {
 
 					
 				} else if (k == 10) {
-					studentData.setSemGpa(datalist[10]);
+					studentData.setSemGpa(Double.valueOf(datalist[10]));
 
 					
 				} else if (k == 11) {
 					studentData.setSemGrade(datalist[11]);
 
 				} else if (k == 12) {
-					studentData.setGradeTotal(datalist[12]);
+					studentData.setGradeTotal(Integer.valueOf(datalist[12]));
 
 				} else if (k == 13) {
 					studentData.setClassGrace(datalist[13]);
 
 				} else if (k == 14) {
-					studentData.setMaxGrTotal(datalist[14]);
+					studentData.setMaxGrTotal(Integer.valueOf(datalist[14]));
 
 				} else if (k == 15) {
-					studentData.setCredTotal(datalist[15]);
+					studentData.setCredTotal(Integer.valueOf(datalist[15]));
 
 				} else if (k == 16) {
-					studentData.setGpa(datalist[16]);
+					studentData.setGpa(Double.valueOf(datalist[16]));
 
 				} else if (k == 17) {
 					studentData.setFgrade(datalist[17]);
@@ -255,16 +254,16 @@ public class ExcelReadingScheduler {
 					studentData.setSubNmOne(datalist[21]);
 
 				} else if (k == 22) {
-					studentData.setCreditSubOne(datalist[22]);
+					studentData.setCreditSubOne(Integer.valueOf(datalist[22]));
 
 				} else if (k == 23) {
-					studentData.setIntSubOne(datalist[23]);
+					studentData.setIntSubOne(Integer.valueOf(datalist[23]));
 
 				} else if (k == 24) {
-					studentData.setExtSubOne(datalist[24]);
+					studentData.setExtSubOne(Integer.valueOf(datalist[24]));
 
 				} else if (k == 25) {
-					studentData.setTotalSubOne(datalist[25]);
+					studentData.setTotalSubOne(Integer.valueOf(datalist[25]));
 
 				} else if (k == 26) {
 					studentData.setGraceSubOne(datalist[26]);
@@ -272,13 +271,13 @@ public class ExcelReadingScheduler {
 					studentData.setPrvFlgSubOne(datalist[27]);
 
 				} else if (k == 28) {
-					studentData.setMaxExtSubOne(datalist[28]);
+					studentData.setMaxExtSubOne(Integer.valueOf(datalist[28]));
 
 				} else if (k == 29) {
-					studentData.setMaxIntSubOne(datalist[29]);
+					studentData.setMaxIntSubOne(Integer.valueOf(datalist[29]));
 
 				} else if (k == 30) {
-					studentData.setMaxTotalSubOne(datalist[30]);
+					studentData.setMaxTotalSubOne(Integer.valueOf(datalist[30]));
 
 				} else if (k == 31) {
 					studentData.setGradeSubOne(datalist[31]);
@@ -289,23 +288,23 @@ public class ExcelReadingScheduler {
 				} else if (k == 33) {
 				studentData.setSubNmTwo(datalist[33]);
 				} else if (k == 34) {
-				studentData.setCreditSubTwo(datalist[34]);
+				studentData.setCreditSubTwo(Integer.valueOf(datalist[34]));
 				} else if (k == 35) {
-				studentData.setIntSubTwo(datalist[35]);
+				studentData.setIntSubTwo(Integer.valueOf(datalist[35]));
 				} else if (k == 36) {
-				studentData.setExtSubTwo(datalist[36]);
+				studentData.setExtSubTwo(Integer.valueOf(datalist[36]));
 				} else if (k == 37) {
-				studentData.setTotalSubTwo(datalist[37]);
+				studentData.setTotalSubTwo(Integer.valueOf(datalist[37]));
 				} else if (k == 38) {
 				studentData.setGraceSubTwo(datalist[38]);
 				} else if (k == 39) {
 				studentData.setPrvFlgSubTwo(datalist[39]);
 				} else if (k == 40) {
-				studentData.setMaxExtSubTwo(datalist[40]);
+				studentData.setMaxExtSubTwo(Integer.valueOf(datalist[40]));
 				} else if (k == 41) {
-				studentData.setMaxIntSubTwo(datalist[41]);
+				studentData.setMaxIntSubTwo(Integer.valueOf(datalist[41]));
 				} else if (k == 42) {
-				studentData.setMaxTotalSubTwo(datalist[42]);
+				studentData.setMaxTotalSubTwo(Integer.valueOf(datalist[42]));
 				} else if (k == 43) {
 				studentData.setGradeSubTwo(datalist[43]);
 				} 
@@ -315,23 +314,23 @@ public class ExcelReadingScheduler {
 				} else if (k == 45) {
 				studentData.setSubNmThree(datalist[45]);
 				} else if (k == 46) {
-				studentData.setCreditSubThree(datalist[46]);
+				studentData.setCreditSubThree(Integer.valueOf(datalist[46]));
 				} else if (k == 47) {
-				studentData.setIntSubThree(datalist[47]);
+				studentData.setIntSubThree(Integer.valueOf(datalist[47]));
 				} else if (k == 48) {
-				studentData.setExtSubThree(datalist[48]);
+				studentData.setExtSubThree(Integer.valueOf(datalist[48]));
 				} else if (k == 49) {
-				studentData.setTotalSubThree(datalist[49]);
+				studentData.setTotalSubThree(Integer.valueOf(datalist[49]));
 				} else if (k == 50) {
 				studentData.setGraceSubThree(datalist[50]);
 				} else if (k == 51) {
 				studentData.setPrvFlgSubThree(datalist[51]);
 				} else if (k == 52) {
-				studentData.setMaxExtSubThree(datalist[52]);
+				studentData.setMaxExtSubThree(Integer.valueOf(datalist[52]));
 				} else if (k == 53) {
-				studentData.setMaxIntSubThree(datalist[53]);
+				studentData.setMaxIntSubThree(Integer.valueOf(datalist[53]));
 				} else if (k == 54) {
-				studentData.setMaxTotalSubThree(datalist[54]);
+				studentData.setMaxTotalSubThree(Integer.valueOf(datalist[54]));
 				} else if (k == 55) {
 				studentData.setGradeSubThree(datalist[55]);
 				} else if (k == 56) {
@@ -340,23 +339,23 @@ public class ExcelReadingScheduler {
 				} else if (k == 57) {
 				studentData.setSubNmFour(datalist[57]);
 				} else if (k == 58) {
-				studentData.setCreditSubFour(datalist[58]);
+				studentData.setCreditSubFour(Integer.valueOf(datalist[58]));
 				} else if (k == 59) {
-				studentData.setIntSubFour(datalist[59]);
+				studentData.setIntSubFour(Integer.valueOf(datalist[59]));
 				} else if (k == 60) {
-				studentData.setExtSubFour(datalist[60]);
+				studentData.setExtSubFour(Integer.valueOf(datalist[60]));
 				} else if (k == 61) {
-				studentData.setTotalSubFour(datalist[61]);
+				studentData.setTotalSubFour(Integer.valueOf(datalist[61]));
 				} else if (k == 62) {
 				studentData.setGraceSubFour(datalist[62]);
 				} else if (k == 63) {
 				studentData.setPrvFlgSubFour(datalist[63]);
 				} else if (k == 64) {
-				studentData.setMaxExtSubFour(datalist[64]);
+				studentData.setMaxExtSubFour(Integer.valueOf(datalist[64]));
 				} else if (k == 65) {
-				studentData.setMaxIntSubFour(datalist[65]);
+				studentData.setMaxIntSubFour(Integer.valueOf(datalist[65]));
 				} else if (k == 66) {
-				studentData.setMaxTotalSubFour(datalist[66]);
+				studentData.setMaxTotalSubFour(Integer.valueOf(datalist[66]));
 				} else if (k == 67) {
 				studentData.setGradeSubFour(datalist[67]);
 				} else if (k == 68) {
@@ -365,23 +364,23 @@ public class ExcelReadingScheduler {
 				} else if (k == 69) {
 				studentData.setSubNmFive(datalist[69]);
 				} else if (k == 70) {
-				studentData.setCreditSubFive(datalist[70]);
+				studentData.setCreditSubFive(Integer.valueOf(datalist[70]));
 				} else if (k == 71) {
-				studentData.setIntSubFive(datalist[71]);
+				studentData.setIntSubFive(Integer.valueOf(datalist[71]));
 				} else if (k == 72) {
-				studentData.setExtSubFive(datalist[72]);
+				studentData.setExtSubFive(Integer.valueOf(datalist[72]));
 				} else if (k == 73) {
-				studentData.setTotalSubFive(datalist[73]);
+				studentData.setTotalSubFive(Integer.valueOf(datalist[73]));
 				} else if (k == 74) {
 				studentData.setGraceSubFive(datalist[74]);
 				} else if (k == 75) {
 				studentData.setPrvFlgSubFive(datalist[75]);
 				} else if (k == 76) {
-				studentData.setMaxExtSubFive(datalist[76]);
+				studentData.setMaxExtSubFive(Integer.valueOf(datalist[76]));
 				} else if (k == 77) {
-				studentData.setMaxIntSubFive(datalist[77]);
+				studentData.setMaxIntSubFive(Integer.valueOf(datalist[77]));
 				} else if (k == 78) {
-				studentData.setMaxTotalSubFive(datalist[78]);
+				studentData.setMaxTotalSubFive(Integer.valueOf(datalist[78]));
 				} else if (k == 79) {
 				studentData.setGradeSubFive(datalist[79]);
 				} else if (k == 80) {
@@ -390,23 +389,23 @@ public class ExcelReadingScheduler {
 				} else if (k == 81) {
 				studentData.setSubNmSix(datalist[81]);
 				} else if (k == 82) {
-				studentData.setCreditSubSix(datalist[82]);
+				studentData.setCreditSubSix(Integer.valueOf(datalist[82]));
 				} else if (k == 83) {
-				studentData.setIntSubSix(datalist[83]);
+				studentData.setIntSubSix(Integer.valueOf(datalist[83]));
 				} else if (k == 84) {
-				studentData.setExtSubSix(datalist[84]);
+				studentData.setExtSubSix(Integer.valueOf(datalist[84]));
 				} else if (k == 85) {
-				studentData.setTotalSubSix(datalist[85]);
+				studentData.setTotalSubSix(Integer.valueOf(datalist[85]));
 				} else if (k == 86) {
 				studentData.setGraceSubSix(datalist[86]);
 				} else if (k == 87) {
 				studentData.setPrvFlgSubSix(datalist[87]);
 				} else if (k == 88) {
-				studentData.setMaxExtSubSix(datalist[88]);
+				studentData.setMaxExtSubSix(Integer.valueOf(datalist[88]));
 				} else if (k == 89) {
-				studentData.setMaxIntSubSix(datalist[89]);
+				studentData.setMaxIntSubSix(Integer.valueOf(datalist[89]));
 				} else if (k == 90) {
-				studentData.setMaxTotalSubSix(datalist[90]);
+				studentData.setMaxTotalSubSix(Integer.valueOf(datalist[90]));
 				} else if (k == 91) {
 				studentData.setGradeSubSix(datalist[91]);
 				} 
@@ -416,8 +415,9 @@ public class ExcelReadingScheduler {
 				catch(Exception e) {
 					invalidRecord.setSemester(sem);
 					invalidRecord.setReason("Invalid record Entry");
-					invalidRecordList.add(invalidRecord);
+					invalidRecordList.add(invalidRecord);	
 				}
+			
 			}
 			studentData.setPassingYear(year);
 			studentData.setMonthOfPassing(month);
@@ -454,11 +454,8 @@ public class ExcelReadingScheduler {
 		// reader.close();
 		long id = 0000;
 		
-		List<AssociateExcelRequest> dataList=new ArrayList<>();
-		HashMap<String, List<UniversityStudDocResponse>> resp=null ;
-						/*
-						 * = associateManagerService .saveStudentInfo(studentDataReviewList, id);
-						 */
+		HashMap<String, List<UniversityStudDocResponse>> resp = associateManagerService
+				.AutosaveStudentInfo(studentDataReviewList, id);
 
 		if (resp.get("RejectedData") != null && !resp.get("RejectedData").isEmpty()) {
 			List<UniversityStudDocResponse> response = resp.get("RejectedData");
@@ -507,7 +504,7 @@ public class ExcelReadingScheduler {
 
 			//fileStorageService.MoveCsvAndImgToArchive(targetStream, emailexcelstorePath.getName(), "2");
 
-			emailService.sendRejectedDatamail(emailexcelstorePath);
+			//emailService.sendRejectedDatamail(emailexcelstorePath);
 		
 			if(emailexcelstorePath.delete())
 	        {
