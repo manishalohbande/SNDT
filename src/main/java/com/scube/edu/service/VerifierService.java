@@ -23,6 +23,6 @@ public interface VerifierService {
 
 	public Integer  updateListonLogout (long id) throws Exception;
 
-	public List<UniversityResponse> getUniTabularData(String prnNo, long semesterId);
+	public List<UniversityResponse> getUniTabularData(String prnNo, long semesterId) throws Exception;
 
 }
