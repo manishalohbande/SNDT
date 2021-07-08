@@ -37,6 +37,7 @@ import com.scube.edu.repository.SemesterRepository;
 import com.scube.edu.repository.StreamRepository;
 import com.scube.edu.repository.UniversityStudentDocRepository;
 import com.scube.edu.repository.YearOfPassingRepository;
+import com.scube.edu.request.AssociateExcelRequest;
 import com.scube.edu.request.UniversityStudentRequest;
 import com.scube.edu.response.UniversityResponse;
 import com.scube.edu.response.UniversityStudDocResponse;
@@ -78,7 +79,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 	private XSSFWorkbook workbook;
 
 	@Override
-	public HashMap<String, List<UniversityStudDocResponse>> saveStudentInfo(List<UniversityStudDocResponse> list,
+	public HashMap<String, List<UniversityStudDocResponse>> saveStudentInfo(List<AssociateExcelRequest> list,
 			Long userid) throws IOException {
 
 		List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
@@ -88,7 +89,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 		List<UniversityStudDocResponse> rejectedData = new ArrayList<UniversityStudDocResponse>();
 		HashMap<String, List<UniversityStudDocResponse>> datalist = new HashMap<String, List<UniversityStudDocResponse>>();
 
-		for (UniversityStudDocResponse Data : list) {
+		for (AssociateExcelRequest Data : list) {
 
 			Long clgnm = null;
 			Long passyr = null;
@@ -144,7 +145,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 			 */
 
 			// docEntity=universityStudentDocRepository.findByEnrollmentNoAndStreamIdAndPassingYearIdAndSemIdAndMonthOfPassing(enrollNo,strm,passyr,semId,monthnm);
-			docEntity = universityStudentDocRepository.findByPrnNoAndSemId(Data.getPrnNo(), semId);
+			docEntity = universityStudentDocRepository.findByPrnNoAndSemIdAndPassingYearId(Data.getPrnNo(), semId,passyr);
 			String reason = null;
 			if (docEntity == null) {
 
@@ -157,6 +158,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 
 					// studentData.setFirstName(Data.getFirstName());
 					// studentData.setLastName(Data.getLastName());
+					try {
 					studentData.setCollegeId(clgnm);
 					studentData.setStreamId(stream.getId());
 					studentData.setEnrollmentNo(Data.getEnrollmentNo());
@@ -168,100 +170,101 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 					studentData.setIsdeleted("N");
 					studentData.setCreateby(userid.toString());
 					studentData.setMonthOfPassing(monthnm);
+					
 					studentData.setPrnNo(Data.getPrnNo());
 					studentData.setCenter(Data.getCenter());
 					studentData.setMedDesc(Data.getMedDesc());
 					studentData.setStudentName(Data.getStudentName());
-					studentData.setSemTotalMax(Data.getSemTotalMax());
-					studentData.setSemGradeTotal(Data.getSemGradeTotal());
+					studentData.setSemTotalMax(Integer.valueOf(Data.getSemTotalMax()));
+					studentData.setSemGradeTotal(Integer.valueOf(Data.getSemGradeTotal()));
 					studentData.setSemGrace(Data.getSemGrace());
 					studentData.setSemclass(Data.getSemclass());
-					studentData.setSemGpa(Data.getSemGpa());
+					studentData.setSemGpa(Double.valueOf(Data.getSemGpa()));
 					studentData.setSemGrade(Data.getSemGrade());
-					studentData.setGradeTotal(Data.getGradeTotal());
+					studentData.setGradeTotal(Integer.valueOf(Data.getGradeTotal()));
 					studentData.setClassGrace(Data.getClassGrace());
-					studentData.setMaxGrTotal(Data.getMaxGrTotal());
-					studentData.setCredTotal(Data.getCredTotal());
-					studentData.setGpa(Data.getGpa());
+					studentData.setMaxGrTotal(Integer.valueOf(Data.getMaxGrTotal()));
+					studentData.setCredTotal(Integer.valueOf(Data.getCredTotal()));
+					studentData.setGpa(Double.valueOf(Data.getGpa()));
 					studentData.setFgrade(Data.getFgrade());
 					studentData.setResultDesc(Data.getResultDesc());
 					studentData.setInceDesc(Data.getInceDesc());
 					studentData.setSubOne(Data.getSubOne());
 					studentData.setSubNmOne(Data.getSubNmOne());
-					studentData.setCreditSubOne(Data.getCreditSubOne());
-					studentData.setIntSubOne(Data.getIntSubOne());
-					studentData.setExtSubOne(Data.getExtSubOne());
-					studentData.setTotalSubOne(Data.getTotalSubOne());
+					studentData.setCreditSubOne(Integer.valueOf(Data.getCreditSubOne()));
+					studentData.setIntSubOne(Integer.valueOf(Data.getIntSubOne()));
+					studentData.setExtSubOne(Integer.valueOf(Data.getExtSubOne()));
+					studentData.setTotalSubOne(Integer.valueOf(Data.getTotalSubOne()));
 					studentData.setGraceSubOne(Data.getGraceSubOne());
 					studentData.setPrvFlgSubOne(Data.getPrvFlgSubOne());
-					studentData.setMaxExtSubOne(Data.getMaxExtSubOne());
-					studentData.setMaxIntSubOne(Data.getMaxIntSubOne());
-					studentData.setMaxTotalSubOne(Data.getMaxTotalSubOne());
+					studentData.setMaxExtSubOne(Integer.valueOf(Data.getMaxExtSubOne()));
+					studentData.setMaxIntSubOne(Integer.valueOf(Data.getMaxIntSubOne()));
+					studentData.setMaxTotalSubOne(Integer.valueOf(Data.getMaxTotalSubOne()));
 					studentData.setGradeSubOne(Data.getGradeSubOne());
 
 					studentData.setSubTwo(Data.getSubTwo());
 					studentData.setSubNmTwo(Data.getSubNmTwo());
-					studentData.setCreditSubTwo(Data.getCreditSubTwo());
-					studentData.setIntSubTwo(Data.getIntSubTwo());
-					studentData.setExtSubTwo(Data.getExtSubTwo());
-					studentData.setTotalSubTwo(Data.getTotalSubTwo());
+					studentData.setCreditSubTwo(Integer.valueOf(Data.getCreditSubTwo()));
+					studentData.setIntSubTwo(Integer.valueOf(Data.getIntSubTwo()));
+					studentData.setExtSubTwo(Integer.valueOf(Data.getExtSubTwo()));
+					studentData.setTotalSubTwo(Integer.valueOf(Data.getTotalSubTwo()));
 					studentData.setGraceSubTwo(Data.getGraceSubTwo());
 					studentData.setPrvFlgSubTwo(Data.getPrvFlgSubTwo());
-					studentData.setMaxExtSubTwo(Data.getMaxExtSubTwo());
-					studentData.setMaxIntSubTwo(Data.getMaxIntSubTwo());
-					studentData.setMaxTotalSubTwo(Data.getMaxTotalSubTwo());
+					studentData.setMaxExtSubTwo(Integer.valueOf(Data.getMaxExtSubTwo()));
+					studentData.setMaxIntSubTwo(Integer.valueOf(Data.getMaxIntSubTwo()));
+					studentData.setMaxTotalSubTwo(Integer.valueOf(Data.getMaxTotalSubTwo()));
 					studentData.setGradeSubTwo(Data.getGradeSubTwo());
 
 					studentData.setSubThree(Data.getSubThree());
 					studentData.setSubNmThree(Data.getSubNmThree());
-					studentData.setCreditSubThree(Data.getCreditSubThree());
-					studentData.setIntSubThree(Data.getIntSubThree());
-					studentData.setExtSubThree(Data.getExtSubThree());
-					studentData.setTotalSubThree(Data.getTotalSubThree());
+					studentData.setCreditSubThree(Integer.valueOf(Data.getCreditSubThree()));
+					studentData.setIntSubThree(Integer.valueOf(Data.getIntSubThree()));
+					studentData.setExtSubThree(Integer.valueOf(Data.getExtSubThree()));
+					studentData.setTotalSubThree(Integer.valueOf(Data.getTotalSubThree()));
 					studentData.setGraceSubThree(Data.getGraceSubThree());
 					studentData.setPrvFlgSubThree(Data.getPrvFlgSubThree());
-					studentData.setMaxExtSubThree(Data.getMaxExtSubThree());
-					studentData.setMaxIntSubThree(Data.getMaxIntSubThree());
-					studentData.setMaxTotalSubThree(Data.getMaxTotalSubThree());
+					studentData.setMaxExtSubThree(Integer.valueOf(Data.getMaxExtSubThree()));
+					studentData.setMaxIntSubThree(Integer.valueOf(Data.getMaxIntSubThree()));
+					studentData.setMaxTotalSubThree(Integer.valueOf(Data.getMaxTotalSubThree()));
 					studentData.setGradeSubThree(Data.getGradeSubThree());
 
 					studentData.setSubFour(Data.getSubFour());
 					studentData.setSubNmFour(Data.getSubNmFour());
-					studentData.setCreditSubFour(Data.getCreditSubFour());
-					studentData.setIntSubFour(Data.getIntSubFour());
-					studentData.setExtSubFour(Data.getExtSubFour());
-					studentData.setTotalSubFour(Data.getTotalSubFour());
+					studentData.setCreditSubFour(Integer.valueOf(Data.getCreditSubFour()));
+					studentData.setIntSubFour(Integer.valueOf(Data.getIntSubFour()));
+					studentData.setExtSubFour(Integer.valueOf(Data.getExtSubFour()));
+					studentData.setTotalSubFour(Integer.valueOf(Data.getTotalSubFour()));
 					studentData.setGraceSubFour(Data.getGraceSubFour());
 					studentData.setPrvFlgSubFour(Data.getPrvFlgSubFour());
-					studentData.setMaxExtSubFour(Data.getMaxExtSubFour());
-					studentData.setMaxIntSubFour(Data.getMaxIntSubFour());
-					studentData.setMaxTotalSubFour(Data.getMaxTotalSubFour());
+					studentData.setMaxExtSubFour(Integer.valueOf(Data.getMaxExtSubFour()));
+					studentData.setMaxIntSubFour(Integer.valueOf(Data.getMaxIntSubFour()));
+					studentData.setMaxTotalSubFour(Integer.valueOf(Data.getMaxTotalSubFour()));
 					studentData.setGradeSubFour(Data.getGradeSubFour());
 
 					studentData.setSubFive(Data.getSubFive());
 					studentData.setSubNmFive(Data.getSubNmFive());
-					studentData.setCreditSubFive(Data.getCreditSubFive());
-					studentData.setIntSubFive(Data.getIntSubFive());
-					studentData.setExtSubFive(Data.getExtSubFive());
-					studentData.setTotalSubFive(Data.getTotalSubFive());
+					studentData.setCreditSubFive(Integer.valueOf(Data.getCreditSubFive()));
+					studentData.setIntSubFive(Integer.valueOf(Data.getIntSubFive()));
+					studentData.setExtSubFive(Integer.valueOf(Data.getExtSubFive()));
+					studentData.setTotalSubFive(Integer.valueOf(Data.getTotalSubFive()));
 					studentData.setGraceSubFive(Data.getGraceSubFive());
 					studentData.setPrvFlgSubFive(Data.getPrvFlgSubFive());
-					studentData.setMaxExtSubFive(Data.getMaxExtSubFive());
-					studentData.setMaxIntSubFive(Data.getMaxIntSubFive());
-					studentData.setMaxTotalSubFive(Data.getMaxTotalSubFive());
+					studentData.setMaxExtSubFive(Integer.valueOf(Data.getMaxExtSubFive()));
+					studentData.setMaxIntSubFive(Integer.valueOf(Data.getMaxIntSubFive()));
+					studentData.setMaxTotalSubFive(Integer.valueOf(Data.getMaxTotalSubFive()));
 					studentData.setGradeSubFive(Data.getGradeSubFive());
 
 					studentData.setSubSix(Data.getSubSix());
 					studentData.setSubNmSix(Data.getSubNmSix());
-					studentData.setCreditSubSix(Data.getCreditSubSix());
-					studentData.setIntSubSix(Data.getIntSubSix());
-					studentData.setExtSubSix(Data.getExtSubSix());
-					studentData.setTotalSubSix(Data.getTotalSubSix());
+					studentData.setCreditSubSix(Integer.valueOf(Data.getCreditSubSix()));
+					studentData.setIntSubSix(Integer.valueOf(Data.getIntSubSix()));
+					studentData.setExtSubSix(Integer.valueOf(Data.getExtSubSix()));
+					studentData.setTotalSubSix(Integer.valueOf(Data.getTotalSubSix()));
 					studentData.setGraceSubSix(Data.getGraceSubSix());
 					studentData.setPrvFlgSubSix(Data.getPrvFlgSubSix());
-					studentData.setMaxExtSubSix(Data.getMaxExtSubSix());
-					studentData.setMaxIntSubSix(Data.getMaxIntSubSix());
-					studentData.setMaxTotalSubSix(Data.getMaxTotalSubSix());
+					studentData.setMaxExtSubSix(Integer.valueOf(Data.getMaxExtSubSix()));
+					studentData.setMaxIntSubSix(Integer.valueOf(Data.getMaxIntSubSix()));
+					studentData.setMaxTotalSubSix(Integer.valueOf(Data.getMaxTotalSubSix()));
 					studentData.setGradeSubSix(Data.getGradeSubSix());
 					studentDataList.add(studentData);
 
@@ -269,96 +272,96 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 					studentData.setCenter(Data.getCenter());
 					studentData.setMedDesc(Data.getMedDesc());
 					studentData.setStudentName(Data.getStudentName());
-					studentData.setSemTotalMax(Data.getSemTotalMax());
-					studentData.setSemGradeTotal(Data.getSemGradeTotal());
+					studentData.setSemTotalMax(Integer.valueOf(Data.getSemTotalMax()));
+					studentData.setSemGradeTotal(Integer.valueOf(Data.getSemGradeTotal()));
 					studentData.setSemGrace(Data.getSemGrace());
 					studentData.setSemclass(Data.getSemclass());
-					studentData.setSemGpa(Data.getSemGpa());
+					studentData.setSemGpa(Double.valueOf(Data.getSemGpa()));
 					studentData.setSemGrade(Data.getSemGrade());
-					studentData.setGradeTotal(Data.getGradeTotal());
+					studentData.setGradeTotal(Integer.valueOf(Data.getGradeTotal()));
 					studentData.setClassGrace(Data.getClassGrace());
-					studentData.setMaxGrTotal(Data.getMaxGrTotal());
-					studentData.setCredTotal(Data.getCredTotal());
-					studentData.setGpa(Data.getGpa());
+					studentData.setMaxGrTotal(Integer.valueOf(Data.getMaxGrTotal()));
+					studentData.setCredTotal(Integer.valueOf(Data.getCredTotal()));
+					studentData.setGpa(Double.valueOf(Data.getGpa()));
 					studentData.setFgrade(Data.getFgrade());
 					studentData.setResultDesc(Data.getResultDesc());
 					studentData.setInceDesc(Data.getInceDesc());
 					studentData.setSubOne(Data.getSubOne());
 					studentData.setSubNmOne(Data.getSubNmOne());
-					studentData.setCreditSubOne(Data.getCreditSubOne());
-					studentData.setIntSubOne(Data.getIntSubOne());
-					studentData.setExtSubOne(Data.getExtSubOne());
-					studentData.setTotalSubOne(Data.getTotalSubOne());
+					studentData.setCreditSubOne(Integer.valueOf(Data.getCreditSubOne()));
+					studentData.setIntSubOne(Integer.valueOf(Data.getIntSubOne()));
+					studentData.setExtSubOne(Integer.valueOf(Data.getExtSubOne()));
+					studentData.setTotalSubOne(Integer.valueOf(Data.getTotalSubOne()));
 					studentData.setGraceSubOne(Data.getGraceSubOne());
 					studentData.setPrvFlgSubOne(Data.getPrvFlgSubOne());
-					studentData.setMaxExtSubOne(Data.getMaxExtSubOne());
-					studentData.setMaxIntSubOne(Data.getMaxIntSubOne());
-					studentData.setMaxTotalSubOne(Data.getMaxTotalSubOne());
+					studentData.setMaxExtSubOne(Integer.valueOf(Data.getMaxExtSubOne()));
+					studentData.setMaxIntSubOne(Integer.valueOf(Data.getMaxIntSubOne()));
+					studentData.setMaxTotalSubOne(Integer.valueOf(Data.getMaxTotalSubOne()));
 					studentData.setGradeSubOne(Data.getGradeSubOne());
 
 					studentData.setSubTwo(Data.getSubTwo());
 					studentData.setSubNmTwo(Data.getSubNmTwo());
-					studentData.setCreditSubTwo(Data.getCreditSubTwo());
-					studentData.setIntSubTwo(Data.getIntSubTwo());
-					studentData.setExtSubTwo(Data.getExtSubTwo());
-					studentData.setTotalSubTwo(Data.getTotalSubTwo());
+					studentData.setCreditSubTwo(Integer.valueOf(Data.getCreditSubTwo()));
+					studentData.setIntSubTwo(Integer.valueOf(Data.getIntSubTwo()));
+					studentData.setExtSubTwo(Integer.valueOf(Data.getExtSubTwo()));
+					studentData.setTotalSubTwo(Integer.valueOf(Data.getTotalSubTwo()));
 					studentData.setGraceSubTwo(Data.getGraceSubTwo());
 					studentData.setPrvFlgSubTwo(Data.getPrvFlgSubTwo());
-					studentData.setMaxExtSubTwo(Data.getMaxExtSubTwo());
-					studentData.setMaxIntSubTwo(Data.getMaxIntSubTwo());
-					studentData.setMaxTotalSubTwo(Data.getMaxTotalSubTwo());
+					studentData.setMaxExtSubTwo(Integer.valueOf(Data.getMaxExtSubTwo()));
+					studentData.setMaxIntSubTwo(Integer.valueOf(Data.getMaxIntSubTwo()));
+					studentData.setMaxTotalSubTwo(Integer.valueOf(Data.getMaxTotalSubTwo()));
 					studentData.setGradeSubTwo(Data.getGradeSubTwo());
 
 					studentData.setSubThree(Data.getSubThree());
 					studentData.setSubNmThree(Data.getSubNmThree());
-					studentData.setCreditSubThree(Data.getCreditSubThree());
-					studentData.setIntSubThree(Data.getIntSubThree());
-					studentData.setExtSubThree(Data.getExtSubThree());
-					studentData.setTotalSubThree(Data.getTotalSubThree());
+					studentData.setCreditSubThree(Integer.valueOf(Data.getCreditSubThree()));
+					studentData.setIntSubThree(Integer.valueOf(Data.getIntSubThree()));
+					studentData.setExtSubThree(Integer.valueOf(Data.getExtSubThree()));
+					studentData.setTotalSubThree(Integer.valueOf(Data.getTotalSubThree()));
 					studentData.setGraceSubThree(Data.getGraceSubThree());
 					studentData.setPrvFlgSubThree(Data.getPrvFlgSubThree());
-					studentData.setMaxExtSubThree(Data.getMaxExtSubThree());
-					studentData.setMaxIntSubThree(Data.getMaxIntSubThree());
-					studentData.setMaxTotalSubThree(Data.getMaxTotalSubThree());
+					studentData.setMaxExtSubThree(Integer.valueOf(Data.getMaxExtSubThree()));
+					studentData.setMaxIntSubThree(Integer.valueOf(Data.getMaxIntSubThree()));
+					studentData.setMaxTotalSubThree(Integer.valueOf(Data.getMaxTotalSubThree()));
 					studentData.setGradeSubThree(Data.getGradeSubThree());
 
 					studentData.setSubFour(Data.getSubFour());
 					studentData.setSubNmFour(Data.getSubNmFour());
-					studentData.setCreditSubFour(Data.getCreditSubFour());
-					studentData.setIntSubFour(Data.getIntSubFour());
-					studentData.setExtSubFour(Data.getExtSubFour());
-					studentData.setTotalSubFour(Data.getTotalSubFour());
+					studentData.setCreditSubFour(Integer.valueOf(Data.getCreditSubFour()));
+					studentData.setIntSubFour(Integer.valueOf(Data.getIntSubFour()));
+					studentData.setExtSubFour(Integer.valueOf(Data.getExtSubFour()));
+					studentData.setTotalSubFour(Integer.valueOf(Data.getTotalSubFour()));
 					studentData.setGraceSubFour(Data.getGraceSubFour());
 					studentData.setPrvFlgSubFour(Data.getPrvFlgSubFour());
-					studentData.setMaxExtSubFour(Data.getMaxExtSubFour());
-					studentData.setMaxIntSubFour(Data.getMaxIntSubFour());
-					studentData.setMaxTotalSubFour(Data.getMaxTotalSubFour());
+					studentData.setMaxExtSubFour(Integer.valueOf(Data.getMaxExtSubFour()));
+					studentData.setMaxIntSubFour(Integer.valueOf(Data.getMaxIntSubFour()));
+					studentData.setMaxTotalSubFour(Integer.valueOf(Data.getMaxTotalSubFour()));
 					studentData.setGradeSubFour(Data.getGradeSubFour());
 
 					studentData.setSubFive(Data.getSubFive());
 					studentData.setSubNmFive(Data.getSubNmFive());
-					studentData.setCreditSubFive(Data.getCreditSubFive());
-					studentData.setIntSubFive(Data.getIntSubFive());
-					studentData.setExtSubFive(Data.getExtSubFive());
-					studentData.setTotalSubFive(Data.getTotalSubFive());
+					studentData.setCreditSubFive(Integer.valueOf(Data.getCreditSubFive()));
+					studentData.setIntSubFive(Integer.valueOf(Data.getIntSubFive()));
+					studentData.setExtSubFive(Integer.valueOf(Data.getExtSubFive()));
+					studentData.setTotalSubFive(Integer.valueOf(Data.getTotalSubFive()));
 					studentData.setGraceSubFive(Data.getGraceSubFive());
 					studentData.setPrvFlgSubFive(Data.getPrvFlgSubFive());
-					studentData.setMaxExtSubFive(Data.getMaxExtSubFive());
-					studentData.setMaxIntSubFive(Data.getMaxIntSubFive());
-					studentData.setMaxTotalSubFive(Data.getMaxTotalSubFive());
+					studentData.setMaxExtSubFive(Integer.valueOf(Data.getMaxExtSubFive()));
+					studentData.setMaxIntSubFive(Integer.valueOf(Data.getMaxIntSubFive()));
+					studentData.setMaxTotalSubFive(Integer.valueOf(Data.getMaxTotalSubFive()));
 					studentData.setGradeSubFive(Data.getGradeSubFive());
 
 					studentData.setSubSix(Data.getSubSix());
 					studentData.setSubNmSix(Data.getSubNmSix());
-					studentData.setCreditSubSix(Data.getCreditSubSix());
-					studentData.setIntSubSix(Data.getIntSubSix());
-					studentData.setExtSubSix(Data.getExtSubSix());
-					studentData.setTotalSubSix(Data.getTotalSubSix());
+					studentData.setCreditSubSix(Integer.valueOf(Data.getCreditSubSix()));
+					studentData.setIntSubSix(Integer.valueOf(Data.getIntSubSix()));
+					studentData.setExtSubSix(Integer.valueOf(Data.getExtSubSix()));
+					studentData.setTotalSubSix(Integer.valueOf(Data.getTotalSubSix()));
 					studentData.setGraceSubSix(Data.getGraceSubSix());
 					studentData.setPrvFlgSubSix(Data.getPrvFlgSubSix());
-					studentData.setMaxExtSubSix(Data.getMaxExtSubSix());
-					studentData.setMaxIntSubSix(Data.getMaxIntSubSix());
-					studentData.setMaxTotalSubSix(Data.getMaxTotalSubSix());
+					studentData.setMaxExtSubSix(Integer.valueOf(Data.getMaxExtSubSix()));
+					studentData.setMaxIntSubSix(Integer.valueOf(Data.getMaxIntSubSix()));
+					studentData.setMaxTotalSubSix(Integer.valueOf(Data.getMaxTotalSubSix()));
 					studentData.setGradeSubSix(Data.getGradeSubSix());
 					SavestudentData.setStream(Data.getStream());
 					SavestudentData.setEnrollmentNo(Data.getEnrollmentNo());
@@ -367,8 +370,22 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 					SavestudentData.setMonthOfPassing(monthnm);
 
 					savedStudDataList.add(SavestudentData);
+					}
+					catch(Exception e)
+					{
+						UniversityStudDocResponse invaliddata = new UniversityStudDocResponse();
 
+						invaliddata.setSemester(Data.getSemester());
+						invaliddata.setStream(Data.getStream());
+						invaliddata.setEnrollmentNo(Data.getEnrollmentNo());
+						invaliddata.setPassingYear(Data.getPassingYear());
+						invaliddata.setMonthOfPassing(Data.getMonthOfPassing());
+						invaliddata.setPrnNo(Data.getPrnNo());
+						invaliddata.setReason("Invalid Record Entry");
+						rejectedData.add(invaliddata);
+					}
 				}
+					
 
 				else {
 					UniversityStudDocResponse studentData = new UniversityStudDocResponse();
