@@ -238,6 +238,8 @@ private static final Logger logger = LoggerFactory.getLogger(EmployerServiceImpl
 			resp.setFirst_name(umee.getFirstName());
 			resp.setLast_name(umee.getLastName());
 			resp.setVrStatus(vr1.getDocStatus());
+			resp.setSemId(vr1.getSemId());
+			resp.setPrnNo(vr1.getPrnNo());
 			responses.add(resp);
 			
 			

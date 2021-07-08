@@ -19,5 +19,7 @@ public class DisputeResponse {
 	private String first_name;
 	private String last_name;
 	private String vrStatus;
+	private Long semId;
+	private String prnNo;
 
 }
