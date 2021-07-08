@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.scube.edu.model.UniversityStudentDocument;
+import com.scube.edu.request.AssociateExcelRequest;
 import com.scube.edu.request.UniversityStudentRequest;
 import com.scube.edu.response.BaseResponse;
 import com.scube.edu.response.UniversityResponse;
@@ -40,7 +41,7 @@ public class AssociateManagerController {
 	 
 	
 	@PostMapping(value = "/uploadStudentInfoFromFile/{userid}" )
-	public ResponseEntity<BaseResponse> saveStudentData (@RequestBody List<UniversityStudDocResponse> list,@PathVariable Long userid) {
+	public ResponseEntity<BaseResponse> saveStudentData (@RequestBody List<AssociateExcelRequest> list,@PathVariable Long userid) {
 		
 		System.out.println("*******AssociateManagerController saveStudentData********"+ list);
 		
