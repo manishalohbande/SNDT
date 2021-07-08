@@ -144,7 +144,7 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 			 */
 
 			// docEntity=universityStudentDocRepository.findByEnrollmentNoAndStreamIdAndPassingYearIdAndSemIdAndMonthOfPassing(enrollNo,strm,passyr,semId,monthnm);
-			docEntity = universityStudentDocRepository.findByPrnNoAndSemId(Data.getPrnNo(), semId);
+			docEntity = universityStudentDocRepository.findByPrnNoAndSemIdAndPassingYearId(Data.getPrnNo(), semId,passyr);
 			String reason = null;
 			if (docEntity == null) {
 
