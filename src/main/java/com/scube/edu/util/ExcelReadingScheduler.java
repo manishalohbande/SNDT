@@ -127,7 +127,7 @@ public class ExcelReadingScheduler {
 		String folder=csvFileLocation;
 		//String flnm=csvfilenm;
 		S3Object fi = fileStore.readExcel(csvFileLocation);
-		//fileStore.deleteFile(fi.getKey());
+		///fileStore.deleteFile(fi.getKey());
 
 		if(fi!=null) {
 		InputStream csvstream = fi.getObjectContent();
@@ -142,6 +142,7 @@ public class ExcelReadingScheduler {
 		String clgnsem;
 		String stream = null;
 		String sem = null;
+		boolean flg=false;
 		while ((line = reader.readLine()) != null) {
 			System.out.println(line);
 			if (check == 0) {
@@ -414,8 +415,9 @@ public class ExcelReadingScheduler {
 			}
 				catch(Exception e) {
 					invalidRecord.setSemester(sem);
-					invalidRecord.setReason("Invalid record Entry");
-					invalidRecordList.add(invalidRecord);	
+					invalidRecord.setReason("Invalid Record Entry");
+					invalidRecordList.add(invalidRecord);
+					flg=true;
 				}
 			
 			}
@@ -423,7 +425,12 @@ public class ExcelReadingScheduler {
 			studentData.setMonthOfPassing(month);
 			studentData.setStream(stream);
 			studentData.setSemester(sem);
+			//if(flg!=true) {
 			studentDataReviewList.add(studentData);
+			
+		//}
+			
+			 flg=false;
 
 		}
 		
@@ -444,10 +451,10 @@ public class ExcelReadingScheduler {
 		if(moveddat!=null) {
 		InputStream mvcsvstream = moveddat.getObjectContent();
 		if(mvcsvstream!=null){
-		//fileStorageService.MoveCsvAndImgToArchive(mvcsvstream, csvnm, "1");
+		fileStorageService.MoveCsvAndImgToArchive(mvcsvstream, csvnm, "1");
 		
 
-		//fileStore.deleteFile(fi.getKey());
+		fileStore.deleteFile(fi.getKey());
 		}
 		}
 
@@ -502,9 +509,9 @@ public class ExcelReadingScheduler {
 			out.close();
 			InputStream targetStream = new FileInputStream(emailexcelstorePath);
 
-			//fileStorageService.MoveCsvAndImgToArchive(targetStream, emailexcelstorePath.getName(), "2");
+			fileStorageService.MoveCsvAndImgToArchive(targetStream, emailexcelstorePath.getName(), "2");
 
-			//emailService.sendRejectedDatamail(emailexcelstorePath);
+			emailService.sendRejectedDatamail(emailexcelstorePath);
 		
 			if(emailexcelstorePath.delete())
 	        {
