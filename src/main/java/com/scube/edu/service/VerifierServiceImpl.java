@@ -309,13 +309,18 @@ public class VerifierServiceImpl implements VerifierService{
 
 
 	@Override
-	public List<UniversityResponse> getUniTabularData(String prnNo, long semesterId) {
+	public List<UniversityResponse> getUniTabularData(String prnNo, long semesterId) throws Exception {
 		
 		System.out.println("******VerifierServiceImpl getUniTabularData******" + prnNo);
 		
 		List<UniversityStudentDocument> respList = universityStudentDocRepo.findByPrnNoAndSemesterId(prnNo, semesterId);
 		
 		List<UniversityResponse> docsList = new ArrayList<>();
+		
+		if(respList.isEmpty()) {
+			logger.info("EMPTY***********");
+			throw new Exception("No Data Found");
+		}
 		
 		for(UniversityStudentDocument ent: respList) {
 			
