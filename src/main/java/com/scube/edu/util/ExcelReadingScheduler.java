@@ -108,6 +108,8 @@ public class ExcelReadingScheduler {
 
 		logger.info("********Enterning ExcelReadingScheduler readExcelFiles********");
 		List<UniversityStudDocResponse> studentDataReviewList = new ArrayList<UniversityStudDocResponse>();
+		List<UniversityStudDocResponse> invalidRecordList = new ArrayList<UniversityStudDocResponse>();
+
 		String imagefile = null;
 		String imagefilenm=null;
 		String previmagefile = "";
@@ -150,7 +152,8 @@ public class ExcelReadingScheduler {
 			String[] datalist = line.split(",");
 			logger.info("" + datalist);
 			UniversityStudDocResponse studentData = new UniversityStudDocResponse();
-			
+			UniversityStudDocResponse invalidRecord = new UniversityStudDocResponse();
+
            if(check ==1) {
         	   for (k = 0; k < 5; k++) {
 
@@ -174,9 +177,12 @@ public class ExcelReadingScheduler {
         	   continue;
 			}
 			for (k = 0; k < datalist.length; k++) {
+				try {
 				
 				if (k == 0) {
 					studentData.setPrnNo(datalist[0]);
+					invalidRecord.setPrnNo(datalist[0]);
+
 				} else if (k == 1) {
 					studentData.setEnrollmentNo(datalist[1]);
 
@@ -404,6 +410,13 @@ public class ExcelReadingScheduler {
 				studentData.setGradeSubSix(datalist[91]);
 				} 
 				
+				
+			}
+				catch(Exception e) {
+					invalidRecord.setSemester(sem);
+					invalidRecord.setReason("Invalid record Entry");
+					invalidRecordList.add(invalidRecord);
+				}
 			}
 			studentData.setPassingYear(year);
 			studentData.setMonthOfPassing(month);
@@ -433,7 +446,7 @@ public class ExcelReadingScheduler {
 		//fileStorageService.MoveCsvAndImgToArchive(mvcsvstream, csvnm, "1");
 		
 
-		fileStore.deleteFile(fi.getKey());
+		//fileStore.deleteFile(fi.getKey());
 		}
 		}
 
@@ -445,6 +458,7 @@ public class ExcelReadingScheduler {
 
 		if (resp.get("RejectedData") != null && !resp.get("RejectedData").isEmpty()) {
 			List<UniversityStudDocResponse> response = resp.get("RejectedData");
+			response.addAll(invalidRecordList);
 
 			XSSFWorkbook workbook = new XSSFWorkbook();
 

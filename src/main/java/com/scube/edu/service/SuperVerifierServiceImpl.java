@@ -299,6 +299,7 @@ private static final Logger logger = LoggerFactory.getLogger(EmployerServiceImpl
 			resp.setStream_name(stream.getStreamName());
 			resp.setReq_date(strDate);
 			resp.setMonthOfPassing(vr.getMonthOfPassing());
+			resp.setPrnNo(vr.getPrnNo());
 			resp.setVerifier_name(userr.getFirstName() + " " + userr.getLastName());
 			if(vr.getRemark()==null||vr.getRemark().equals(""))
 			{
