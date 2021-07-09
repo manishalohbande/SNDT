@@ -142,9 +142,22 @@ private static final Logger logger = LoggerFactory.getLogger(EmployerServiceImpl
 			resp.setBranch_nm(branch.getBranchName());
 			resp.setSemester(sem.getSemester());
 			resp.setMonthOfPassing(req.getMonthOfPassing());
-			  resp.setPrnNo(req.getPrnNo());
-
+			resp.setPrnNo(req.getPrnNo());
 			
+			if(req.getCourierAddr() != null) {
+			  resp.setCourierAddress(req.getCourierAddr());  
+			}
+			if(req.getResultCollectionType() != null) {
+				if(req.getResultCollectionType().equalsIgnoreCase("1")) {
+				  resp.setResultCollectionType("Email");
+				}
+				if(req.getResultCollectionType().equalsIgnoreCase("2")) {
+				  resp.setResultCollectionType("Courier");
+				}
+				if(req.getResultCollectionType().equalsIgnoreCase("3")) {
+				  resp.setResultCollectionType("Self Collection");
+				}
+			}
 			responseList.add(resp);
 			
 		}
@@ -240,6 +253,27 @@ private static final Logger logger = LoggerFactory.getLogger(EmployerServiceImpl
 			resp.setVrStatus(vr1.getDocStatus());
 			resp.setSemId(vr1.getSemId());
 			resp.setPrnNo(vr1.getPrnNo());
+			
+			RequestTypeResponse reqMaster = reqTypeService.getNameById(vr1.getRequestType());
+			resp.setRequest_type_id(reqMaster.getRequestType());
+			
+			if(vr1.getCourierAddr() != null) {
+				  resp.setCourierAddress(vr1.getCourierAddr());
+			  }
+			  
+			  if(vr1.getResultCollectionType() != null) {
+				  if(vr1.getResultCollectionType().equalsIgnoreCase("1")) {
+					  resp.setResultCollectionType("Email");
+				  }
+				  if(vr1.getResultCollectionType().equalsIgnoreCase("2")) {
+					  resp.setResultCollectionType("Courier");
+				  }
+				  if(vr1.getResultCollectionType().equalsIgnoreCase("3")) {
+					  resp.setResultCollectionType("Self Collection");
+				  }
+			  }
+			
+			
 			responses.add(resp);
 			
 			

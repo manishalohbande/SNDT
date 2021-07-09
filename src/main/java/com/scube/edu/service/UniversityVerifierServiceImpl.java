@@ -154,6 +154,25 @@ public class UniversityVerifierServiceImpl implements UniversityVerifierService 
 			resp.setFilePath(req.getUploadDocumentPath());
 			resp.setMonthOfPassing(req.getMonthOfPassing());
 			resp.setPrnNo(req.getPrnNo());
+			
+			RequestTypeResponse reqMaster = reqTypeService.getNameById(req.getRequestType());
+			resp.setRequest_type_id(reqMaster.getRequestType());
+			
+			if(req.getCourierAddr() != null) {
+				  resp.setCourierAddress(req.getCourierAddr());
+			  }
+			  
+			  if(req.getResultCollectionType() != null) {
+				  if(req.getResultCollectionType().equalsIgnoreCase("1")) {
+					  resp.setResultCollectionType("Email");
+				  }
+				  if(req.getResultCollectionType().equalsIgnoreCase("2")) {
+					  resp.setResultCollectionType("Courier");
+				  }
+				  if(req.getResultCollectionType().equalsIgnoreCase("3")) {
+					  resp.setResultCollectionType("Self Collection");
+				  }
+			  }
 
 			responseList.add(resp);
 

@@ -21,5 +21,8 @@ public class DisputeResponse {
 	private String vrStatus;
 	private Long semId;
 	private String prnNo;
+	private String request_type_id;
+	private String courierAddress;
+	private String resultCollectionType;
 
 }

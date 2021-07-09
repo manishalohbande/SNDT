@@ -55,6 +55,9 @@ public class VerificationResponse {
 	
 	private String monthOfPassing;
 	private String prnNo;
+	
+	private String resultCollectionType;
+	private String courierAddress;
 
 
 

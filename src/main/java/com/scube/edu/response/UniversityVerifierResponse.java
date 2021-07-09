@@ -23,6 +23,9 @@ public class UniversityVerifierResponse {
 		private String monthOfPassing;
 		private String prnNo;
 		private Long semId;
+		private String request_type_id;
+		private String courierAddress;
+		private String resultCollectionType;
 
        
         

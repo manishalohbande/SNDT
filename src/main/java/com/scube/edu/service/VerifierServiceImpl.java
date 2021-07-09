@@ -173,7 +173,22 @@ public class VerifierServiceImpl implements VerifierService{
 			  resp.setSemester(sem.getSemester());
 			  resp.setMonthOfPassing(veriReq.getMonthOfPassing());
 			  resp.setPrnNo(veriReq.getPrnNo());
-
+			  
+			  if(veriReq.getCourierAddr() != null) {
+				  resp.setCourierAddress(veriReq.getCourierAddr());
+			  }
+			  
+			  if(veriReq.getResultCollectionType() != null) {
+				  if(veriReq.getResultCollectionType().equalsIgnoreCase("1")) {
+					  resp.setResultCollectionType("Email");
+				  }
+				  if(veriReq.getResultCollectionType().equalsIgnoreCase("2")) {
+					  resp.setResultCollectionType("Courier");
+				  }
+				  if(veriReq.getResultCollectionType().equalsIgnoreCase("3")) {
+					  resp.setResultCollectionType("Self Collection");
+				  }
+			  }
 			 // run query here which will update 'assigned_to' column with userId value
 			 // for now assign any value other than 0 (assign 1)
 			// Long a = (long) 1;
