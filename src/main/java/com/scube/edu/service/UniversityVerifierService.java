@@ -17,6 +17,9 @@ public interface UniversityVerifierService {
 	public List<StudentVerificationDocsResponse> setStatusForUniversityDocument(
 			StatusChangeRequest statusChangeRequest) throws Exception ;
 
+	public List<UniversityVerifierResponse> getUniversityVerifierPhysicalCollectionRequestList(String fromDate,
+			String toDate);
+
 
 
 }

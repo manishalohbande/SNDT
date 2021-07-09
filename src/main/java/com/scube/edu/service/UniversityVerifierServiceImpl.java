@@ -238,4 +238,73 @@ public class UniversityVerifierServiceImpl implements UniversityVerifierService 
 		return null;
 	}
 
+	@Override
+	public List<UniversityVerifierResponse> getUniversityVerifierPhysicalCollectionRequestList(String fromDate,
+			String toDate) {
+		
+		logger.info("**UniversityVerifierServiceImpl getUniversityVerifierPhysicalCollectionRequestList**"+ fromDate +"-- "+ toDate);
+		
+		List<UniversityVerifierResponse> responseList = new ArrayList<>();
+		List<VerificationRequest> list = universityVerifierRepository.findByRequestTypeAndDocStatusAndResultCollectionType(fromDate, toDate);
+		
+		for(VerificationRequest req: list) {
+			
+			UniversityVerifierResponse resp = new UniversityVerifierResponse();
+			
+			PassingYearMaster year = yearOfPassService.getYearById(req.getYearOfPassingId());
+
+			DocumentMaster doc = documentService.getNameById(req.getDocumentId());
+
+			StreamMaster stream = streamService.getNameById(req.getStreamId());
+			
+			 SemesterEntity sem=semesterService.getSemById(req.getSemId());
+				
+			  BranchMasterEntity branch=branchMasterService.getbranchById(req.getBranchId());
+			
+			resp.setApplicationId(req.getApplicationId());
+			
+			if (doc != null) {
+				resp.setStatus(req.getDocStatus());
+				resp.setDocName(doc.getDocumentName());
+			}
+			if (year != null) {
+				resp.setYearofPassing(year.getYearOfPassing());
+			}
+			if (stream != null) {
+				resp.setStream(stream.getStreamName());
+			}
+			resp.setFullName(req.getFirstName() + " " + req.getLastName());
+			resp.setId(req.getId());
+			resp.setFilePath(req.getUploadDocumentPath());
+			resp.setMonthOfPassing(req.getMonthOfPassing());
+			resp.setPrnNo(req.getPrnNo());
+			resp.setSemester(sem.getSemester());
+			resp.setSemId(req.getSemId());
+			
+			RequestTypeResponse reqMaster = reqTypeService.getNameById(req.getRequestType());
+			resp.setRequest_type_id(reqMaster.getRequestType());
+			
+			if(req.getCourierAddr() != null) {
+				  resp.setCourierAddress(req.getCourierAddr());
+			  }
+			  
+			  if(req.getResultCollectionType() != null) {
+				  if(req.getResultCollectionType().equalsIgnoreCase("1")) {
+					  resp.setResultCollectionType("Email");
+				  }
+				  if(req.getResultCollectionType().equalsIgnoreCase("2")) {
+					  resp.setResultCollectionType("Courier");
+				  }
+				  if(req.getResultCollectionType().equalsIgnoreCase("3")) {
+					  resp.setResultCollectionType("Self Collection");
+				  }
+			  }
+			  responseList.add(resp);
+			
+		}
+		
+		
+		return responseList;
+	}
+
 }

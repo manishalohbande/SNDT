@@ -26,6 +26,7 @@ public class UniversityVerifierResponse {
 		private String request_type_id;
 		private String courierAddress;
 		private String resultCollectionType;
+		private Long applicationId;
 
        
         
