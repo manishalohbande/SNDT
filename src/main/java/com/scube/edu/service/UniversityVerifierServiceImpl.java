@@ -20,11 +20,13 @@ import com.scube.edu.model.BranchMasterEntity;
 import com.scube.edu.model.CutomizationEntity;
 import com.scube.edu.model.DocumentMaster;
 import com.scube.edu.model.PassingYearMaster;
+import com.scube.edu.model.RequestTypeMaster;
 import com.scube.edu.model.SemesterEntity;
 import com.scube.edu.model.StreamMaster;
 import com.scube.edu.model.UserMasterEntity;
 import com.scube.edu.model.VerificationRequest;
 import com.scube.edu.repository.CustomizationRepository;
+import com.scube.edu.repository.RequestTypeRepository;
 import com.scube.edu.repository.UniversityVerifierRepository;
 import com.scube.edu.repository.UserRepository;
 import com.scube.edu.repository.VerificationRequestRepository;
@@ -68,7 +70,8 @@ public class UniversityVerifierServiceImpl implements UniversityVerifierService 
 
 	@Autowired
 	UserService userService;
-	
+	@Autowired
+	RequestTypeRepository requestTypeRepository;
 	@Autowired
 	CustomizationRepository customizationRepository;
 	
@@ -245,7 +248,8 @@ public class UniversityVerifierServiceImpl implements UniversityVerifierService 
 		logger.info("**UniversityVerifierServiceImpl getUniversityVerifierPhysicalCollectionRequestList**"+ fromDate +"-- "+ toDate);
 		
 		List<UniversityVerifierResponse> responseList = new ArrayList<>();
-		List<VerificationRequest> list = universityVerifierRepository.findByRequestTypeAndDocStatusAndResultCollectionType(fromDate, toDate);
+		RequestTypeMaster transcript=requestTypeRepository.findByRequestTypeAndIsdeleted("Transcript","N");
+		List<VerificationRequest> list = universityVerifierRepository.findByRequestTypeAndDocStatusAndResultCollectionType(fromDate, toDate,transcript.getId());
 		
 		for(VerificationRequest req: list) {
 			

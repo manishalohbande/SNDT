@@ -12,7 +12,7 @@ import com.scube.edu.model.RequestTypeMaster;
 public interface RequestTypeRepository extends JpaRepository<RequestTypeMaster, Long>{
 
 	Optional<RequestTypeMaster> findById(Long id);
-
+	RequestTypeMaster findByRequestTypeAndIsdeleted(String rqstTyp,String isdeleted);
 	List<RequestTypeMaster> findAllByIsdeleted(String isdeleted);
 	
 	List<RequestTypeMaster> findByIsdeleted(String isdeleted);
