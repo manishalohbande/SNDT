@@ -73,6 +73,7 @@ import com.scube.edu.model.DocumentMaster;
 import com.scube.edu.model.PassingYearMaster;
 import com.scube.edu.model.SemesterEntity;
 import com.scube.edu.model.StreamMaster;
+import com.scube.edu.model.UniversityStudentDocument;
 import com.scube.edu.model.UserMasterEntity;
 import com.scube.edu.model.VerificationRequest;
 import com.scube.edu.repository.VerificationRequestRepository;
@@ -104,6 +105,9 @@ public class EmailService {
 
 	@Autowired
 	DocumentService documentService;
+	
+	@Autowired
+	UniversityStudentDocService universityStudentDocService;
 
 	private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
@@ -320,7 +324,7 @@ public class EmailService {
 			// Now set the actual messageHello User,
 
 			String vmFileContent1 = "Hello User, <br><br> We have received your registration request .Please click link below to verify your email account.<br><a href='http://"
-					+ url + "/University/emailVerification?emailId=" + encodeEmail + "'><strong>" + url
+					+ url + "/SndtUniversity/emailVerification?emailId=" + encodeEmail + "'><strong>" + url
 					+ "/EDU/api/auth/verifyEmail/" + encodeEmail + "</strong></a> "
 					+ " <br>If you do not use this link within 24 hours , it will expire. Post that you will need to register again. <br><br> Thanks,<br>Team University";
 
@@ -871,12 +875,16 @@ public class EmailService {
 			Document document = new Document(PageSize.A4, 40, 40, 50, 7);
 			// Set all required fonts here with appropriate names
 			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-			headFont.setSize(15);
+			headFont.setSize(13);
 			headFont.setColor(Color.BLACK);
 
 			Font headAddrFont12 = FontFactory.getFont(FontFactory.HELVETICA);
 			headAddrFont12.setSize(12);
 			headAddrFont12.setColor(Color.BLACK);
+			
+			Font subjectFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+			subjectFont.setSize(12);
+			subjectFont.setColor(Color.BLACK);
 
 			Font headAddrFont11 = FontFactory.getFont(FontFactory.HELVETICA);
 			headAddrFont11.setSize(11);
@@ -910,8 +918,8 @@ public class EmailService {
 //			 Image img = Image.getInstance(imageLocation+"/logo.png");
 			//Image img = Image.getInstance("logo.png");
 
-			img.setAlignment(Element.ALIGN_CENTER);
-			img.scaleToFit(120, 100); // width, height
+			img.setAlignment(Element.ALIGN_LEFT);
+			img.scaleToFit(80, 60); // width, height
 
 			document.open();
 //	    EduCred_Logo.jpg
@@ -919,45 +927,55 @@ public class EmailService {
 			document.add(img);
 
 			Paragraph head = new Paragraph();
-			head.setAlignment(Paragraph.ALIGN_RIGHT);
+			head.setAlignment(Paragraph.ALIGN_CENTER);
 			head.setFont(headFont);
-			head.add("Marks And Certification Unit");
+			head.add("SHREEMATI NATHIBAI BAMODAR THACKERSEY \r\n"
+					+ "WOMEN'S UNIVERSITY \r\n"
+					+ "Pariksha Bhavan, Sir Vithaldar Vidyavihar, \r\n"
+					+ "Juhu Road, Santacruz(W), Mumbai-400 049 \r\n"
+					+ "www.sndt.ac.in: Email-coe@sndt.ac.in; drexam@sndt.ac.in");
 			document.add(head);
+			
+			Paragraph date = new Paragraph();
+			date.setAlignment(Paragraph.ALIGN_RIGHT);
+			date.setFont(headAddrFont11);
+			date.add("DATE:- "+java.time.LocalDate.now());
+			document.add(date);
 
-			Paragraph headAddr = new Paragraph();
-			headAddr.setFont(headAddrFont12);
-			headAddr.setAlignment(Paragraph.ALIGN_RIGHT);
-			headAddr.add(Chunk.NEWLINE);
-			headAddr.add("Examinations Section, \r" + "M.J. Phule Bhavan, \r" + "Vidyanagari, Santacruz (East), \r"
-					+ "Mumbai- 400 098. \r" + "Date: " + java.time.LocalDate.now());
-			document.add(headAddr);
+//			Paragraph headAddr = new Paragraph();
+//			headAddr.setFont(headAddrFont12);
+//			headAddr.setAlignment(Paragraph.ALIGN_RIGHT);
+//			headAddr.add(Chunk.NEWLINE);
+//			headAddr.add("Examinations Section, \r" + "M.J. Phule Bhavan, \r" + "Vidyanagari, Santacruz (East), \r"
+//					+ "Mumbai- 400 098. \r" + "Date: " + java.time.LocalDate.now());
+//			document.add(headAddr);
 
 			Paragraph Addr = new Paragraph();
 			Addr.setFont(headAddrFont12);
 			Addr.setAlignment(Paragraph.ALIGN_LEFT);
 			Addr.add(Chunk.NEWLINE);
 			Addr.add("To, \r" + ume.getFirst_name() + " " + ume.getLast_name() + "\r" + "Email Id: " + ume.getEmail()
-					+ ", \r" + "Phone No: " + ume.getPhone_no() + ", \r");
+					+ ", \r" + "Phone No: " + ume.getPhone_no() + " \r");
 			Addr.add(Chunk.NEWLINE);
 			Addr.add(Chunk.NEWLINE);
-			Addr.add(Chunk.NEWLINE);
-			document.add(Addr);
 
-//	    Paragraph para = new Paragraph();
-//	    para.setFont(headAddrFont10);
-//	    para.setAlignment(Paragraph.ALIGN_CENTER);
-//	    para.add("Sir/Madam, \r"
-//	    		+ "       With reference to your application of Verification Document, this \r"
-//	    		+ "is to inform you that the contents of the photocopy of the statement of marks of the \r"
-//	    		+ "below mentioned candidate received along with your letter have been duly verified \r"
-//	    		+ "and found correct.");
-//	    document.add(para);
+			document.add(Addr);
+			
+			Paragraph subject = new Paragraph();
+			subject.setAlignment(Paragraph.ALIGN_CENTER);
+			subject.setFont(subjectFont);
+			subject.add("Subject: Verification Of Genuineness of Education Regarding.");
+			subject.add(Chunk.NEWLINE);
+			subject.add(Chunk.NEWLINE);
+			subject.add(Chunk.NEWLINE);
+			document.add(subject);
+			
 			logger.info("greeting set below here--->");
 
-			Paragraph greeting = new Paragraph();
-			greeting.setFont(headAddrFont11);
-			greeting.setAlignment(Paragraph.ALIGN_LEFT);
-			greeting.add("Sir/Madam, \r");
+//			Paragraph greeting = new Paragraph();
+//			greeting.setFont(headAddrFont11);
+//			greeting.setAlignment(Paragraph.ALIGN_LEFT);
+//			greeting.add("Sir/Madam, \r");
 
 			Paragraph para = new Paragraph();
 			para.setFont(headAddrFont11);
@@ -965,22 +983,22 @@ public class EmailService {
 			if(vr.getDocStatus().equalsIgnoreCase("UN_Approved_Pass")||vr.getDocStatus().equalsIgnoreCase("SVD_Approved_Pass")) {
 			
 			para.add(
-					"          With reference to your application for Verification of the educational document , this is to inform you that the contents of the photocopy of the Statement Of Marks of the below mentioned candidate received along with your letter have been verified and found correct(Pass).");
+					"I am forwarding photo copy of Educational Documents of the student who has passed our University Examination and have to inform you that the office has verified their documents and found to be in order.");
 			para.add(Chunk.NEWLINE);
 			para.add(Chunk.NEWLINE);
 			}
 			if(vr.getDocStatus().equalsIgnoreCase("UN_Approved_Fail")||vr.getDocStatus().equalsIgnoreCase("SVD_Approved_Fail")) {
 				
-				para.add("          With reference to your application for Verification of the educational document , this is to inform you that the contents of the photocopy of the Statement Of Marks of the below mentioned candidate received along with your letter have been verified and found Fail.");
+				para.add("I am forwarding photo copy of Educational Documents of the student who has passed our University Examination and have to inform you that the office has verified their documents and found to be in order.");
 				para.add(Chunk.NEWLINE);
 				para.add(Chunk.NEWLINE);
 				}
-			document.add(greeting);
+//			document.add(greeting);
 			document.add(para);
 
-			 PdfPTable detailsTable = new PdfPTable(5);
+			 PdfPTable detailsTable = new PdfPTable(6);
 			    detailsTable.setWidthPercentage(100);
-			   detailsTable.setWidths(new int[] {20,20,20,20,20});
+			   detailsTable.setWidths(new int[] {16,16,16,16,16,16});
 			    
 //	    PdfPCell cell1 = new PdfPCell(new Paragraph("Serial No"));
 	    PdfPCell cell1 = new PdfPCell(new Paragraph("Date"));
@@ -989,8 +1007,8 @@ public class EmailService {
 	    PdfPCell cell4 = new PdfPCell(new Paragraph("Month and Year Of Exam"));
 	    PdfPCell cell5 = new PdfPCell(new Paragraph("Seat Number"));
 //	    PdfPCell cell6 = new PdfPCell(new Paragraph("Branch"));
-	    PdfPCell cell7 = new PdfPCell(new Paragraph("Stream"));
-//	    PdfPCell cell8 = new PdfPCell(new Paragraph("Semester"));
+	    PdfPCell cell7 = new PdfPCell(new Paragraph("Document Name"));
+	    PdfPCell cell8 = new PdfPCell(new Paragraph("Sem Grade"));
 	    
 	    
 	    
@@ -1002,7 +1020,7 @@ public class EmailService {
 	    detailsTable.addCell(cell5);
 //	    detailsTable.addCell(cell6);
 	    
-//	    detailsTable.addCell(cell8);
+	    detailsTable.addCell(cell8);
 
 	    
 	    
@@ -1021,6 +1039,8 @@ public class EmailService {
 			SemesterEntity sem = semService.getSemById(vr.getSemId());
 
 			StreamMaster stream = streamService.getNameById(vr.getStreamId());
+			
+			UniversityStudentDocument usd = universityStudentDocService.getRecordByPrnNoAndSemId(vr.getPrnNo(), vr.getSemId());
 
 			PdfPCell dateCell = new PdfPCell(new Paragraph(strDate));
 	    	PdfPCell nameCell = new PdfPCell(new Paragraph(vr.getFirstName() + " " + vr.getLastName()));
@@ -1028,8 +1048,8 @@ public class EmailService {
 	    	PdfPCell yearCell = new PdfPCell(new Paragraph(vr.getMonthOfPassing()+" "+year.getYearOfPassing()));
 	    	PdfPCell enrollCell = new PdfPCell(new Paragraph(vr.getEnrollmentNumber()));
 //	    	PdfPCell branchCell = new PdfPCell(new Paragraph(branch.getBranchName()));
-	    	PdfPCell streamCell = new PdfPCell(new Paragraph(stream.getStreamName()));
-//	    	PdfPCell semCell = new PdfPCell(new Paragraph(sem.getSemester()));
+	    	PdfPCell streamCell = new PdfPCell(new Paragraph(doc.getDocumentName()));
+	    	PdfPCell semCell = new PdfPCell(new Paragraph(usd.getSemGrade()));
 	    	
 	    	detailsTable.addCell(dateCell);
 	    	detailsTable.addCell(nameCell);
@@ -1039,7 +1059,7 @@ public class EmailService {
 	    	detailsTable.addCell(enrollCell);
 //	    	detailsTable.addCell(branchCell);
 	    	
-//	    	detailsTable.addCell(semCell);
+	    	detailsTable.addCell(semCell);
 	    	
 	    	
 
@@ -1075,7 +1095,7 @@ public class EmailService {
 			Paragraph foot = new Paragraph();
 			foot.setAlignment(Paragraph.ALIGN_RIGHT);
 			foot.setFont(headAddrFont12);
-			foot.add("(Narendra G. Khalane \r" + "Assistant Registrar");
+			foot.add("(Dr. Subhash K. Waghmare) \r"+"Director \r" + "Board Of Examinations and Evaluation.");
 			document.add(foot);
 
 //        HeaderFooter footer = new HeaderFooter( new Phrase("System generated document does not require signature.", footerFont9), true);

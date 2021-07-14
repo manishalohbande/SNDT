@@ -12,4 +12,6 @@ public interface UniversityStudentDocService {
 
 	UniversityStudentDocument getUniversityDocDataById(Long id);
 
+	UniversityStudentDocument getRecordByPrnNoAndSemId(String prnNo, Long semId);
+
 }

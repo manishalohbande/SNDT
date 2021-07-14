@@ -62,6 +62,15 @@ public class UniversityStudentDocServiceImpl implements UniversityStudentDocServ
 		         
 		         
 		}
+	
+	public UniversityStudentDocument getRecordByPrnNoAndSemId(String prnNo, Long semId) {
+		
+		logger.info("*******UniversityStudentDocServiceImpl getRecordByPrnNoAndSemId*******");
+		
+		UniversityStudentDocument usd = studentDocumentRepository.findByPrnNoAndSemId(prnNo, semId);
+		
+		return usd;
+	}
 
 	
 }

@@ -33,6 +33,9 @@ public interface UniversityStudentDocRepository extends JpaRepository<University
 	@Query(value = "SELECT * FROM university_studentdocument where prn_no = ?1 and semester_id = ?2", nativeQuery = true)
 	List<UniversityStudentDocument> findByPrnNoAndSemesterId(String prnNo, long semesterId);
 
+	
+	UniversityStudentDocument findByPrnNoAndSemId(String prnNo, Long semId);
+
 
 
 }
