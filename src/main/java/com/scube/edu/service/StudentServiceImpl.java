@@ -248,6 +248,7 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 			closedDocResp.setSemester(sem.getSemester());
 			closedDocResp.setBranch_nm(branch.getBranchName());
 			closedDocResp.setMonthOfPassing(req.getMonthOfPassing());
+			closedDocResp.setPrnNo(req.getPrnNo());
 			List.add(closedDocResp);
 			
 		}

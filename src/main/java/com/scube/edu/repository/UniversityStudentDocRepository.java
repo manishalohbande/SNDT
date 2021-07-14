@@ -26,7 +26,7 @@ public interface UniversityStudentDocRepository extends JpaRepository<University
 
 	UniversityStudentDocument findByPrnNoAndSemIdAndPassingYearId(String prnNo,Long semId,Long passingYearId);
 	
-	@Query(value = "SELECT * FROM university_studentdocument where seat_no LIKE %?1% and passing_year_id LIKE %?2% and sream_id LIKE %?3% and semester_id LIKE %?4% and month_of_passing LIKE %?5% and prn_no LIKE %?6%" , nativeQuery = true)
+	@Query(value = "SELECT * FROM university_studentdocument where seat_no =?1 and passing_year_id =?2 and sream_id =?3 and semester_id =?4 and month_of_passing =?5 and prn_no =?6" , nativeQuery = true)
 	List<UniversityStudentDocument> searchBySeatNoLikeAndPassingYearIdLikeAndStreamIdLikeAndSemIdLikeAndMonthOfPassingLikeAndPrnNoLike(
 			String enrollmentno, String yearofpassid, String streamid,String semId,String monthOfPassing, String prnNo);
 
