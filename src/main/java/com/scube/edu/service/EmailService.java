@@ -905,40 +905,49 @@ public class EmailService {
 			// left, right, top, bottom
 			logger.info("headerFooter set here--->just before document.open()");
 
-			Image img;
-	        if(awsORtest.equalsIgnoreCase("AWS")) {
-	        	img = Image.getInstance(logoimageLocation+"logo.png"); // live
-	        }if(awsORtest.equalsIgnoreCase("TEST")){
-	        	img = Image.getInstance(logoimageLocation+"logo.png"); // test
-//	        	img = Image.getInstance("logo.png");
-	        }else {
-	        	img = Image.getInstance(logoimageLocation+"logo.png");
-	        }
-			
-//			 Image img = Image.getInstance(imageLocation+"/logo.png");
-			//Image img = Image.getInstance("logo.png");
-
-			img.setAlignment(Element.ALIGN_LEFT);
-			img.scaleToFit(80, 60); // width, height
+//			Image img;
+//	        if(awsORtest.equalsIgnoreCase("AWS")) {
+//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // live
+//	        }if(awsORtest.equalsIgnoreCase("TEST")){
+//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // test
+////	        	img = Image.getInstance("logo.png");
+//	        }else {
+//	        	img = Image.getInstance(logoimageLocation+"logo.png");
+//	        }
+//			
+////			 Image img = Image.getInstance(imageLocation+"/logo.png");
+//			//Image img = Image.getInstance("logo.png");
+//
+//			img.setAlignment(Element.ALIGN_LEFT);
+//			img.scaleToFit(80, 60); // width, height
 
 			document.open();
 //	    EduCred_Logo.jpg
 
-			document.add(img);
+//			document.add(img);
+			
+			Image headerImg;
+			headerImg = Image.getInstance("sndt_header_new.jpg");
+			headerImg.setAlignment(Element.ALIGN_CENTER);
+			headerImg.scaleToFit(500, 300);
+			
+			document.add(headerImg);
 
-			Paragraph head = new Paragraph();
-			head.setAlignment(Paragraph.ALIGN_CENTER);
-			head.setFont(headFont);
-			head.add("SHREEMATI NATHIBAI BAMODAR THACKERSEY \r\n"
-					+ "WOMEN'S UNIVERSITY \r\n"
-					+ "Pariksha Bhavan, Sir Vithaldar Vidyavihar, \r\n"
-					+ "Juhu Road, Santacruz(W), Mumbai-400 049 \r\n"
-					+ "www.sndt.ac.in: Email-coe@sndt.ac.in; drexam@sndt.ac.in");
-			document.add(head);
+//			Paragraph head = new Paragraph();
+//			head.setAlignment(Paragraph.ALIGN_CENTER);
+//			head.setFont(headFont);
+//			head.add("SHREEMATI NATHIBAI BAMODAR THACKERSEY \r\n"
+//					+ "WOMEN'S UNIVERSITY \r\n"
+//					+ "Pariksha Bhavan, Sir Vithaldar Vidyavihar, \r\n"
+//					+ "Juhu Road, Santacruz(W), Mumbai-400 049 \r\n"
+//					+ "www.sndt.ac.in: Email-coe@sndt.ac.in; drexam@sndt.ac.in");
+//			document.add(head);
 			
 			Paragraph date = new Paragraph();
 			date.setAlignment(Paragraph.ALIGN_RIGHT);
 			date.setFont(headAddrFont11);
+			date.add(Chunk.NEWLINE);
+			date.add(Chunk.NEWLINE);
 			date.add("DATE:- "+java.time.LocalDate.now());
 			document.add(date);
 
