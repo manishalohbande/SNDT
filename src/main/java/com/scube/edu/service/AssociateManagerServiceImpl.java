@@ -11,6 +11,10 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -592,12 +596,53 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 
 		List<UniversityStudentDocument> studentDataList = new ArrayList<UniversityStudentDocument>();
 
-		List<UniversityStudentDocument> usdr = universityStudentDocRepository
-				.searchBySeatNoLikeAndPassingYearIdLikeAndStreamIdLikeAndSemIdLikeAndMonthOfPassingLikeAndPrnNoLike(
-						universityStudData.getEnrollmentNo(), universityStudData.getPassingYearId(),
-						universityStudData.getStreamId(), universityStudData.getSemId(),
-						universityStudData.getMonthOfPassing(), universityStudData.getPrnNo());
+		/*
+		 * List<UniversityStudentDocument> usdr = universityStudentDocRepository
+		 * .searchBySeatNoLikeAndPassingYearIdLikeAndStreamIdLikeAndSemIdLikeAndMonthOfPassingLikeAndPrnNoLike(
+		 * universityStudData.getEnrollmentNo(), universityStudData.getPassingYearId(),
+		 * universityStudData.getStreamId(), universityStudData.getSemId(),
+		 * universityStudData.getMonthOfPassing(), universityStudData.getPrnNo());
+		 */
 		List<UniversityResponse> studData = new ArrayList<>();
+		
+		String enrollementNo=null;
+		 Long passingyrid=null;
+		 Long strmid=null;
+		 Long semid=null;
+		 String monthofPass=null;
+		 String prno=null;
+		 
+		 if(!universityStudData.getEnrollmentNo().equalsIgnoreCase("")) {
+			 logger.info("HERE");
+		 }
+		 if(!universityStudData.getEnrollmentNo().equalsIgnoreCase("")) {
+		   enrollementNo= universityStudData.getEnrollmentNo(); 
+		 }
+		 if(!universityStudData.getPassingYearId().equals("")) {
+
+			 System.out.println("PssingyrData"+universityStudData.getPassingYearId());
+			 passingyrid=Long.valueOf(universityStudData.getPassingYearId()); 
+		 }
+		 if(!universityStudData.getStreamId().equals("")) {
+
+			 strmid=Long.valueOf(universityStudData.getStreamId()); 
+		 }
+		 if(!universityStudData.getSemId().equals("")) {
+
+			 semid=Long.valueOf(universityStudData.getSemId());
+		 }
+		 if(!universityStudData.getMonthOfPassing().equals("")) {
+
+			 monthofPass=universityStudData.getMonthOfPassing();
+		 }
+		 if(!universityStudData.getPrnNo().equals("")) {
+
+			 prno=universityStudData.getPrnNo();
+		 }
+		 
+		
+		  List<UniversityStudentDocument> usdr = getUniversityStudData(enrollementNo,  passingyrid, strmid, semid, monthofPass,  prno);
+		
 
 		for (UniversityStudentDocument studentData : usdr) {
 
@@ -647,7 +692,8 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 			studData.add(uniResp);
 
 		}
-
+//		em.close();
+//	       emf.close();
 		return studData;
 	}
 
@@ -962,5 +1008,49 @@ public class AssociateManagerServiceImpl implements AssociateManagerService {
 		datalist.put("RejectedData", rejectedData);
 		return datalist;
 
+	}
+	
+public List<UniversityStudentDocument> getUniversityStudData(String enrollmentno, Long yearofpassid, Long streamid,Long semId,String monthOfPassing, String prnNo){
+		
+		//EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PERSISTENCE");
+
+		 EntityManager em = emf.createEntityManager();
+       CriteriaBuilder cb = em.getCriteriaBuilder();
+       
+       List<UniversityStudentDocument> resp = new ArrayList<>();
+       
+       
+       CriteriaQuery<UniversityStudentDocument> cq = cb.createQuery(UniversityStudentDocument.class);
+       Root<UniversityStudentDocument> book = cq.from(UniversityStudentDocument.class);
+       List<Predicate> predicates = new ArrayList<>();
+       
+     
+       if(enrollmentno != null ) {
+       	predicates.add(cb.equal(book.get("enrollmentNo"), enrollmentno));
+       }
+       if(prnNo != null ) {
+            predicates.add(cb.equal(book.get("prnNo"), prnNo));
+           }
+       if(streamid != null) {
+       	predicates.add( cb.equal(book.get("streamId"), streamid));
+           }
+       if(semId != null) {
+       	predicates.add(cb.equal(book.get("semId"), semId));
+           }
+       if(yearofpassid != null) {
+       	predicates.add( cb.equal(book.get("passingYearId"), yearofpassid));
+           }
+       if(monthOfPassing != null ) {
+       	predicates.add( cb.equal(book.get("monthOfPassing"), monthOfPassing));
+       	
+           }
+		
+       cq.where(predicates.toArray(new Predicate[0]));
+       resp=em.createQuery(cq).getResultList();
+       
+       em.close();
+//       emf.close();
+       return resp;
+	
 	}
 }
