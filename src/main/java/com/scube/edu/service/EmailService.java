@@ -643,6 +643,10 @@ public class EmailService {
 			Font footerFont9 = FontFactory.getFont(FontFactory.HELVETICA);
 			footerFont9.setSize(9);
 			footerFont9.setColor(Color.BLACK);
+			
+			Font subjectFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+			subjectFont.setSize(12);
+			subjectFont.setColor(Color.BLACK);
 
 			PdfWriter.getInstance(document, outputStream);
 
@@ -652,38 +656,48 @@ public class EmailService {
 //        footer.setBorder(Rectangle.NO_BORDER);
 	        document.setFooter(footer);
 	        
-	        Image img;
-	        if(awsORtest.equalsIgnoreCase("AWS")) {
-	        	img = Image.getInstance(logoimageLocation+"logo.png"); // live
-	        }if(awsORtest.equalsIgnoreCase("TEST")) {
-	        	img = Image.getInstance(logoimageLocation+"logo.png"); // test
-//	        	img = Image.getInstance("logo.png");
-	        }else {
-	        	img = Image.getInstance(logoimageLocation+"logo.png");
-	        }
-	       // Image img = Image.getInstance("logo.png");
-
-			img.setAlignment(Element.ALIGN_CENTER);
-			img.scaleToFit(120, 100); // width, height
+//	        Image img;
+//	        if(awsORtest.equalsIgnoreCase("AWS")) {
+//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // live
+//	        }if(awsORtest.equalsIgnoreCase("TEST")) {
+//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // test
+////	        	img = Image.getInstance("logo.png");
+//	        }else {
+//	        	img = Image.getInstance(logoimageLocation+"logo.png");
+//	        }
+//	       // Image img = Image.getInstance("logo.png");
+//
+//			img.setAlignment(Element.ALIGN_CENTER);
+//			img.scaleToFit(120, 100); // width, height
 	        
 	        document.open();
 //	    EduCred_Logo.jpg
 
-			document.add(img);
+//			document.add(img);
+	        
+	        Image headerImg;
+			headerImg = Image.getInstance("sndt_header_new.jpg");
+			headerImg.setAlignment(Element.ALIGN_CENTER);
+			headerImg.scaleToFit(500, 300);
+			
+			document.add(headerImg);
+			
+			Paragraph date = new Paragraph();
+			date.setAlignment(Paragraph.ALIGN_RIGHT);
+			date.setFont(headAddrFont11);
+			date.add(Chunk.NEWLINE);
+			date.add(Chunk.NEWLINE);
+			date.add("DATE:- "+java.time.LocalDate.now());
+			document.add(date);
+			
 
-			Paragraph head = new Paragraph();
-			head.setAlignment(Paragraph.ALIGN_RIGHT);
-			head.setFont(headFont);
-			head.add("Marks And Certification Unit");
-			document.add(head);
-
-			Paragraph headAddr = new Paragraph();
-			headAddr.setFont(headAddrFont12);
-			headAddr.setAlignment(Paragraph.ALIGN_RIGHT);
-			headAddr.add(Chunk.NEWLINE);
-			headAddr.add("Examinations Section, \r" + "M.J. Phule Bhavan, \r" + "Vidyanagari, Santacruz (East), \r"
-					+ "Mumbai- 400 098. \r" + "Date: " + java.time.LocalDate.now());
-			document.add(headAddr);
+//			Paragraph headAddr = new Paragraph();
+//			headAddr.setFont(headAddrFont12);
+//			headAddr.setAlignment(Paragraph.ALIGN_RIGHT);
+//			headAddr.add(Chunk.NEWLINE);
+//			headAddr.add("Examinations Section, \r" + "M.J. Phule Bhavan, \r" + "Vidyanagari, Santacruz (East), \r"
+//					+ "Mumbai- 400 098. \r" + "Date: " + java.time.LocalDate.now());
+//			document.add(headAddr);
 
 			Paragraph Addr = new Paragraph();
 			Addr.setFont(headAddrFont12);
@@ -695,26 +709,35 @@ public class EmailService {
 			Addr.add(Chunk.NEWLINE);
 			Addr.add(Chunk.NEWLINE);
 			document.add(Addr);
+			
+			Paragraph subject = new Paragraph();
+			subject.setAlignment(Paragraph.ALIGN_CENTER);
+			subject.setFont(subjectFont);
+			subject.add("Subject: Verification Of Genuineness of Education Regarding.");
+			subject.add(Chunk.NEWLINE);
+			subject.add(Chunk.NEWLINE);
+			subject.add(Chunk.NEWLINE);
+			document.add(subject);
 
-			Paragraph greeting = new Paragraph();
-			greeting.setFont(headAddrFont11);
-			greeting.setAlignment(Paragraph.ALIGN_LEFT);
-			greeting.add("Sir/Madam, \r");
+//			Paragraph greeting = new Paragraph();
+//			greeting.setFont(headAddrFont11);
+//			greeting.setAlignment(Paragraph.ALIGN_LEFT);
+//			greeting.add("Sir/Madam, \r");
 
 			Paragraph para = new Paragraph();
 			para.setFont(headAddrFont11);
 			para.setAlignment(Paragraph.ALIGN_LEFT);
 			para.add(
-					"          As per Xerox copy of the Statement of Marks of the candidate received from you for verification. After verifying the office record it has been observed that the statement of marks is not issued by this University and hence the same is FAKE.");
+					"I am forwarding photo copy of Educational Documents of the student who has passed our University Examination and have to inform you that the office has verified their documents and found discrepancies in them.");
 			para.add(Chunk.NEWLINE);
 			para.add(Chunk.NEWLINE);
 
-			document.add(greeting);
+//			document.add(greeting);
 			document.add(para);
 
-		    PdfPTable detailsTable = new PdfPTable(5);
+		    PdfPTable detailsTable = new PdfPTable(6);
 		    detailsTable.setWidthPercentage(100);
-		    detailsTable.setWidths(new int[] {20,20,20,20,20});
+		    detailsTable.setWidths(new int[] {16,16,16,16,16,16});
 		    
 //		    PdfPCell cell1 = new PdfPCell(new Paragraph("Serial No"));
 		    PdfPCell cell1 = new PdfPCell(new Paragraph("Date"));
@@ -724,7 +747,7 @@ public class EmailService {
 		    PdfPCell cell5 = new PdfPCell(new Paragraph("Seat Number"));
 //		    PdfPCell cell6 = new PdfPCell(new Paragraph("Branch"));
 		    PdfPCell cell7 = new PdfPCell(new Paragraph("Exam"));
-//		    PdfPCell cell8 = new PdfPCell(new Paragraph("Semester"));
+		    PdfPCell cell8 = new PdfPCell(new Paragraph("Sem Grade"));
 
 		    
 		    detailsTable.addCell(cell1);
@@ -733,7 +756,7 @@ public class EmailService {
 		    detailsTable.addCell(cell7);
 		    detailsTable.addCell(cell4);
 		    detailsTable.addCell(cell5);
-//		    detailsTable.addCell(cell6);
+		    detailsTable.addCell(cell8);
 
 //	    for(VerificationRequest ent: vr) {
 
@@ -750,7 +773,7 @@ public class EmailService {
 
 			StreamMaster stream = streamService.getNameById(vr.getStreamId());
 
-			
+			UniversityStudentDocument usd = universityStudentDocService.getRecordByPrnNoAndSemId(vr.getPrnNo(), vr.getSemId());
 			
 			PdfPCell dateCell = new PdfPCell(new Paragraph(strDate));
 	    	PdfPCell nameCell = new PdfPCell(new Paragraph(vr.getFirstName()+" "+vr.getLastName()));
@@ -760,6 +783,7 @@ public class EmailService {
 //	    	PdfPCell branchCell = new PdfPCell(new Paragraph(branch.getBranchName()));
 	    	PdfPCell streamCell = new PdfPCell(new Paragraph(stream.getStreamName()));
 //	    	PdfPCell semCell = new PdfPCell(new Paragraph(sem.getSemester()));
+	    	PdfPCell semCell = new PdfPCell(new Paragraph(usd.getSemGrade()));
 	    	
 	    	detailsTable.addCell(dateCell);
 	    	detailsTable.addCell(nameCell);
@@ -769,24 +793,14 @@ public class EmailService {
 	    	detailsTable.addCell(enrollCell);
 //	    	detailsTable.addCell(branchCell);
 	    	
-//	    	detailsTable.addCell(semCell);
+	    	detailsTable.addCell(semCell);
 	    	
 	    
 	    
 	    	document.add(detailsTable);
 	    	
 
-			Paragraph para1 = new Paragraph();
-			para1.setFont(headAddrFont11);
-			para1.setAlignment(Paragraph.ALIGN_LEFT);
-			para1.add(
-					"          You are, requested to inform the Sr. Inspector Of Police of your nearby Police Station for investigating in the matter and the same maybe informed to this office accordingly.");
-			para1.add(Chunk.NEWLINE);
-			para1.add(Chunk.NEWLINE);
-			para1.add("Thanking you,");
-			para1.add(Chunk.NEWLINE);
-			para1.add(Chunk.NEWLINE);
-			document.add(para1);
+			
 
 			// Add footer of PDF here
 
@@ -804,12 +818,12 @@ public class EmailService {
 //		    img2.scaleAbsolute(75, 75);
 //		    document.add(img2);
 			
-		    Paragraph foot = new Paragraph();
-		    foot.setAlignment(Paragraph.ALIGN_RIGHT);
-		    foot.setFont(headAddrFont12);
-		    foot.add("Dr. Vinod P Patil");
-		    
-		    document.add(foot);
+//		    Paragraph foot = new Paragraph();
+//		    foot.setAlignment(Paragraph.ALIGN_RIGHT);
+//		    foot.setFont(headAddrFont12);
+//		    foot.add("Dr. Vinod P Patil");
+//		    
+//		    document.add(foot);
 		    
 		    
 		    
@@ -830,15 +844,15 @@ public class EmailService {
 		    
 		    document.add(signImg);
 		    
-		    Paragraph foot1 = new Paragraph();
-		    foot1.setAlignment(Paragraph.ALIGN_RIGHT);
-		    foot1.setFont(headAddrFont12);
-		    foot1.add("Director \r"
-		    		+ "Board Of Examination & Evaluation");
+		    Paragraph foot = new Paragraph();
+			foot.setAlignment(Paragraph.ALIGN_RIGHT);
+			foot.setFont(headAddrFont12);
+			foot.add("(Dr. Subhash K. Waghmare) \r"+"Director \r" + "Board Of Examinations and Evaluation.");
+			document.add(foot);
 		    
 		   
 		    		    
-  		    document.add(foot1);
+//  		    document.add(foot);
 
   		// Image signImg = Image.getInstance("signature.png");
 //		    signImg.setAlignment(Element.ALIGN_RIGHT);
@@ -1059,6 +1073,7 @@ public class EmailService {
 //	    	PdfPCell branchCell = new PdfPCell(new Paragraph(branch.getBranchName()));
 	    	PdfPCell streamCell = new PdfPCell(new Paragraph(doc.getDocumentName()));
 	    	PdfPCell semCell = new PdfPCell(new Paragraph(usd.getSemGrade()));
+	    	
 	    	
 	    	detailsTable.addCell(dateCell);
 	    	detailsTable.addCell(nameCell);
