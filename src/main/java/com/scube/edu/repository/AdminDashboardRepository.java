@@ -35,7 +35,7 @@ public interface AdminDashboardRepository extends JpaRepository<VerificationRequ
 	@Query(value="select sum(vr.doc_amt_with_gst) as totalAmt ,um.company_name,vr.user_id from verification_request vr left join user_master um on vr.user_id=um.id where um.company_name is not null and um.role_id =2 and year(vr.created_date)= ?1 group by user_id order by totalAmt desc limit 10",nativeQuery = true)
 	List<Object[]> findVerificationRequestToptenEmp(int year);
 	
-	@Query(value ="SELECT count(*) from verification_request where year(closed_date) = ?1 and doc_status in ('UN_Approved','Uni_Auto_Approved','SVD_Approved')", nativeQuery = true)
+	@Query(value ="SELECT count(*) from verification_request where year(closed_date) = ?1 and doc_status in ('UN_Approved_Pass','Uni_Auto_Approved_Pass','SVD_Approved_Pass','UN_Approved_Fail','Uni_Auto_Approved_Fail','SVD_Approved_Fail')", nativeQuery = true)
 	String getcountOfpositiveReq(int year);
 
 	@Query(value ="SELECT count(*) from verification_request where year(closed_date) = ?1 and doc_status in ('UN_Rejected','Uni_Auto_Rejected','SVD_Rejected')", nativeQuery = true)

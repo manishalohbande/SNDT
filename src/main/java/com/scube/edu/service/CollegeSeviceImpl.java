@@ -60,7 +60,7 @@ private static final Logger logger = LoggerFactory.getLogger(CollegeSeviceImpl.c
 	public String addCollege(CollegeAddRequest collegeRequest) throws Exception {
 		
 		String resp;
-		CollegeMaster collegeEntities  = collegeRespository.findByCollegeName(collegeRequest.getCollegeName());
+		CollegeMaster collegeEntities  = collegeRespository.findByCollegeNameAndIsdeleted(collegeRequest.getCollegeName(),"N");
 		
 		
 		if(collegeEntities != null) {
@@ -71,6 +71,15 @@ private static final Logger logger = LoggerFactory.getLogger(CollegeSeviceImpl.c
 		}
 		else {
 	
+			CollegeMaster collegeMaster = collegeRespository.findByCollegeName(collegeRequest.getCollegeName());
+			if (collegeMaster != null) {
+				
+				collegeMaster.setIsdeleted("N");
+				collegeMaster.setUpdatedate(new Date());
+
+				collegeRespository.save(collegeMaster);
+			} else {
+			
 			CollegeMaster collegeMasterEntity = new CollegeMaster();
 
 			collegeMasterEntity.setUniversityId((long)1);// 1
@@ -79,7 +88,7 @@ private static final Logger logger = LoggerFactory.getLogger(CollegeSeviceImpl.c
 			collegeMasterEntity.setIsdeleted("N"); // By Default N
 
 			collegeRespository.save(collegeMasterEntity);
-	     
+				}
 	     resp = "Success";
 	
 		}

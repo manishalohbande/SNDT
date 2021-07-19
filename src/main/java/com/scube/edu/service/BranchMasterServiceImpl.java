@@ -1,6 +1,7 @@
 package com.scube.edu.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,7 +81,7 @@ private static final Logger logger = LoggerFactory.getLogger(CollegeSeviceImpl.c
 		String flag;		
 		logger.info("*******BranchMasterServiceImpl saveBranch*******"+ branchReq.getBranchname());
 		
-		BranchMasterEntity bme = branchMasterRepository.findByBranchNameAndStreamId(branchReq.getBranchname(), branchReq.getStreamid());
+		BranchMasterEntity bme = branchMasterRepository.findByBranchNameAndStreamIdAndIsdeleted(branchReq.getBranchname(), branchReq.getStreamid(),"N");
 		
 		if(bme != null) {
 			flag = "The Branch and streamId combo already exist";
@@ -88,8 +89,16 @@ private static final Logger logger = LoggerFactory.getLogger(CollegeSeviceImpl.c
 			
 		}else {
 			logger.info("add new branch");
-			
+			BranchMasterEntity isdeletedChk = branchMasterRepository.findByBranchNameAndStreamId(branchReq.getBranchname(), branchReq.getStreamid());
 			BranchMasterEntity bmEnt = new BranchMasterEntity();
+
+			if(isdeletedChk!=null) {
+				isdeletedChk.setIsdeleted("N");
+				isdeletedChk.setUpdatedate(new Date());
+				branchMasterRepository.save(isdeletedChk);
+
+			}
+			else {
 			
 			bmEnt.setBranchName(branchReq.getBranchname());
 			bmEnt.setIsdeleted("N");
@@ -97,6 +106,7 @@ private static final Logger logger = LoggerFactory.getLogger(CollegeSeviceImpl.c
 			bmEnt.setUniversityId(branchReq.getUniversityid());
 			
 			branchMasterRepository.save(bmEnt);
+			}
 			
 			flag = "Success";
 			

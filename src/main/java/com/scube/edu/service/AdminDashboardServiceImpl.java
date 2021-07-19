@@ -300,7 +300,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
 		{
 		rationcount.put("Disputes",  Integer. parseInt(raisedDisputCount));
 		}
-		if(raisedDisputCount!=null)
+		if(clearDisputCount!=null)
 		{
 		rationcount.put("Clear",  Integer. parseInt(clearDisputCount));
 		}

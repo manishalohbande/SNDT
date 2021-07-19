@@ -1,6 +1,7 @@
 package com.scube.edu.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,19 +78,29 @@ public class SemesterServiceImpl implements SemesterService{
 		
 		logger.info("*******SemesterServiceImpl addSem*******");
 		
-		SemesterEntity sEnt = semesterRepository.findBySemesterAndStreamId(semReq.getSemestername(), semReq.getStreamid());
+		SemesterEntity sEnt = semesterRepository.findBySemesterAndStreamIdAndIsdeleted(semReq.getSemestername(), semReq.getStreamid(),"N");
 		
 		if(sEnt != null) {
 			throw new Exception("This sem name and Stream Id combo already exist.");
-		}else {
+		} else {
 			SemesterEntity semEnt = new SemesterEntity();
-			
+			SemesterEntity isdeletedchk = semesterRepository.findBySemesterAndStreamId(semReq.getSemestername(),
+					semReq.getStreamid());
+			if (isdeletedchk != null) {
+				isdeletedchk.setIsdeleted("N");
+				isdeletedchk.setUpdatedate(new Date());
+				semesterRepository.save(isdeletedchk);
+
+			}
+			else {
+
 			semEnt.setIsdeleted("N");
 			semEnt.setSemester(semReq.getSemestername());
 			semEnt.setStreamId(semReq.getStreamid());
 			semEnt.setUniversityId(semReq.getUniversityid());
 			
 			semesterRepository.save(semEnt);
+			}
 			return true;
 		}
 		

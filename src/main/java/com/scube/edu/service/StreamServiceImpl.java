@@ -60,23 +60,33 @@ public class StreamServiceImpl  implements StreamService{
 		public String addStream(StreamRequest streamRequest) throws Exception {
 			
 			StreamMaster streamMasterEntity  = new  StreamMaster();
-			StreamMaster Response =streamRespository.findByStreamName(streamRequest.getStreamName());
-			String resp;
+			StreamMaster Response =streamRespository.findByStreamNameAndIsdeleted(streamRequest.getStreamName(),"N");
+			String resp = null;
 			if(Response!=null)
 			{
 				resp="Stream already exist!";
 			}
 			else
 			{
+				StreamMaster strmMasterEntity  = new  StreamMaster();
+				StreamMaster streamMaster=streamRespository.findByStreamName(streamRequest.getStreamName());
+				if(streamMaster!=null) {
+					streamMaster.setIsdeleted("N");
+					streamMaster.setUpdatedate(new Date());
+				       streamRespository.save(streamMaster);
+
+				}
+				else {
 			streamMasterEntity.setUniversityId(streamRequest.getUniversityId());//1
 			streamMasterEntity.setStreamName(streamRequest.getStreamName());//Name Document
 			streamMasterEntity.setCreateby(streamRequest.getCreated_by()); // Logged User Id 
 			streamMasterEntity.setIsdeleted("N"); // By Default N	
 		
 			streamRespository.save(streamMasterEntity);
+				}
 			resp="success";
+			
 			}
-				
 			return resp;
 			
 		}

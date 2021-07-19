@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
 			}
 			
 //			RoleMaster role = roleService.getNameById(userReq.getRoleId());
-		
+			else {
 			userMasterEntity.setFirstName(userReq.getFirstName());
 			userMasterEntity.setLastName(userReq.getLastName());
 			userMasterEntity.setEmailId(userReq.getEmailId());
@@ -134,6 +134,7 @@ public class UserServiceImpl implements UserService {
 			userMasterEntity.setIsdeleted("N");
 			
 			emailService.sendVerificationEmail(userReq.getEmailId(), url);
+			}
 			
 			userRepository.save(userMasterEntity);
 			

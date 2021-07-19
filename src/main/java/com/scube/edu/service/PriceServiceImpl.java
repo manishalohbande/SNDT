@@ -2,6 +2,7 @@ package com.scube.edu.service;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,10 +87,24 @@ public class PriceServiceImpl  implements PriceService {
 		@Override
 		public Boolean addPrice(PriceAddRequest priceRequest) throws Exception {
 			
+			PriceMaster PriceMasterentt=pricemasterRespository.findByYearrangeStartAndYearrangeEndAndRequestTypeIdAndDoctypeIdAndIsdeleted(priceRequest.getYearrangeStart(), priceRequest.getYearrangeEnd(), priceRequest.getRequestTypeId(), priceRequest.getDoctypeId(),"N");
 			
-			
+			if(PriceMasterentt!=null) {
+				throw new Exception("This price entry already exists");
+
+			}
+			else {
 			PriceMaster priceMasterEntity  = new  PriceMaster();
-			
+			PriceMaster ischkpriceMaster=pricemasterRespository.findByYearrangeStartAndYearrangeEndAndRequestTypeIdAndDoctypeId(priceRequest.getYearrangeStart(), priceRequest.getYearrangeEnd(), priceRequest.getRequestTypeId(), priceRequest.getDoctypeId());
+
+			if(ischkpriceMaster!=null) {
+				ischkpriceMaster.setIsdeleted("N"); // By Default N
+			//	priceMasterEntity.setUpdateby(StringpriceRequest.getId());
+				ischkpriceMaster.setUpdatedate(new Date());
+				pricemasterRespository.save(ischkpriceMaster);
+
+				
+			}else {
 			//priceMasterEntity.setServiceName(priceRequest.getServiceName());//1
 			priceMasterEntity.setAmount(priceRequest.getAmount());//1
 			priceMasterEntity.setYearrangeStart(priceRequest.getYearrangeStart());//
@@ -103,8 +118,10 @@ public class PriceServiceImpl  implements PriceService {
 			priceMasterEntity.setRequestTypeId(priceRequest.getRequestTypeId());
 			priceMasterEntity.setDoctypeId(priceRequest.getDoctypeId());
 			pricemasterRespository.save(priceMasterEntity);
+
+			}
 		
-			
+			}
 				
 			return true;
 			

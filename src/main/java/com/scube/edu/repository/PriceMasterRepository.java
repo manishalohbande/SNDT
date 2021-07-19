@@ -20,6 +20,8 @@ public interface PriceMasterRepository extends JpaRepository<PriceMaster, Long>{
 	
 	PriceMaster findById(long id);
 
+	PriceMaster findByYearrangeStartAndYearrangeEndAndRequestTypeIdAndDoctypeIdAndIsdeleted(String yrRngStart,String yrRngEnd,Long requesttypeId,Long DocTypeId,String isDeleted);
+	PriceMaster findByYearrangeStartAndYearrangeEndAndRequestTypeIdAndDoctypeId(String yrRngStart,String yrRngEnd,Long requesttypeId,Long DocTypeId);
 
 	List<PriceMaster> findByIsdeleted(String string);
 
