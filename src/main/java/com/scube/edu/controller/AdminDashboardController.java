@@ -40,28 +40,28 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getRequestStatiticsByYearWeekMonth (@PathVariable int year) {
 		
 		System.out.println("*******AdminDashboardController getRequestStatiticsByYearWeekMonth********");
-		
-		response = new BaseResponse();
+		BaseResponse response1 = null;
+		response1 = new BaseResponse();
 		
 	    try {
 	    	
 	    	HashMap<String,HashMap<String,String>> List = adminDashboardService.getRequestStatByStatus(year);
 				
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response1.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response1.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response1.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response1);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response1.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response1.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response1.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response1);
 				
 			}
 	}
@@ -70,28 +70,28 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getTopTenemployersOfYear (@PathVariable int year) {
 		
 		System.out.println("*******AdminDashboardController getTopTenemployersOfYear********");
-		
-		response = new BaseResponse();
+		BaseResponse response2 = null;
+		response2 = new BaseResponse();
 		
 	    try {
 	    	
 	    	List<TopTenEmployResponse>  List = adminDashboardService.gettopTenEmployer(year);
 				
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response2.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response2.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response2.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response2);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response2.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response2.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response2.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response2);
 				
 			}
 	}
@@ -100,28 +100,28 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> requestRatio (@PathVariable int year) {
 		
 		System.out.println("*******AdminDashboardController requestRatio********");
-		
-		response = new BaseResponse();
+		BaseResponse response3 = null;
+		response3 = new BaseResponse();
 		
 	    try {
 	    	
 	    	Map<String,Integer>  List = adminDashboardService.getPostiveNegReqRation(year);
 				
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response3.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response3.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response3.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response3);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response3.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response3.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response3.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response3);
 				
 			}
 	}
@@ -130,28 +130,28 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getYearRevenue () {
 		
 		System.out.println("*******AdminDashboardController getYearRevenue********");
-		
-		response = new BaseResponse();
+		BaseResponse response4 = null;
+		response4 = new BaseResponse();
 		
 	    try {
 	    	
 	    	List<TopFiverYearRevenueResponse>  List = adminDashboardService.getTopFiveYearRevenue();
 				
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response4.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response4.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response4.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response4);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response4.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response4.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response4.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response4);
 				
 			}
 	}
@@ -160,28 +160,28 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getDisputeRation (@PathVariable int year) {
 		
 		System.out.println("*******AdminDashboardController requestRatio********");
-		
-		response = new BaseResponse();
+		BaseResponse response5 = null;
+		response5 = new BaseResponse();
 		
 	    try {
 	    	
 	    	Map<String, Integer>  List = adminDashboardService.getDisputeRatio(year);
 				
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response5.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response5.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response5.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response5);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response5.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response5.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response5.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response5);
 				
 			}
 	}
@@ -191,28 +191,28 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getFinancialStat (@PathVariable String fistofMont,@PathVariable String currenDateOfmonth) {
 		
 		System.out.println("*******AdminDashboardController getFinancialStat********");
-		
-		response = new BaseResponse();
+		BaseResponse response6 = null;
+		response6 = new BaseResponse();
 		
 	    try {
 	    	
 	    	List<FinancialStatResponse> List = adminDashboardService.getFinancialStat(fistofMont, currenDateOfmonth);
 				
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response6.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response6.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response6.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response6);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response6.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response6.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response6.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response6);
 				
 			}
 	}
@@ -222,28 +222,28 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getMonthlyPerformanceGraph (@PathVariable int month,@PathVariable int year) {
 		
 		System.out.println("*******AdminDashboardController getPerformanceGraph********");
-		
-		response = new BaseResponse();
+		BaseResponse response7 = null;
+		response7 = new BaseResponse();
 		
 	    try {
 	    	
 	    	List<VerifierPerformanceResponse> List = adminDashboardService.getMonthlyPerformanceOfVerfier(month,year);
 				
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response7.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response7.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response7.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response7);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response7.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response7.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response7.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response7);
 				
 			}
 	}
@@ -252,27 +252,27 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getDailyPerformanceGraph (@PathVariable String date) {
 		
 		System.out.println("*******AdminDashboardController getDailyPerformanceGraph********");
-		
-		response = new BaseResponse();
+		BaseResponse response8 = null;
+		response8 = new BaseResponse();
 		
 	    try {
 	    	
 	    	List<VerifierPerformanceResponse> List = adminDashboardService.getDailyPerformanceOfVerfier(date);
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response8.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response8.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response8.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response8);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response8.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response8.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response8.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response8);
 				
 			}
 	}
@@ -281,27 +281,27 @@ public class AdminDashboardController {
 	public ResponseEntity<BaseResponse> getPerformanceGraphCustomRange (@PathVariable String fromdate,@PathVariable String todate) {
 		
 		System.out.println("*******AdminDashboardController getPerformanceGraphCustomRange********");
-		
-		response = new BaseResponse();
+		BaseResponse response9 = null;
+		response9 = new BaseResponse();
 		
 	    try {
 	    	
 	    	List<VerifierPerformanceResponse> List = adminDashboardService.getPerformanceOfVerfier(fromdate, todate);
-				response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
-				response.setRespData(List);
+				response9.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
+				response9.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
+				response9.setRespData(List);
 				
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(response9);
 					
 			}catch (Exception e) {
 				
 				logger.error(e.getMessage()); //BAD creds message comes from here
 				
-				response.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
-				response.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
-				response.setRespData(e.getMessage());
+				response9.setRespCode(StringsUtils.Response.FAILURE_RESP_CODE);
+				response9.setRespMessage(StringsUtils.Response.FAILURE_RESP_MSG);
+				response9.setRespData(e.getMessage());
 				
-				return ResponseEntity.badRequest().body(response);
+				return ResponseEntity.badRequest().body(response9);
 				
 			}
 	}
