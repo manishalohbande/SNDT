@@ -275,7 +275,7 @@ public class StudentController {
 		response = new BaseResponse();
 		    try {
 		    	
-		    	HashMap<String,Long> list = studentService.CalculateDocAmount(studentDocReq);
+		    	HashMap<String,List<Long>> list = studentService.CalculateDocAmount(studentDocReq);
 					
 					response.setRespCode(StringsUtils.Response.SUCCESS_RESP_CODE);
 					response.setRespMessage(StringsUtils.Response.SUCCESS_RESP_MSG);
