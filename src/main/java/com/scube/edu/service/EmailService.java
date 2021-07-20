@@ -656,31 +656,32 @@ public class EmailService {
 //        footer.setBorder(Rectangle.NO_BORDER);
 	        document.setFooter(footer);
 	        
-//	        Image img;
-//	        if(awsORtest.equalsIgnoreCase("AWS")) {
-//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // live
-//	        }if(awsORtest.equalsIgnoreCase("TEST")) {
-//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // test
-////	        	img = Image.getInstance("logo.png");
-//	        }else {
-//	        	img = Image.getInstance(logoimageLocation+"logo.png");
-//	        }
+	        Image img;
+	        if(awsORtest.equalsIgnoreCase("AWS")) {
+	        	img = Image.getInstance(logoimageLocation+"sndt_header_new.jpg"); // live
+	        }if(awsORtest.equalsIgnoreCase("TEST")) {
+	        	img = Image.getInstance(logoimageLocation+"sndt_header_new.jpg"); // test
+//	        	img = Image.getInstance("logo.png");
+	        }else {
+	        	img = Image.getInstance(logoimageLocation+"sndt_header_new.jpg");
+	        }
 //	       // Image img = Image.getInstance("logo.png");
 //
 //			img.setAlignment(Element.ALIGN_CENTER);
 //			img.scaleToFit(120, 100); // width, height
-	        
+			img.setAlignment(Element.ALIGN_CENTER);
+			img.scaleToFit(500, 300);
 	        document.open();
 //	    EduCred_Logo.jpg
 
 //			document.add(img);
 	        
-	        Image headerImg;
-			headerImg = Image.getInstance("sndt_header_new.jpg");
-			headerImg.setAlignment(Element.ALIGN_CENTER);
-			headerImg.scaleToFit(500, 300);
+//	        Image headerImg;
+//			headerImg = Image.getInstance("sndt_header_new.jpg");
+
 			
-			document.add(headerImg);
+			document.add(img);
+			
 			
 			Paragraph date = new Paragraph();
 			date.setAlignment(Paragraph.ALIGN_RIGHT);
@@ -919,33 +920,29 @@ public class EmailService {
 			// left, right, top, bottom
 			logger.info("headerFooter set here--->just before document.open()");
 
-//			Image img;
-//	        if(awsORtest.equalsIgnoreCase("AWS")) {
-//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // live
-//	        }if(awsORtest.equalsIgnoreCase("TEST")){
-//	        	img = Image.getInstance(logoimageLocation+"logo.png"); // test
-////	        	img = Image.getInstance("logo.png");
-//	        }else {
-//	        	img = Image.getInstance(logoimageLocation+"logo.png");
-//	        }
-//			
-////			 Image img = Image.getInstance(imageLocation+"/logo.png");
-//			//Image img = Image.getInstance("logo.png");
-//
-//			img.setAlignment(Element.ALIGN_LEFT);
-//			img.scaleToFit(80, 60); // width, height
+			Image img;
+	        if(awsORtest.equalsIgnoreCase("AWS")) {
+	        	img = Image.getInstance(logoimageLocation+"sndt_header_new.jpg"); // live
+	        }if(awsORtest.equalsIgnoreCase("TEST")){
+	        	img = Image.getInstance(logoimageLocation+"sndt_header_new.jpg"); // test
+//	        	img = Image.getInstance("logo.png");
+	        }else {
+	        	img = Image.getInstance(logoimageLocation+"sndt_header_new.jpg");
+	        }
+
+	        img.setAlignment(Element.ALIGN_CENTER);
+			img.scaleToFit(500, 300);
 
 			document.open();
 //	    EduCred_Logo.jpg
 
 //			document.add(img);
 			
-			Image headerImg;
-			headerImg = Image.getInstance("sndt_header_new.jpg");
-			headerImg.setAlignment(Element.ALIGN_CENTER);
-			headerImg.scaleToFit(500, 300);
+//			Image img;
+//			img = Image.getInstance("sndt_header_new.jpg");
 			
-			document.add(headerImg);
+			
+			document.add(img);
 
 //			Paragraph head = new Paragraph();
 //			head.setAlignment(Paragraph.ALIGN_CENTER);
