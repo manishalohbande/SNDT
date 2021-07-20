@@ -489,9 +489,10 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 		}
 		
 		logger.info("---------"+ appId);
+		HashMap<String,Long> map = new HashMap<String,Long>();
+
 		
-		
-		
+		try {
 		for(StudentDocVerificationRequest req : studentDocReq) {
 			System.out.println(req);
 			VerificationRequest resp = new VerificationRequest();
@@ -508,12 +509,17 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 			
 			logger.info(total+ " and  "+ totalWithGST+ "  and  "+ amtWithoutGST + " and   "+ amtWithGST);			
 		}
-		HashMap<String,Long> map = new HashMap<String,Long>();
 	
 		
 		
 		map.put("total_without_gst", amtWithoutGST);
 		map.put("total_with_gst", amtWithGST);
+		}
+		catch(Exception e)
+		{
+			map.put("total_without_gst", (long) 99999);
+			map.put("total_with_gst", (long) 99999);
+		}
 		
 		return map;		
 	}
