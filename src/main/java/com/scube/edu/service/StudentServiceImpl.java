@@ -522,16 +522,16 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 			}
 		}
 	
-		if(pricenotforYear!=null) {
+		if(!pricenotforYear.isEmpty()&&pricenotforYear!=null) {
 			
 			amtwithgst.add((long) 99999);
 			amtwithoutgst.add((long) 99999);
 			
 			map.put("total_without_gst", amtwithoutgst);
 			map.put("total_with_gst", amtwithgst);			
-			map.replace("YearNotDefined", pricenotforYear);
+			map.put("YearNotDefined", pricenotforYear);
 			
-		}else {
+		}else{
 			amtwithgst.add(amtWithGST);
 			amtwithoutgst.add(amtWithoutGST);
 			
