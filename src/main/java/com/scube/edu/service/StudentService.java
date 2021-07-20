@@ -31,6 +31,6 @@ public interface StudentService {
 	public String saveDocument(MultipartFile file);
 	
 	public String UpdatePaymentFlag(List<paymensReqFlagRequest> id);
-	public HashMap<String, Long> CalculateDocAmount(List<StudentDocVerificationRequest> studentDocReq);
+	public HashMap<String, List< Long>> CalculateDocAmount(List<StudentDocVerificationRequest> studentDocReq);
 
 }

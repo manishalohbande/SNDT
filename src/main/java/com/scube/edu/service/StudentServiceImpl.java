@@ -464,7 +464,7 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 	}
 
 	@Override
-	public HashMap<String, Long> CalculateDocAmount(List<StudentDocVerificationRequest> studentDocReq){
+	public HashMap<String,List< Long>> CalculateDocAmount(List<StudentDocVerificationRequest> studentDocReq){
 		
 	logger.info("********StudentServiceImpl calculateTotalAmount********");
 		
@@ -489,10 +489,13 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 		}
 		
 		logger.info("---------"+ appId);
-		HashMap<String,Long> map = new HashMap<String,Long>();
+		HashMap<String,List<Long>> map = new HashMap<String,List<Long>>();
+
+		List<Long> amtwithgst=new ArrayList<>();
+		List<Long> amtwithoutgst=new ArrayList<>();
+		List<Long> pricenotforYear=new ArrayList<>();
 
 		
-		try {
 		for(StudentDocVerificationRequest req : studentDocReq) {
 			System.out.println(req);
 			VerificationRequest resp = new VerificationRequest();
@@ -500,26 +503,46 @@ private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.
 			System.out.println("------In Save and calculate Req FOR LOOP----");
 			
 			PriceMaster diff =  priceMasterRepo.getPriceByYearDiff(year , req.getYearofpassid(),req.getRequesttype(),Long.parseLong(req.getDocname()));
-						
+			if (diff!=null)	{		
 			total = diff.getTotalAmt();
 			totalWithGST =    ((diff.getTotalAmt() * diff.getGst()) / 100) + diff.getTotalAmt();
 			
 			amtWithoutGST += diff.getTotalAmt();
 			amtWithGST += ((diff.getTotalAmt() * diff.getGst()) / 100) + diff.getTotalAmt();
 			
-			logger.info(total+ " and  "+ totalWithGST+ "  and  "+ amtWithoutGST + " and   "+ amtWithGST);			
+			logger.info(total+ " and  "+ totalWithGST+ "  and  "+ amtWithoutGST + " and   "+ amtWithGST);	
+			}
+			else {
+				Optional<PassingYearMaster> dyear=yearOfPassRepo.findById(req.getYearofpassid());
+				PassingYearMaster passingYr=dyear.get();
+				pricenotforYear.add(Long.valueOf(passingYr.getYearOfPassing()));
+				//map.put("total_without_gst", (long) 99999);
+				//map.put("total_with_gst", (long) 99999);
+
+			}
 		}
 	
-		
-		
-		map.put("total_without_gst", amtWithoutGST);
-		map.put("total_with_gst", amtWithGST);
+		if(!pricenotforYear.isEmpty()&&pricenotforYear!=null) {
+			
+			amtwithgst.add((long) 99999);
+			amtwithoutgst.add((long) 99999);
+			
+			map.put("total_without_gst", amtwithoutgst);
+			map.put("total_with_gst", amtwithgst);			
+			map.put("YearNotDefined", pricenotforYear);
+			
+		}else{
+			amtwithgst.add(amtWithGST);
+			amtwithoutgst.add(amtWithoutGST);
+			
+			map.put("total_without_gst", amtwithoutgst);
+			map.put("total_with_gst", amtwithgst);
 		}
-		catch(Exception e)
-		{
-			map.put("total_without_gst", (long) 99999);
-			map.put("total_with_gst", (long) 99999);
-		}
+		
+		/*
+		 * } catch(Exception e) { map.put("total_without_gst", (long) 99999);
+		 * map.put("total_with_gst", (long) 99999); }
+		 */
 		
 		return map;		
 	}
